@@ -4,4 +4,6 @@ nombre_cliente = ["Juan Perez", "Maria Gomez", "Carlos Lopez", "Ana Martinez", "
 edad_cliente = [25, 42, 31, 55, 19, 38, 47, 29, 61, 34]
 tipo_cobertura = [1, 2, 1, 2, 1, 2, 1, 1, 2, 2]
 
-print(edad_cliente) 
+print(edad_cliente)
+x = int(input("Ingrese la edad del cliente: "))
+print (x)
