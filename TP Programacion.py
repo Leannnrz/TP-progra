@@ -13,16 +13,15 @@ stock_medicamento = [20, 15, 6, 10, 25, 5, 12, 3, 18, 7]
 requiere_receta = [2, 2, 1, 2, 2, 1, 1, 1, 1, 1]
 disponibilidad_medicamento = [1, 0, 1, 1, 1, 0, 1, 0, 1, 1]
 
-for i in range(len(id_cliente)):
-    for j in descripcion_medicamento[1:50]:
-        reporte_medicamentos = f"Medicamento: {nombre_medicamento[i]} | Precio: ${precio_medicamento[i]}"
-        reporte_medicamentos_dos = f"Descripción: {descripcion_medicamento[i]}" 
-        if disponibilidad_medicamento[i] == 1:
-            dispo_med = "Sí"
-        else:
-            dispo_med = "No"
-        reporte_medicamentos_tres = f"Stock: {stock_medicamento[i]} | Disponible: {dispo_med}"
-        print(reporte_medicamentos) 
-        print(reporte_medicamentos_dos) 
-        print(reporte_medicamentos_tres) 
-        print() 
+for i in range(len(id_medicamento)):
+    reporte_medicamentos = f"Medicamento: {nombre_medicamento[i]} | Precio: ${precio_medicamento[i]}"
+    reporte_medicamentos_dos = f"Descripción: {descripcion_medicamento[i][1:100]}..." 
+    if disponibilidad_medicamento[i] == 1:
+        dispo_med = "Sí"
+    else:
+        dispo_med = "No"
+    reporte_medicamentos_tres = f"Stock: {stock_medicamento[i]} | Disponible: {dispo_med}"
+    print(reporte_medicamentos) 
+    print(reporte_medicamentos_dos) 
+    print(reporte_medicamentos_tres) 
+    print( ) 
