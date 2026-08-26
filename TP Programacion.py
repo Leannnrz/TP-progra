@@ -13,20 +13,25 @@ stock_medicamento = [20, 15, 6, 10, 25, 5, 12, 3, 18, 7]
 requiere_receta = [2, 2, 1, 2, 2, 1, 1, 1, 1, 1]
 disponibilidad_medicamento = [1, 0, 1, 1, 1, 0, 1, 0, 1, 1]
 
-def funcion_medicamentos():
+def funcion_mostrar_medicamentos():
     for i in range(len(id_medicamento)):
-        reporte_medicamentos = f"Medicamento: {nombre_medicamento[i]} | Precio: ${precio_medicamento[i]:,.2f}"
-        reporte_medicamentos_dos = f"Descripción: {descripcion_medicamento[i][1:200]}..."
+        reporte_medicamentos = f"Medicamento: {nombre_medicamento[i]}"
+        reporte_precios_medicamentos = f"Precio: ${precio_medicamento[i]:,.2f}"
+        reporte_descripcion_medicamentos = f"Descripción: {descripcion_medicamento[i][1:2000]}..."
         if disponibilidad_medicamento[i] == 1:
-            dispo_med = "Sí"
+            dispo_med = "Sí" 
         else:
             dispo_med = "No"
-        reporte_medicamentos_tres = f"Precio Total: ${precio_medicamento[i] * stock_medicamento[i]:,.2f}"
-        reporte_medicamentos_cuatro = f"Stock: {stock_medicamento[i]} | Disponible: {dispo_med}"
-        print(reporte_medicamentos) 
-        print(reporte_medicamentos_dos) 
-        print(reporte_medicamentos_tres) 
-        print(reporte_medicamentos_cuatro)
-        print()  
+        reporte_precio_total_medicamentos = f"Precio Total: ${precio_medicamento[i] * stock_medicamento[i]:,.2f}"
+        reporte_stock_medicamentos = f"Stock: {stock_medicamento[i]}"
+        reporte_disponible_medicamentos = f"Disponible: {dispo_med}"
+        print("-" * 170)
+        print("|", reporte_medicamentos.ljust(30), "|", reporte_precios_medicamentos.ljust(10), "|")
+        print("|", reporte_precio_total_medicamentos.ljust(30), "|")
+        print("|", reporte_stock_medicamentos.ljust(30), "|", reporte_disponible_medicamentos.ljust(17), "|")
+        print()
+        print(reporte_descripcion_medicamentos)  
+        print("-" * 170)
+        print()
 
-mostrar_medicamentos = funcion_medicamentos() 
+mostrar_medicamentos = funcion_mostrar_medicamentos() 
