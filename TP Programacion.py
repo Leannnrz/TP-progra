@@ -21,10 +21,12 @@ def funcion_medicamentos():
             dispo_med = "Sí"
         else:
             dispo_med = "No"
-        reporte_medicamentos_tres = f"Stock: {stock_medicamento[i]} | Disponible: {dispo_med}"
+        reporte_medicamentos_tres = f"Precio Total: ${precio_medicamento[i] * stock_medicamento[i]:,.2f}"
+        reporte_medicamentos_cuatro = f"Stock: {stock_medicamento[i]} | Disponible: {dispo_med}"
         print(reporte_medicamentos) 
         print(reporte_medicamentos_dos) 
         print(reporte_medicamentos_tres) 
-        print( ) 
+        print(reporte_medicamentos_cuatro)
+        print()  
 
 mostrar_medicamentos = funcion_medicamentos() 
