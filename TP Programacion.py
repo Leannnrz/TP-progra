@@ -28,25 +28,44 @@ presento_receta = [2, 1, 2, 2, 1, 2, 1, 1, 1, 2]
 '''
 Función de login
 '''
-def login():
-    
-    usuario = input("Ingrese el usuario: ")
-    contrasenia = input("Ingrese una contraseña: ")
+def login(max_intentos):
+    usuario_admin = "admin"
+    contrasenia_admin = "1234"
 
-    while usuario != "admin" or contrasenia != "1234":
-        print("Usuario o contraseña incorrectos.\n")
+    usuario_normal = "usuario"
+    contrasenia_normal = "abcd"
+
+    intentos = 0
+
+    while intentos < max_intentos:
         usuario = input("Ingrese el usuario: ")
         contrasenia = input("Ingrese la contraseña: ")
-        
-    print("Login exitoso!\n")
-    return True
+
+        if usuario == usuario_admin and contrasenia == contrasenia_admin:
+            print("Login exitoso!")
+            print("Ingresó como administrador.\n")
+            return usuario_admin
+
+        elif usuario == usuario_normal and contrasenia == contrasenia_normal:
+            print("Login exitoso!")
+            print("Ingresó como usuario.\n")
+            return usuario_normal
+
+        else:
+            intentos += 1
+            print("Usuario o contraseña incorrectos.")
+            print("Intentos restantes:", max_intentos - intentos)
+
+    print("Ha superado el límite de intentos.")
+    return None
+
 
 
 
 '''
 FUNCIÓN CLIENTE (CRUD)
 '''
-# Para agregar un cliente
+#? Para agregar un cliente
 def alta_cliente():
 
     print("\n--- AGREGAR CLIENTE ---")
@@ -764,4 +783,6 @@ def mostrar_menu():
     
 
 
+# Progrma inicial
+tipo_usuario = login(3)
 mostrar_menu()
