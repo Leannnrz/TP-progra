@@ -752,10 +752,12 @@ def mostrar_estadistica(matriz):
 '''
 MENÚ PRINCIPAL
 '''
-def mostrar_menu():
-    if login():
+def mostrar_menu(tipo_usuario):
+
+    if tipo_usuario == "admin":
         
         opcion = ""
+
         while opcion != "5":
             print("\n----------------------- \nMenú Principal\n-----------------------")
             print("\n1- Clientes")
@@ -780,9 +782,44 @@ def mostrar_menu():
                 print("Saliendo del programa.")
             else:
                 print("Opción no válida.")
+
+    elif tipo_usuario == "usuario":
+
+        opcion = ""
+
+        while opcion != "4":
+            print("\n-----------------------")
+            print("Menú Usuario")
+            print("-----------------------")
+            print("1- Ver Clientes")
+            print("2- Ver Medicamentos")
+            print("3- Ver Ventas")
+            print("4- Salir")
+
+            opcion = input("\nSeleccione una opción: ")
+            print()
+
+            if opcion == "1":
+                print("Mostrando clientes...")
+
+            elif opcion == "2":
+                print("Mostrando medicamentos...")
+
+            elif opcion == "3":
+                print("Mostrando ventas...")
+
+            elif opcion == "4":
+                print("Saliendo del programa.")
+
+            else:
+                print("Opción no válida.")
+
+    else:
+        print("Acceso denegado.")
+
     
 
 
-# Progrma inicial
+# Programa principal
 tipo_usuario = login(3)
-mostrar_menu()
+mostrar_menu(tipo_usuario)
