@@ -1,0 +1,113 @@
+def menu_principal():
+    opcion = 0
+    while opcion != 5:
+        print("=" * 75)
+        print("MENÚ PRINCIPAL".rjust(45))
+        print("=" * 75)
+  
+        print("1. Gestion de productos")
+        print("2. Gestion de ventas")
+        print("3. Gestion de usuarios")
+        print("4. Gestion de estadisticas")
+        print("5. Cerrar sesion\n")
+
+        opcion = int(input("Ingrese una opcion: "))
+
+        if opcion == 1:
+            menu_productos()
+        elif opcion == 2:
+            menu_ventas()
+        elif opcion == 3:
+            menu_usuarios()
+        elif opcion == 4:
+            "menu_estadisticas()"
+        elif opcion == 5:
+            print("Cerrando sesion...")
+        else:
+            print("Opcion inválida.")
+
+def menu_medicamentos():
+    opcion = 0
+    while opcion != 5:
+        print("=" * 75)
+        print("GESTION DE MEDICAMENTOS".ljust(45))
+        print("=" * 75)
+
+        print("1. Agregar medicamento")
+        print("2. Modificar medicamento")
+        print("3. Eliminar medicamento")
+        print("4. Modificar descripcion de medicamento")
+        print("5. Volver al menu principal\n")
+
+        opcion = int(input("Ingrese una opcion: "))
+
+        if opcion == 1:
+            print("Agregando un medicamento")
+        elif opcion == 2:
+            print("Modificar medicamento")
+        elif opcion == 3:
+            print("Eliminar medicamento")
+        elif opcion == 4:
+            print("Modificar descripcion de medicamento")
+        elif opcion == 5:
+            print("Volviendo al menu principal...")
+        else:
+            print("Opcion inválida.")
+
+def menu_ventas():
+    opcion = 0
+    while opcion != 5:
+        print("=" * 75)
+        print("GESTION DE VENTAS".ljust(45))
+        print("=" * 75)
+
+        print("1. Agregar venta")
+        print("2. Modificar venta")
+        print("3. Eliminar venta")
+        print("4. Mostrar reporte de ventas")
+        print("5. Volver al menu principal\n")
+
+        opcion = int(input("Ingrese una opcion: "))
+
+        if opcion == 1:
+            print("Agregar venta")
+        elif opcion == 2:
+            print("Modificar venta")
+        elif opcion == 3:
+            print("Eliminar venta")
+        elif opcion == 4:
+            print("Mostrar reporte de ventas")
+        elif opcion == 5:
+            print("Volviendo al menu principal...")
+        else:
+            print("Opcion inválida.")
+
+def menu_usuarios():
+    opcion = 0
+    while opcion != 5:
+        print("=" * 75)
+        print("GESTION DE USUARIOS".ljust(45))
+        print("=" * 75)
+
+        print("1. Agregar usuario")
+        print("2. Modificar usuario")
+        print("3. Consultar usuarios")
+        print("4. Buscar usuario")
+        print("5. Volver al menu principal\n")
+
+        opcion = int(input("Ingrese una opcion: "))
+
+        if opcion == 1:
+            print("Agregar usuario")
+        elif opcion == 2:
+            print("Modificar usuario")
+        elif opcion == 3:
+            print("Consultar usuarios")
+        elif opcion == 4:
+            print("Buscar usuario")
+        elif opcion == 5:
+            print("Volviendo al menu principal...")
+        else:
+            print("Opcion inválida.")
+
+menu_principal()

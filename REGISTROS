@@ -1,0 +1,15 @@
+usuariosAdmin = [["admin", 1234, "Administrador"]]
+usuariosEmpleados = [["empleado", 2222, "Empleado"]]
+
+def registrar_usuario():
+    intentos = 0
+    print ("=" * 30 + " REGISTRO " + "=" * 30)
+    nombre = input("Ingrese el nombre del usuario: ")
+    contraseña = input("Ingrese la contraseña del usuario: ")
+
+    usuariosEmpleados.append([nombre, contraseña, "Empleado"])
+
+    print("Usuario registrado correctamente.\n")
+
+registrar_usuario()
+
