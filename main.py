@@ -763,6 +763,7 @@ def mostrar_menu(tipo_usuario):
             print("\n1- Clientes")
             print("2- Medicamentos")
             print("3- Ventas")
+            print("4- Estadísticas")
             # Realizar una consulta
             #print("4- Realizar una consulta")
             print("4- Estadísticas")
