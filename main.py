@@ -1,11 +1,25 @@
+
 '''
 LISTAS
 '''
 # Listas de clientes
-id_cliente = ["C001", "C002", "C003", "C004", "C005", "C006", "C007", "C008", "C009", "C010"]
+matriz_clientes = [
+    ["C001", "Juan Perez", 25, 1],
+    ["C002", "Maria Gomez", 42, 2],
+    ["C003", "Carlos Lopez", 31, 1],
+    ["C004", "Ana Martinez", 55, 2],
+    ["C005", "Luis Fernandez", 19, 1],
+    ["C006", "Sofia Torres", 38, 2],
+    ["C007", "Diego Ramirez", 47, 1],
+    ["C008", "Valentina Castro", 29, 2],
+    ["C009", "Martin Rojas", 61, 2],
+    ["C010", "Lucia Diaz", 34, 2]
+]
+
+'''id_cliente = ["C001", "C002", "C003", "C004", "C005", "C006", "C007", "C008", "C009", "C010"]
 nombre_cliente = ["Juan Perez", "Maria Gomez", "Carlos Lopez", "Ana Martinez", "Luis Fernandez", "Sofia Torres", "Diego Ramirez", "Valentina Castro", "Martin Rojas", "Lucia Diaz"]
 edad_cliente = [25, 42, 31, 55, 19, 38, 47, 29, 61, 34]
-tipo_cobertura = [1, 2, 1, 2, 1, 2, 1, 2, 2, 2]
+tipo_cobertura = [1, 2, 1, 2, 1, 2, 1, 2, 2, 2]'''
 
 
 # Listas de medicamentos
@@ -61,37 +75,45 @@ def login(max_intentos):
 
 
 
-
 '''
 FUNCIÓN CLIENTE (CRUD)
 '''
-#? Para agregar un cliente
+# Para agregar un cliente
 def alta_cliente():
 
     print("\n--- AGREGAR CLIENTE ---")
     codigo = input("Ingrese código del cliente: ")
 
-    while codigo in id_cliente:
+    cantidad = 0
+
+    for fila in matriz_clientes:
+        if fila[0] == codigo:
+            cantidad = cantidad + 1
+
+    while cantidad > 0:
         print("Error: el cliente ya existe.")
         codigo = input("Ingrese otro código: ")
 
+        cantidad = 0
+
+        for fila in matriz_clientes:
+            if fila[0] == codigo:
+                cantidad = cantidad + 1
+
     nombre = input("Ingrese nombre: ")
     edad = int(input("Ingrese edad: "))
-    
+        
     while edad <= 0:
         print("Error: la edad debe ser mayor a 0.")
-        edad = int(input("Ingrese edad: "))
-    
+        edad = int(input("Ingrese la edad: "))
+        
     cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
-    
+        
     while cobertura != 1 and cobertura != 2:
         print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
         cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
-    
-    id_cliente.append(codigo)
-    nombre_cliente.append(nombre)
-    edad_cliente.append(edad)
-    tipo_cobertura.append(cobertura)
+        
+    matriz_clientes.append([codigo, nombre, edad, cobertura])
 
     print("Cliente agregado correctamente.")
 
@@ -196,109 +218,6 @@ def ordenamiento_seleccion_clientes():
         id_cliente[posicDelMayor], id_cliente[destinoDelMayor] = id_cliente[destinoDelMayor], id_cliente[posicDelMayor]
         nombre_cliente[posicDelMayor], nombre_cliente[destinoDelMayor] = nombre_cliente[destinoDelMayor], nombre_cliente[posicDelMayor]
         tipo_cobertura[posicDelMayor], tipo_cobertura[destinoDelMayor] = tipo_cobertura[destinoDelMayor], tipo_cobertura[posicDelMayor]
-
-
-
-'''
-BUSQUEDA DE CLIENTES
-'''
-def buscar_clientes():
-    
-    num = 0
-    
-    while num != 4:
-        print()
-        print("¿Que tipo de cliente busca?")
-        print("1- Por edad")
-        print("2- Según su tipo de cobertura")
-        print("3- Por código de cliente")
-        print("4- Volver \n")
-        
-        num = int(input("Ingrese el número: "))
-        
-        if num == 1:
-            ordenamiento_seleccion_clientes()
-            edad = int(input("Ingrese la edad a buscar: "))
-            print()
-            izq = 0
-            der = len(edad_cliente) - 1
-            pos = -1
-            
-            while izq <= der and pos == -1:
-                medio = (izq + der) // 2
-                if edad_cliente[medio] == edad:
-                    pos = medio
-                elif edad_cliente[medio] < edad:
-                    izq = medio + 1
-                else:
-                    der = medio - 1
-                    
-            posiciones = []
-            if pos != -1:
-                i = pos
-                while i >= 0 and edad_cliente[i] == edad:    
-                    i = i - 1
-                i = i + 1                                   
-                while i < len(edad_cliente) and edad_cliente[i] == edad: 
-                    posiciones.append(i)
-                    i = i + 1
-                    
-            if len(posiciones) > 0:
-                posi = 0
-                while posi != len(posiciones):
-                    print("Cliente:", nombre_cliente[posiciones[posi]], "- ID:", id_cliente[posiciones[posi]])
-                    posi = posi + 1
-                print()
-            else:
-                print("No existen clientes con esa edad.")
-             
-    
-        elif num == 2:
-            print("1- Particular")
-            print("2- Obra Social")
-            cober = int(input("Ingrese la cobertura a buscar: "))
-            while cober != 1 and cober != 2:
-                print("El número ingresado no es válido")
-                cober = int(input("Ingrese la cobertura a buscar: "))
-            print()
-            posiciones = []
-            pos = 0
-            cant_cober = len(tipo_cobertura)
-            while pos < cant_cober:
-                if tipo_cobertura[pos] == cober:
-                    posiciones.append(pos)
-                pos = pos + 1
-            posi = 0
-            while posi != len(posiciones):
-                print("Cliente:", nombre_cliente[posiciones[posi]], "- ID:", id_cliente[posiciones[posi]])
-                posi = posi + 1
-            print()
-           
-        
-        elif num == 3:
-            codi_cliente = input("Ingrese el código del cliente a buscar: ")
-            posiciones = []
-            pos = 0
-            cant_codi = len(id_cliente)
-            while pos < cant_codi:
-                if id_cliente[pos] == codi_cliente:
-                    posiciones.append(pos)
-                pos = pos + 1
-            if len(posiciones) > 0:
-                print("Cliente:", nombre_cliente[posiciones[0]], "- Edad:", edad_cliente[posiciones[0]])
-            else:
-                print("No existe ningun cliente con ese ID.")
-            print()
-            
-        elif num == 4:
-            print("Volviendo...")
-    
-    
-        else:
-            print("El numero no es válido.")
-            num = int(input("¿Qué tipo de cliente se  busca? "))
-
-
 
 
 
