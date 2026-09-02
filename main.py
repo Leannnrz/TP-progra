@@ -202,27 +202,6 @@ def mostrar_clientes():
 
 
 '''
-ORDENAMIENTO DE CLIENTES
-'''
-def ordenamiento_seleccion_clientes():
-
-    for destinoDelMayor in range(len(edad_cliente) - 1, 0, -1):
-        posicDelMayor = 0
-
-        for posElem in range(1, destinoDelMayor + 1):
-
-            if edad_cliente[posElem] > edad_cliente[posicDelMayor]:
-                posicDelMayor = posElem
-
-        edad_cliente[posicDelMayor], edad_cliente[destinoDelMayor] = edad_cliente[destinoDelMayor], edad_cliente[posicDelMayor]
-        id_cliente[posicDelMayor], id_cliente[destinoDelMayor] = id_cliente[destinoDelMayor], id_cliente[posicDelMayor]
-        nombre_cliente[posicDelMayor], nombre_cliente[destinoDelMayor] = nombre_cliente[destinoDelMayor], nombre_cliente[posicDelMayor]
-        tipo_cobertura[posicDelMayor], tipo_cobertura[destinoDelMayor] = tipo_cobertura[destinoDelMayor], tipo_cobertura[posicDelMayor]
-
-
-
-
-'''
 FUNCIÓN MEDICAMENTOS (CRUD)
 '''
 # Para agregar un medicamento
@@ -322,39 +301,6 @@ def mostrar_medicamentos():
             print("Requiere receta: No\n")
 
         print("--------------------")
-
-
-
-'''
-Ordenamiento Medicamentos
-'''
-def ordenamiento_insercion_medicamentos():
-
-    for posActual in range(1, len(precio_medicamento)):
-
-        precio = precio_medicamento[posActual]
-        codigo = id_medicamento[posActual]
-        nombre = nombre_medicamento[posActual]
-        stock = stock_medicamento[posActual]
-        receta = requiere_receta[posActual]
-
-        posElem = posActual
-
-        while posElem > 0 and precio_medicamento[posElem - 1] > precio:
-
-            precio_medicamento[posElem] = precio_medicamento[posElem - 1]
-            id_medicamento[posElem] = id_medicamento[posElem - 1]
-            nombre_medicamento[posElem] = nombre_medicamento[posElem - 1]
-            stock_medicamento[posElem] = stock_medicamento[posElem - 1]
-            requiere_receta[posElem] = requiere_receta[posElem - 1]
-
-            posElem = posElem - 1
-
-        precio_medicamento[posElem] = precio
-        id_medicamento[posElem] = codigo
-        nombre_medicamento[posElem] = nombre
-        stock_medicamento[posElem] = stock
-        requiere_receta[posElem] = receta
 
 
 
