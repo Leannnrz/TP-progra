@@ -14,7 +14,7 @@ def menu_principal():
         opcion = int(input("Ingrese una opcion: "))
 
         if opcion == 1:
-            menu_productos()
+            menu_medicamentos()
         elif opcion == 2:
             menu_ventas()
         elif opcion == 3:
