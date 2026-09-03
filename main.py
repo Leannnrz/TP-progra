@@ -89,13 +89,13 @@ def submenu_medicamentos():
         opcion_medicamentos = input("Seleccione una opción: ")
 
         if opcion_medicamentos == "1":
-            alta_medicamento()
+            medicamentos.alta_medicamento()
         elif opcion_medicamentos == "2":
-            modificar_medicamento()
+            medicamentos.modificar_medicamento()
         elif opcion_medicamentos == "3":
-            eliminar_medicamento()
+            medicamentos.eliminar_medicamento()
         elif opcion_medicamentos == "4":
-            mostrar_medicamentos()
+            medicamentos.mostrar_medicamentos()
         elif opcion_medicamentos == "5":
             print("Volviendo al menú principal.\n")
         else:
