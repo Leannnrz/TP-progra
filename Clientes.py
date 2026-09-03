@@ -1,4 +1,4 @@
-# Listas de clientes
+# Matriz de clientes
 matriz_clientes = [
     ["C001", "Juan Perez", 25, 1],
     ["C002", "Maria Gomez", 42, 2],
@@ -13,7 +13,7 @@ matriz_clientes = [
 ]
 
 '''
-FUNCIONES DE CLIENTES (CRUD)
+FUNCIONES CRUD DE CLIENTES
 '''
 # Para agregar un cliente
 def alta_cliente():
@@ -24,7 +24,7 @@ def alta_cliente():
     cantidad = 0  # No existe el código, si existe se convierte en 1
 
     for fila in matriz_clientes:  # Recorremos la fila
-        if fila[0] == codigo:     # El primer elemento de la lista es el código
+        if fila[0] == codigo:     # El primer elemento de la fila es el código
             cantidad = cantidad + 1
 
     while cantidad > 0:
@@ -61,26 +61,26 @@ def modificar_cliente():
     codigo = input("Ingrese código del cliente: ")
     posicion = -1
 
-    for i in range(len(id_cliente)): #busca la posicion del cliente
-        if id_cliente[i] == codigo:
+    for i in range(len(matriz_clientes)): #Busca la posicion del cliente
+        if matriz_clientes[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
         print("Cliente no encontrado.")
         return
 
-    nombre_cliente[posicion] = input("Nuevo nombre: ")
-    edad_cliente[posicion] = int(input("Nueva edad: "))
-    
-    while edad_cliente[posicion] <= 0:
+    matriz_clientes[posicion][1] = input("Nuevo nombre: ")
+    matriz_clientes[posicion][2] = int(input("Nueva edad: "))
+
+    while matriz_clientes[posicion][2] <= 0:
         print("Error: la edad debe ser mayor a 0.")
-        edad_cliente[posicion] = int(input("Ingrese una nueva edad: "))
-        
-    tipo_cobertura[posicion] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
-    
-    while tipo_cobertura[posicion] != 1 and tipo_cobertura[posicion] != 2:
+        matriz_clientes[posicion][2] = int(input("Ingrese una nueva edad: "))
+
+    matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+
+    while matriz_clientes[posicion][3] != 1 and matriz_clientes[posicion][3] != 2:
         print("Tipo de cobertura inválida: Ingrese una de las opciones.")
-        tipo_cobertura[posicion] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+        matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
 
     print("Cliente modificado correctamente.")
     

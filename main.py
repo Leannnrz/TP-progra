@@ -1,6 +1,6 @@
 import clientes
-
-
+import medicamentos
+import ventas
 
 
 '''
@@ -35,13 +35,13 @@ def login(max_intentos):
             print("Intentos restantes:", max_intentos - intentos)
 
     print("Ha superado el límite de intentos.")
-    return None
+    return
 
 
 '''
 SUBMENUS
 '''
-# Submenu clientes
+# Submenú clientes
 def submenu_clientes():
     opcion_clientes = ""
 
@@ -73,7 +73,7 @@ def submenu_clientes():
             print("Opción inválida.")
 
 
-# Submenu medicamentos
+# Submenú medicamentos
 def submenu_medicamentos():
     opcion_medicamentos = ""
 
@@ -103,7 +103,7 @@ def submenu_medicamentos():
             
 
 
-# Submenu de ventas
+# Submenú de ventas
 def submenu_ventas():
     opcion_ventas = ""
 
@@ -132,7 +132,7 @@ def submenu_ventas():
             print("Opción inválida.")
 
 
-
+'''
 #Submenú de Estadisticas
 def matriz_estadisticas():
 
@@ -168,7 +168,7 @@ def mostrar_estadistica(matriz):
     print("              Con receta   Sin receta")
     print("Particular    ", matriz[0][0], "          ", matriz[0][1])
     print("Obra Social   ", matriz[1][0], "          ", matriz[1][1])
-        
+'''
 
 
 '''
@@ -177,7 +177,6 @@ MENÚ PRINCIPAL
 def mostrar_menu(tipo_usuario):
 
     if tipo_usuario == "admin":
-        
         opcion = ""
 
         while opcion != "5":
@@ -198,19 +197,19 @@ def mostrar_menu(tipo_usuario):
                 clientes.alta_cliente()
                 submenu_clientes()
             elif opcion == "2":
-                submenu_medicamentos()
+                medicamentos.submenu_medicamentos()
             elif opcion == "3":
-                submenu_ventas()
+                ventas.submenu_ventas()
             elif opcion == "4":
-                matriz = matriz_estadisticas()
-                mostrar_estadistica(matriz)
+                ...
+                #matriz = matriz_estadisticas()
+                #mostrar_estadistica(matriz)
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:
                 print("Opción no válida.")
 
     elif tipo_usuario == "usuario":
-
         opcion = ""
 
         while opcion != "4":
@@ -227,23 +226,19 @@ def mostrar_menu(tipo_usuario):
 
             if opcion == "1":
                 print("Mostrando clientes...")
-
             elif opcion == "2":
                 print("Mostrando medicamentos...")
-
             elif opcion == "3":
                 print("Mostrando ventas...")
-
             elif opcion == "4":
                 print("Saliendo del programa.")
-
             else:
                 print("Opción no válida.")
 
     else:
         print("Acceso denegado.")
 
-    
+
 
 
 # Programa principal
