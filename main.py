@@ -119,13 +119,13 @@ def submenu_ventas():
         opcion_ventas = input("Seleccione una opción: ")
 
         if opcion_ventas == "1":
-            alta_venta()
+            ventas.alta_venta()
         elif opcion_ventas == "2":
-            modificar_venta()
+            ventas.modificar_venta()
         elif opcion_ventas == "3":
-            eliminar_venta()
+            ventas.eliminar_venta()
         elif opcion_ventas == "4":
-            mostrar_ventas()
+            ventas.mostrar_ventas()
         elif opcion_ventas == "5":
             print("Volviendo al menú principal.\n")
         else:

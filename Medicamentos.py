@@ -1,4 +1,4 @@
-# Listas de medicamentos
+# Matriz de medicamentos
 matriz_medicamentos = [
     ["M001", "Paracetamol", 1500, 20, 2],
     ["M002", "Ibuprofeno", 2200, 15, 2],
@@ -47,18 +47,18 @@ def modificar_medicamento():
     codigo = input("Ingrese código del medicamento: ")
     posicion = -1
 
-    for i in range(len(id_medicamento)): #busca la posicion del medicamento
-        if id_medicamento[i] == codigo:
+    for i in range(len(matriz_medicamentos)): #Busca la posicion del medicamento
+        if matriz_medicamentos[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
         print("Medicamento no encontrado.")
         return
 
-    nombre_medicamento[posicion] = input("Nuevo medicamento: ")
-    precio_medicamento[posicion] = int(input("Nuevo precio: "))
-    stock_medicamento[posicion] = int(input("Nuevo stock: "))
-    requiere_receta[posicion] = int(input("Requiere receta? (1-Si / 2-No): "))
+    matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
+    matriz_medicamentos[posicion][2] = int(input("Nuevo precio: "))
+    matriz_medicamentos[posicion][3] = int(input("Nuevo stock: "))
+    matriz_medicamentos[posicion][4] = int(input("Requiere receta? (1-Si / 2-No): "))
 
     print("Medicamento modificado correctamente.")
     
