@@ -1,12 +1,20 @@
 # Listas de medicamentos
-id_medicamento = ["M001", "M002", "M003", "M004", "M005", "M006", "M007", "M008", "M009", "M010"]
-nombre_medicamento = ["Paracetamol", "Ibuprofeno", "Amoxicilina", "Loratadina", "Omeprazol", "Diclofenac", "Metformina", "Salbutamol", "Enalapril", "Azitromicina"]
-precio_medicamento = [1500, 2200, 3500, 1800, 2700, 2500, 4200, 3900, 3100, 4800]
-stock_medicamento = [20, 15, 6, 10, 25, 5, 12, 3, 18, 7]
-requiere_receta = [2, 2, 1, 2, 2, 1, 1, 1, 1, 1]
+matriz_medicamentos = [
+    ["M001", "Paracetamol", 1500, 20, 2],
+    ["M002", "Ibuprofeno", 2200, 15, 2],
+    ["M003", "Amoxicilina", 3500, 6, 1],
+    ["M004", "Loratadina", 1800, 10, 2],
+    ["M005", "Omeprazol", 2700, 25, 2],
+    ["M006", "Diclofenac", 2500, 5, 1],
+    ["M007", "Metformina", 4200, 12, 1],
+    ["M008", "Salbutamol", 3900, 3, 1],
+    ["M009", "Enalapril", 3100, 18, 1],
+    ["M010", "Azitromicina", 4800, 7, 1]
+]
+
 
 '''
-FUNCIÓN MEDICAMENTOS (CRUD)
+FUNCIONES CRUD DE MEDICAMENTOS
 '''
 # Para agregar un medicamento
 def alta_medicamento():
@@ -70,11 +78,11 @@ def eliminar_medicamento():
     if posicion == -1:
         print("Medicamento no encontrado.")
         return
-
+'''
     for i in range(len(id_medicamento_venta)): # Verifica que el medicamento no este asociado a una venta.
         if id_medicamento_venta[i] == codigo:
             print("No se puede eliminar, el medicamento tiene ventas asociadas.")
-            return
+            return'''
 
     id_medicamento.pop(posicion)
     nombre_medicamento.pop(posicion)
