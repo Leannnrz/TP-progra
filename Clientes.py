@@ -58,10 +58,10 @@ def alta_cliente():
 def modificar_cliente():
 
     print("\n--- MODIFICAR CLIENTE ---")
-    codigo = input("Ingrese código del cliente: ")
+    codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
-    for i in range(len(matriz_clientes)): #Busca la posicion del cliente
+    for i in range(len(matriz_clientes)):    # Busca la posición del cliente
         if matriz_clientes[i][0] == codigo:
             posicion = i
 
@@ -90,27 +90,24 @@ def modificar_cliente():
 def eliminar_cliente():
 
     print("\n--- ELIMINAR CLIENTE ---")
-    codigo = input("Ingrese código del cliente: ")
+    codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
-    for i in range(len(id_cliente)):
-        if id_cliente[i] == codigo:
+    for i in range(len(matriz_clientes)):
+        if matriz_clientes[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
         print("Cliente no encontrado.")
         return
-    
+    '''
     for i in range(len(id_cliente_venta)):  # Verifica que el cliente no tenga ventas
         if id_cliente_venta[i] == codigo:
             print("No se puede eliminar, el cliente tiene ventas registradas.")
-            return
-        
-    id_cliente.pop(posicion)
-    nombre_cliente.pop(posicion)
-    edad_cliente.pop(posicion)
-    tipo_cobertura.pop(posicion)
+            return'''
 
+    
+    matriz_clientes.pop(posicion)
     print("Cliente eliminado correctamente.")
     
 
