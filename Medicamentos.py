@@ -71,25 +71,20 @@ def eliminar_medicamento():
     codigo = input("Ingrese código del medicamento: ")
     posicion = -1
 
-    for i in range(len(id_medicamento)):
-        if id_medicamento[i] == codigo:
+    for i in range(len(matriz_medicamentos)):
+        if matriz_medicamentos[i][0] == codigo:   # Busca el código en la columna 0
             posicion = i
 
     if posicion == -1:
         print("Medicamento no encontrado.")
         return
-'''
+    '''
     for i in range(len(id_medicamento_venta)): # Verifica que el medicamento no este asociado a una venta.
         if id_medicamento_venta[i] == codigo:
             print("No se puede eliminar, el medicamento tiene ventas asociadas.")
             return'''
 
-    id_medicamento.pop(posicion)
-    nombre_medicamento.pop(posicion)
-    precio_medicamento.pop(posicion)
-    stock_medicamento.pop(posicion)
-    requiere_receta.pop(posicion)
-
+    matriz_medicamentos.pop(posicion)
     print("Medicamento eliminado correctamente.")
 
 
