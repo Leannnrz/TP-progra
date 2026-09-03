@@ -22,21 +22,36 @@ def alta_medicamento():
     print("\n--- AGREGAR MEDICAMENTO ---\n")
     codigo = input("Ingrese el código del medicamento: ")
 
-    while codigo in id_medicamento:
-        print("Error: el medicamento ya existe.")
+    cantidad = 0  # No existe el código, si existe se convierte en 1
+    
+    for fila in matriz_medicamentos:  # Recorremos la fila
+        if fila[0] == codigo:         # El primer elemento de la fila es el código
+            cantidad = cantidad + 1
+    
+    while cantidad > 0:
+        print("Error: el cliente ya existe.")
         codigo = input("Ingrese otro código: ")
+    
+        cantidad = 0
+    
+        for fila in matriz_medicamentos:
+            if fila[0] == codigo:
+                cantidad = cantidad + 1
+
+    '''while codigo in id_medicamento:
+        print("Error: el medicamento ya existe.")
+        codigo = input("Ingrese otro código: ")'''
 
     nombre = input("Ingrese el nombre: ")
     precio = int(input("Ingrese el precio: "))
     stock = int(input("Ingrese el stock: "))
+
     receta = int(input("Requiere receta (1- Si / 2- No): "))
+    while receta != 1 and receta != 2:
+        print ("Opción inválida: Ingrese una de las opciones.")
+        receta = int(input("Requiere receta (1- Si / 2- No): "))
 
-    id_medicamento.append(codigo)
-    nombre_medicamento.append(nombre)
-    precio_medicamento.append(precio)
-    stock_medicamento.append(stock)
-    requiere_receta.append(receta)
-
+    matriz_medicamentos.append([codigo, nombre, precio, stock, receta])  
     print("Medicamento agregado correctamente.\n")
 
 
@@ -58,7 +73,7 @@ def modificar_medicamento():
     matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
     matriz_medicamentos[posicion][2] = int(input("Nuevo precio: "))
     matriz_medicamentos[posicion][3] = int(input("Nuevo stock: "))
-    matriz_medicamentos[posicion][4] = int(input("Requiere receta? (1-Si / 2-No): "))
+    matriz_medicamentos[posicion][4] = int(input("Requiere receta? (1-Si / 2-No): \n"))
 
     print("Medicamento modificado correctamente.")
     
