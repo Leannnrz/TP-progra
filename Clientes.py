@@ -114,19 +114,17 @@ def eliminar_cliente():
 
 # Para mostrar lista clientes
 def mostrar_clientes():
-    ordenamiento_seleccion_clientes()
 
     print("\n--- LISTADO DE CLIENTES ORDENADOS POR EDAD ---\n")
 
-    for i in range(len(id_cliente)):
-
-        print("Código:", id_cliente[i])
-        print("Nombre:", nombre_cliente[i])
-        print("Edad:", edad_cliente[i])
+    for i in range(len(matriz_clientes)):
+        print("Código:", matriz_clientes[i][0])
+        print("Nombre:", matriz_clientes[i][1])
+        print("Edad:", matriz_clientes[i][2])
         
-        if tipo_cobertura[i] == 1:
+        if matriz_clientes[i][3] == 1:
             print("Cobertura: Particular")
         else:
-            print("Cobertura: Obra Social\n")
+            print("Cobertura: Obra Social")
 
         print("----------------------")
