@@ -93,14 +93,14 @@ def mostrar_medicamentos():
     
     print("\n--- LISTADO DE MEDICAMENTOS ORDENADOS POR PRECIO ---\n")
 
-    for i in range(len(id_medicamento)):
+    for i in range(len(matriz_medicamentos)):
 
-        print("Código:", id_medicamento[i])
-        print("Nombre:", nombre_medicamento[i])
-        print("Precio:", precio_medicamento[i])
-        print("Stock:", stock_medicamento[i])
+        print("Código:", matriz_medicamentos[i][0])
+        print("Nombre:", matriz_medicamentos[i][1])
+        print("Precio:", matriz_medicamentos[i][2])
+        print("Stock:", matriz_medicamentos[i][3])
         
-        if requiere_receta[i] == 1:
+        if matriz_medicamentos[i][4] == 1:
             print("Requiere receta: Si.")
         else:
             print("Requiere receta: No\n")
