@@ -77,8 +77,7 @@ def modificar_medicamento():
     matriz_medicamentos[posicion][4] = int(input("Requiere receta? (1-Si / 2-No): \n"))
 
     print("Medicamento modificado correctamente.")
-    
-    
+
 
 # Para eliminar un medicamento
 def eliminar_medicamento():
@@ -106,20 +105,16 @@ def eliminar_medicamento():
 
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():
-    
+    ancho_total = 80
     print("\n---- LISTADO DE MEDICAMENTOS ----\n")
+    print(f'{"Código":<8}{"Nombre":<20}{"Laboratorio":<20}{"Precio":>10}{"Stock":>8}{"Receta":>10}')
+    print("-" * ancho_total)
 
-    for i in range(len(matriz_medicamentos)):
-
-        print("Código:", matriz_medicamentos[i][0])
-        print("Nombre:", matriz_medicamentos[i][1])
-        print("Precio:", matriz_medicamentos[i][2])
-        print("Stock:", matriz_medicamentos[i][3])
-        
-        if matriz_medicamentos[i][4] == 1:
-            print("Requiere receta: Si.")
+    for medicamento in matriz_medicamentos:
+        if medicamento[5] == 1:
+            receta = "Si"
         else:
-            print("Requiere receta: No\n")
+            receta = "No"
 
-        print("--------------------")
-
+        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10.2f}{medicamento[4]:>8}{receta:>10}')
+    
