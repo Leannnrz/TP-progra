@@ -1,0 +1,609 @@
+'''
+MATRICES y DATOS
+'''
+matriz_clientes = [
+    ["C001", "Juan Perez", 25, 1],
+    ["C002", "Maria Gomez", 42, 2],
+    ["C003", "Carlos Lopez", 31, 1],
+    ["C004", "Ana Martinez", 55, 2],
+    ["C005", "Luis Fernandez", 19, 1]
+]
+
+matriz_medicamentos = [
+    ["M001", "Paracetamol", 1500, 20, 2],
+    ["M002", "Ibuprofeno", 2200, 15, 2],
+    ["M003", "Amoxicilina", 3500, 6, 1],
+    ["M004", "Loratadina", 1800, 10, 2],
+    ["M005", "Omeprazol", 2700, 25, 2]
+]
+
+matriz_ventas = [
+    ["V001", "C001", "M001", 2, 2],
+    ["V002", "C003", "M003", 1, 1],
+    ["V003", "C002", "M002", 3, 2],
+    ["V004", "C001", "M005", 1, 2],
+    ["V005", "C005", "M007", 2, 1]
+]
+
+
+'''
+Función de login
+'''
+def login():
+    
+    usuario = input("Ingrese el usuario: ")
+    contrasenia = input("Ingrese una contraseña: ")
+
+    while usuario != "admin" or contrasenia != "1234":
+        print("Usuario o contraseña incorrectos.\n")
+        usuario = input("Ingrese el usuario: ")
+        contrasenia = input("Ingrese la contraseña: ")
+        
+    print("Login exitoso!\n")
+    return True
+
+
+
+'''
+FUNCIÓN CLIENTE (CRUD)
+'''
+# Para agregar un cliente
+def alta_cliente(matriz):
+
+    id = input("Ingrese ID del cliente: ")
+    nombre = input("Ingrese nombre: ")
+    edad = int(input("Ingrese edad: "))
+    cobertura = int(input("Ingrese tipo de cobertura (1-Particular / 2-Obra Social): "))
+
+    fila = [id, nombre, edad, cobertura]
+
+    matriz.append(fila)
+
+    print("Cliente agregado correctamente.")
+
+
+
+# Para modificar un cliente
+def modificar_cliente(matriz):
+
+    id_buscar = input("Ingrese el ID del cliente a modificar: ")
+
+    encontrado = False
+
+    for i in range(len(matriz)):
+
+        if matriz[i][0] == id_buscar:
+
+            matriz[i][1] = input("Ingrese nuevo nombre: ")
+            matriz[i][2] = int(input("Ingrese nueva edad: "))
+            matriz[i][3] = int(input("Ingrese nueva cobertura (1-Particular / 2-Obra Social): "))
+
+            encontrado = True
+
+    if encontrado:
+        print("Cliente modificado correctamente.")
+    else:
+        print("Cliente no encontrado.")
+
+    
+# Para eliminar un cliente
+def eliminar_cliente(matriz):
+
+    id_buscar = input("Ingrese el ID del cliente a eliminar: ")
+
+    for i in range(len(matriz)):
+
+        if matriz[i][0] == id_buscar:
+
+            matriz.pop(i)
+
+            print("Cliente eliminado correctamente.")
+            return
+
+    print("Cliente no encontrado.")
+
+    
+# Para mostrar clientes
+def mostrar_clientes(matriz):
+
+    print("\n--- CLIENTES ---")
+    print("ID | Nombre | Edad | Cobertura")
+    print("--------------------------------------")
+
+    for fila in matriz:
+
+        if fila[3] == 1:
+            cobertura = "Particular"
+        else:
+            cobertura = "Obra Social"
+
+        print(fila[0], "|", fila[1], "|", fila[2], "|", cobertura)
+
+
+
+'''
+FUNCIÓN MEDICAMENTOS (CRUD)
+'''
+# Para agregar un medicamento
+def alta_medicamento(matriz):
+
+    id_medicamento = input("Ingrese ID del medicamento: ")
+    nombre = input("Ingrese nombre del medicamento: ")
+    precio = int(input("Ingrese precio: "))
+    stock = int(input("Ingrese stock: "))
+    receta = int(input("¿Requiere receta? (1-Si / 2-No): "))
+
+    fila = [id_medicamento, nombre, precio, stock, receta]
+
+    matriz.append(fila)
+
+    print("Medicamento agregado correctamente.")
+
+
+# Para modificar un medicamento
+def modificar_medicamento(matriz):
+
+    id_buscar = input("Ingrese el ID del medicamento a modificar: ")
+
+    encontrado = False
+
+    for i in range(len(matriz)):
+
+        if matriz[i][0] == id_buscar:
+
+            matriz[i][1] = input("Ingrese nuevo nombre: ")
+            matriz[i][2] = int(input("Ingrese nuevo precio: "))
+            matriz[i][3] = int(input("Ingrese nuevo stock: "))
+            matriz[i][4] = int(input("¿Requiere receta? (1-Si / 2-No): "))
+
+            encontrado = True
+
+    if encontrado:
+        print("Medicamento modificado correctamente.")
+    else:
+        print("Medicamento no encontrado.")
+
+    
+# Para eliminar un medicamento
+def eliminar_medicamento(matriz):
+
+    id_buscar = input("Ingrese el ID del medicamento a eliminar: ")
+
+    for i in range(len(matriz)):
+
+        if matriz[i][0] == id_buscar:
+
+            matriz.pop(i)
+
+            print("Medicamento eliminado correctamente.")
+            return
+
+    print("Medicamento no encontrado.")
+
+
+# Para mostrar medicamentos
+def mostrar_medicamentos(matriz):
+
+    print("\n--- MEDICAMENTOS ---")
+    print("ID | Nombre | Precio | Stock | Receta")
+    print("-----------------------------------------------")
+
+    for fila in matriz:
+
+        if fila[4] == 1:
+            receta = "Si"
+        else:
+            receta = "No"
+
+        print(fila[0], "|", fila[1], "|", fila[2], "|", fila[3], "|", receta)
+
+
+
+'''
+FUNCION VENTAS (CRUD)
+'''
+# Para agregar una venta
+def alta_venta(matriz):
+
+    id_venta = input("Ingrese ID de la venta: ")
+    id_cliente = input("Ingrese ID del cliente: ")
+    id_medicamento = input("Ingrese ID del medicamento: ")
+    cantidad = int(input("Ingrese cantidad: "))
+    receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
+
+    fila = [id_venta, id_cliente, id_medicamento, cantidad, receta]
+
+    matriz.append(fila)
+
+    print("Venta agregada correctamente.")
+
+
+# Para modificar una venta
+def modificar_venta(matriz):
+
+    id_buscar = input("Ingrese el ID de la venta a modificar: ")
+
+    encontrado = False
+
+    for i in range(len(matriz)):
+
+        if matriz[i][0] == id_buscar:
+
+            matriz[i][1] = input("Ingrese nuevo ID de cliente: ")
+            matriz[i][2] = input("Ingrese nuevo ID de medicamento: ")
+            matriz[i][3] = int(input("Ingrese nueva cantidad: "))
+            matriz[i][4] = int(input("¿Presentó receta? (1-Si / 2-No): "))
+
+            encontrado = True
+
+    if encontrado:
+        print("Venta modificada correctamente.")
+    else:
+        print("Venta no encontrada.")
+
+
+# Para eliminar una venta
+def eliminar_venta(matriz):
+
+    id_buscar = input("Ingrese el ID de la venta a eliminar: ")
+
+    for i in range(len(matriz)):
+
+        if matriz[i][0] == id_buscar:
+
+            matriz.pop(i)
+
+            print("Venta eliminada correctamente.")
+            return
+
+    print("Venta no encontrada.")
+
+
+# Para mostrar lista de ventas
+def mostrar_ventas(matriz):
+
+    print("\n--- VENTAS ---")
+    print("ID Venta | ID Cliente | ID Medicamento | Cantidad | Receta")
+    print("-----------------------------------------------------------")
+
+    for fila in matriz:
+
+        if fila[4] == 1:
+            receta = "Si"
+        else:
+            receta = "No"
+
+        print(fila[0], "|", fila[1], "|", fila[2], "|", fila[3], "|", receta)
+
+
+'''
+ORDENAMIENTO
+'''
+
+def ordenar_matriz(matriz, columna):
+
+    for i in range(len(matriz) - 1):
+
+        for j in range(len(matriz) - 1 - i):
+
+            if matriz[j][columna] > matriz[j + 1][columna]:
+
+                aux = matriz[j]
+                matriz[j] = matriz[j + 1]
+                matriz[j + 1] = aux
+
+
+'''
+SELECCIÓN DE COLUMNA
+'''
+
+def seleccionar_columna(cantidad_columnas):
+
+    columna = int(input("Ingrese el número de columna por la cual desea ordenar: "))
+
+    while columna < 1 or columna > cantidad_columnas:
+
+        print("Error: número de columna inválido.")
+
+        columna = int(input("Ingrese un número de columna válido: "))
+
+    return columna - 1
+
+'''
+MATRIZ ESTADISTICA
+'''
+
+def matriz_estadisticas():
+
+    matriz = [
+        [0, 0],    # Particular
+        [0, 0]     # Obra Social
+    ]
+
+    for venta in matriz_ventas:
+
+        id_cliente = venta[1]
+        receta = venta[4]
+
+        posicion_cliente = -1
+
+        for i in range(len(matriz_clientes)):
+
+            if matriz_clientes[i][0] == id_cliente:
+                posicion_cliente = i
+
+        if posicion_cliente != -1:
+
+            cobertura = matriz_clientes[posicion_cliente][3]
+
+            fila = cobertura - 1
+            columna = receta - 1
+
+            matriz[fila][columna] += 1
+
+    return matriz
+
+
+def mostrar_estadistica(matriz):
+
+    print("\n--- VENTAS POR COBERTURA Y RECETA ---\n")
+
+    print("              Con receta    Sin receta")
+    print("Particular    ", matriz[0][0], "            ", matriz[0][1])
+    print("Obra Social   ", matriz[1][0], "            ", matriz[1][1])
+
+
+
+'''
+SUBMENUS MATRICES
+'''
+
+def submenu_matrices():
+
+    opcion = ""
+
+    while opcion != "4":
+
+        print("\n--- MATRICES ---")
+        print("1- Matriz de clientes")
+        print("2- Matriz de medicamentos")
+        print("3- Matriz de ventas")
+        print("4- Volver")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+
+            print("\n1- Mostrar matriz")
+            print("2- Ordenar matriz")
+
+            opcion_matriz = input("Seleccione una opción: ")
+
+            if opcion_matriz == "1":
+
+                mostrar_clientes(matriz_clientes)
+
+            elif opcion_matriz == "2":
+
+                print("\nColumnas disponibles:")
+                print("1- ID Cliente")
+                print("2- Nombre")
+                print("3- Edad")
+                print("4- Cobertura")
+
+                columna = seleccionar_columna(4)
+
+                ordenar_matriz(matriz_clientes, columna)
+
+                print("\n--- MATRIZ DE CLIENTES ORDENADA ---")
+                mostrar_clientes(matriz_clientes)
+
+            else:
+
+                print("Opción inválida.")
+
+        elif opcion == "2":
+
+            print("\n1- Mostrar matriz")
+            print("2- Ordenar matriz")
+
+            opcion_matriz = input("Seleccione una opción: ")
+
+            if opcion_matriz == "1":
+
+                mostrar_medicamentos(matriz_medicamentos)
+
+            elif opcion_matriz == "2":
+
+                print("\nColumnas disponibles:")
+                print("1- ID Medicamento")
+                print("2- Nombre")
+                print("3- Precio")
+                print("4- Stock")
+                print("5- Requiere receta")
+
+                columna = seleccionar_columna(5)
+
+                ordenar_matriz(matriz_medicamentos, columna)
+
+                print("\n--- MATRIZ DE MEDICAMENTOS ORDENADA ---")
+                mostrar_medicamentos(matriz_medicamentos)
+
+            else:
+
+                print("Opción inválida.")
+
+        elif opcion == "3":
+
+            print("\n1- Mostrar matriz")
+            print("2- Ordenar matriz")
+
+            opcion_matriz = input("Seleccione una opción: ")
+
+            if opcion_matriz == "1":
+
+                mostrar_ventas(matriz_ventas)
+
+            elif opcion_matriz == "2":
+
+                print("\nColumnas disponibles:")
+                print("1- ID Venta")
+                print("2- ID Cliente")
+                print("3- ID Medicamento")
+                print("4- Cantidad")
+                print("5- Presentó receta")
+
+                columna = seleccionar_columna(5)
+
+                ordenar_matriz(matriz_ventas, columna)
+
+                print("\n--- MATRIZ DE VENTAS ORDENADA ---")
+                mostrar_ventas(matriz_ventas)
+
+            else:
+
+                print("Opción inválida.")
+
+        elif opcion == "4":
+
+            print("Volviendo...")
+
+        else:
+
+            print("Opción inválida.")
+
+
+'''
+SUBMENUS
+'''
+# Submenu clientes
+def submenu_clientes():
+    opcion_clientes = ""
+
+    while opcion_clientes != "6":
+
+        print("\n--- CLIENTES ---")
+        print("1- Agregar cliente")
+        print("2- Modificar cliente")
+        print("3- Eliminar cliente")
+        print("4- Mostrar cliente")
+        print("5- Volver.\n")
+
+        opcion_clientes = input("Seleccione una opción: ")
+
+        if opcion_clientes == "1":
+            alta_cliente(matriz_clientes)
+        elif opcion_clientes == "2":
+            modificar_cliente(matriz_clientes)
+        elif opcion_clientes == "3":
+            eliminar_cliente(matriz_clientes)
+        elif opcion_clientes == "4":
+            mostrar_clientes(matriz_clientes)
+        elif opcion_clientes == "5":
+            print("Volviendo al menú principal. \n")
+        else:
+            print("Opción inválida")
+
+
+# Submenu medicamentos
+def submenu_medicamentos():
+    opcion_medicamentos = ""
+
+    while opcion_medicamentos != "5":
+
+        print("\n--- MEDICAMENTOS ---")
+        print("1- Crear medicamento")
+        print("2- Modificar medicamento")
+        print("3- Eliminar medicamento")
+        print("4- Mostrar medicamentos")
+        print("5- Volver. \n")
+
+        opcion_medicamentos = input("Seleccione una opción: ")
+
+        if opcion_medicamentos == "1":
+            alta_medicamento(matriz_medicamentos)
+        elif opcion_medicamentos == "2":
+            modificar_medicamento(matriz_medicamentos)
+        elif opcion_medicamentos == "3":
+            eliminar_medicamento(matriz_medicamentos)
+        elif opcion_medicamentos == "4":
+            mostrar_medicamentos(matriz_medicamentos)
+        elif opcion_medicamentos == "5":
+            print("Volviendo al menú principal.\n")
+        else:
+            print("Opción inválida")
+            
+
+
+# Submenu de ventas
+def submenu_ventas():
+    opcion_ventas = ""
+
+    while opcion_ventas != "5":
+
+        print("\n--- VENTAS ---")
+        print("1- Crear venta")
+        print("2- Modificar venta")
+        print("3- Eliminar venta")
+        print("4- Mostrar ventas")
+        print("5- Volver.\n")
+
+        opcion_ventas = input("Seleccione una opción: ")
+
+        if opcion_ventas == "1":
+            alta_venta(matriz_ventas)
+        elif opcion_ventas == "2":
+            modificar_venta(matriz_ventas)
+        elif opcion_ventas == "3":
+            eliminar_venta(matriz_ventas)
+        elif opcion_ventas == "4":
+            mostrar_ventas(matriz_ventas)
+        elif opcion_ventas == "5":
+            print("Volviendo al menú principal.\n")
+        else:
+            print("Opción inválida")
+
+
+
+
+                
+
+
+'''
+MENÚ PRINCIPAL
+'''
+def mostrar_menu():
+    if login():
+        
+        opcion = ""
+        while opcion != "6":
+            print("----------------------- \nMenú Principal\n-----------------------")
+            print("\n1- Clientes")
+            print("2- Medicamentos")
+            print("3- Ventas")
+            print("4- Estadísticas")
+            print("5- matrices")
+            print("6- Salir\n")
+
+            opcion = input("Seleccione una opción: ")
+            print()
+
+            if opcion == "1":
+                submenu_clientes()
+            elif opcion == "2":
+                submenu_medicamentos()
+            elif opcion == "3":
+                submenu_ventas()
+            elif opcion == "4": 
+                matriz = matriz_estadisticas()
+                mostrar_estadistica(matriz) 
+            elif opcion == "5": 
+                submenu_matrices()     
+            elif opcion == "6":
+                print("Saliendo del programa.")
+            else:
+                print("Opcion no válida.")
+    
+
+
+mostrar_menu()
