@@ -246,3 +246,7 @@ def mostrar_menu(tipo_usuario):
 # Programa principal
 tipo_usuario = login(3)
 mostrar_menu(tipo_usuario)
+
+
+
+encabezados = ["Código", "Nombre", "Descripción", "P. Unitario", "Stock.", "Req. receta"]

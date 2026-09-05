@@ -1,16 +1,17 @@
 # Matriz de medicamentos
 matriz_medicamentos = [
-    ["M001", "Paracetamol", 1500, 20, 2],
-    ["M002", "Ibuprofeno", 2200, 15, 2],
-    ["M003", "Amoxicilina", 3500, 6, 1],
-    ["M004", "Loratadina", 1800, 10, 2],
-    ["M005", "Omeprazol", 2700, 25, 2],
-    ["M006", "Diclofenac", 2500, 5, 1],
-    ["M007", "Metformina", 4200, 12, 1],
-    ["M008", "Salbutamol", 3900, 3, 1],
-    ["M009", "Enalapril", 3100, 18, 1],
-    ["M010", "Azitromicina", 4800, 7, 1]
+    ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
+    ["M002", "Ibuprofeno", "Bayer", 2200, 15, 2],
+    ["M003", "Amoxicilina", "Roemmers", 3500, 6, 1],
+    ["M004", "Loratadina", "Bagó", 1800, 10, 2],
+    ["M005", "Omeprazol", "Gador", 2700, 25, 2],
+    ["M006", "Diclofenac", "Elea", 2500, 5, 1],
+    ["M007", "Metformina", "Montpellier", 4200, 12, 1],
+    ["M008", "Salbutamol", "Cassará", 3900, 3, 1],
+    ["M009", "Enalapril", "Bernabó", 3100, 18, 1],
+    ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
 ]
+
 
 
 '''
