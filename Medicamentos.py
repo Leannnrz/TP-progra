@@ -106,7 +106,7 @@ def eliminar_medicamento():
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():
     
-    print("\n--- LISTADO DE MEDICAMENTOS ORDENADOS POR PRECIO ---\n")
+    print("\n---- LISTADO DE MEDICAMENTOS ----\n")
 
     for i in range(len(matriz_medicamentos)):
 

@@ -1,7 +1,10 @@
+# Importacion de módulos.
+from colorama import init, Fore, Back, Style
 import clientes
 import medicamentos
 import ventas
 
+init(autoreset=True) # Inicialización de colorama
 
 '''
 Función de login
@@ -11,7 +14,7 @@ def login(max_intentos):
     contrasenia_admin = "1234"
 
     usuario_normal = "usuario"
-    contrasenia_normal = "abcd"
+    contrasenia_normal = "4321"
 
     intentos = 0
 
@@ -100,7 +103,6 @@ def submenu_medicamentos():
             print("Volviendo al menú principal.\n")
         else:
             print("Opción inválida.")
-            
 
 
 # Submenú de ventas
@@ -180,7 +182,7 @@ def mostrar_menu(tipo_usuario):
         opcion = ""
 
         while opcion != "5":
-            print("\n----------------------- \nMenú Principal\n-----------------------")
+            print(f"{Fore.BLUE}{Style.BRIGHT}\n----------------------- \nMenú Principal\n-----------------------")
             print("\n1- Clientes")
             print("2- Medicamentos")
             print("3- Ventas")
@@ -194,12 +196,12 @@ def mostrar_menu(tipo_usuario):
             print()
 
             if opcion == "1":
-                clientes.alta_cliente()
+                #clientes.alta_cliente()
                 submenu_clientes()
             elif opcion == "2":
-                medicamentos.submenu_medicamentos()
+                submenu_medicamentos()
             elif opcion == "3":
-                ventas.submenu_ventas()
+                submenu_ventas()
             elif opcion == "4":
                 ...
                 #matriz = matriz_estadisticas()

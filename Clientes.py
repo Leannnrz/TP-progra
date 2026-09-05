@@ -115,7 +115,7 @@ def eliminar_cliente():
 # Para mostrar lista clientes
 def mostrar_clientes():
 
-    print("\n--- LISTADO DE CLIENTES ORDENADOS POR EDAD ---\n")
+    print("\n---- LISTADO DE CLIENTES ----\n")
 
     for i in range(len(matriz_clientes)):
         print("Código:", matriz_clientes[i][0])
