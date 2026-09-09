@@ -47,7 +47,9 @@ def iniciar_sesion():
             print("Se alcanzó el maximo de intentos. Saliendo del programa.")
 
 def menu_de_acceso():
-    print("=" * 30 + " Bienvenido al sistema de registro e inicio de sesión. " + "-" * 30 + "\n")
+    print("=" * 175)
+    print("Bienvenido al sistema de registo e inicio de sesion".rjust(100))
+    print("=" * 175)
 
     intentos = 0
     while intentos != 3:
