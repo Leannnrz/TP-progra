@@ -1,10 +1,7 @@
-def menu_principal():
+def menu_admin():
     opcion = 0
     while opcion != 5:
-        print("=" * 75)
-        print("MENÚ PRINCIPAL".rjust(45))
-        print("=" * 75)
-  
+        print("=" * 75 + "MENU PRINCIPAL" + "=" * 75)
         print("1. Gestion de productos")
         print("2. Gestion de ventas")
         print("3. Gestion de usuarios")
@@ -29,10 +26,7 @@ def menu_principal():
 def menu_medicamentos():
     opcion = 0
     while opcion != 5:
-        print("=" * 75)
-        print("GESTION DE MEDICAMENTOS".ljust(45))
-        print("=" * 75)
-
+        print("=" * 75 + "GESTION DE MEDICAMENTOS" + "=" * 75)
         print("1. Agregar medicamento")
         print("2. Modificar medicamento")
         print("3. Eliminar medicamento")
@@ -57,10 +51,7 @@ def menu_medicamentos():
 def menu_ventas():
     opcion = 0
     while opcion != 5:
-        print("=" * 75)
-        print("GESTION DE VENTAS".ljust(45))
-        print("=" * 75)
-
+        print("=" * 75 + "GESTION DE VENTAS" + "=" * 75)
         print("1. Agregar venta")
         print("2. Modificar venta")
         print("3. Eliminar venta")
@@ -85,10 +76,7 @@ def menu_ventas():
 def menu_usuarios():
     opcion = 0
     while opcion != 5:
-        print("=" * 75)
-        print("GESTION DE USUARIOS".ljust(45))
-        print("=" * 75)
-
+        print("=" * 75 + "GESTION DE USUARIOS" + "=" * 75)
         print("1. Agregar usuario")
         print("2. Modificar usuario")
         print("3. Consultar usuarios")
@@ -110,4 +98,32 @@ def menu_usuarios():
         else:
             print("Opcion inválida.")
 
-menu_principal()
+menu_admin()
+
+def menu_cliente():
+    opcion = 0
+    while opcion != 5:
+        print("=" * 75 + "MENU PRINCIPAL" + "=" * 75)
+        print("1. Ver medicamentos disponibles")
+        print("2. Buscar medicamento")
+        print("3. Comprar medicamento")
+        print("4. Ver historial de compras")
+        print("5. Cerrar sesion\n")
+
+        opcion = int(input("Ingrese una opcion: "))
+
+        if opcion == 1:
+            print("Ver medicamentos disponibles")
+        elif opcion == 2:
+            print("Buscar medicamento")
+        elif opcion == 3:
+            print("Comprar medicamento")
+        elif opcion == 4:
+            print("Ver historial de compras")
+        elif opcion == 5:
+            print("Cerrando sesion...")
+        else:
+            print("Error: opcion invalida. Seleccione una de las opciones")
+
+menu_cliente()
+        

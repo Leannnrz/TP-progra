@@ -1,24 +1,44 @@
-# Listas de clientes
-id_cliente = ["C001", "C002", "C003", "C004", "C005", "C006", "C007", "C008", "C009", "C010"]
-nombre_cliente = ["Juan Perez", "Maria Gomez", "Carlos Lopez", "Ana Martinez", "Luis Fernandez", "Sofia Torres", "Diego Ramirez", "Valentina Castro", "Martin Rojas", "Lucia Diaz"]
-edad_cliente = [25, 42, 31, 55, 19, 38, 47, 29, 61, 34]
-tipo_cobertura = [1, 2, 1, 2, 1, 2, 1, 1, 2, 2]
+# MATRIZ CLIENTES
+clientes = [
+    ["C001", "Juan Perez", 25, 1],
+    ["C002", "Maria Gomez", 42, 2],
+    ["C003", "Carlos Lopez", 31, 1],
+    ["C004", "Ana Martinez", 55, 2],
+    ["C005", "Luis Fernandez", 19, 1],
+    ["C006", "Sofia Torres", 38, 2],
+    ["C007", "Diego Ramirez", 47, 1],
+    ["C008", "Valentina Castro", 29, 1],
+    ["C009", "Martin Rojas", 61, 2],
+    ["C010", "Lucia Diaz", 34, 2]
+]
 
-# Listas de medicamentos
-id_medicamento = ["M001", "M002", "M003", "M004", "M005", "M006", "M007", "M008", "M009", "M010"]
-nombre_medicamento = ["Paracetamol", "Ibuprofeno", "Amoxicilina", "Loratadina", "Omeprazol", "Diclofenac", "Metformina", "Salbutamol", "Enalapril", "Azitromicina"]
-precio_medicamento = [1500, 2200, 3500, 1800, 2700, 2500, 4200, 3900, 3100, 4800]
-stock_medicamento = [20, 15, 6, 10, 25, 5, 12, 3, 18, 7]
-requiere_receta = [2, 2, 1, 2, 2, 1, 1, 1, 1, 1]
-
-# Listas de ventas
-id_venta = ["V001", "V002", "V003", "V004", "V005", "V006", "V007", "V008", "V009", "V010"]
-id_cliente_venta = ["C001", "C003", "C002", "C001", "C005", "C007", "C003", "C008", "C010", "C005"]
-id_medicamento_venta = ["M001", "M003", "M002", "M005", "M007", "M004", "M003", "M010", "M009", "M001"]
-cantidad_ventas = [2, 1, 3, 1, 2, 1, 1, 2, 1, 4]
-presento_receta = [2, 1, 2, 2, 1, 2, 1, 1, 1, 2]
-
-#FUNCION PARA CLACULAR EL COSTO TOTAL DE CADA MEDICAMENTO
+# MATRIZ MEDICAMENTOS
+medicamentos = [
+    ["M001", "Paracetamol", 1500, 20, 2],
+    ["M002", "Ibuprofeno", 2200, 15, 2],
+    ["M003", "Amoxicilina", 3500, 6, 1],
+    ["M004", "Loratadina", 1800, 10, 2],
+    ["M005", "Omeprazol", 2700, 25, 2],
+    ["M006", "Diclofenac", 2500, 5, 1],
+    ["M007", "Metformina", 4200, 12, 1],
+    ["M008", "Salbutamol", 3900, 3, 1],
+    ["M009", "Enalapril", 3100, 18, 1],
+    ["M010", "Azitromicina", 4800, 7, 1]
+]
+#MATRIZ VENTAS
+ventas = [
+    ["V001", "C001", "M001", 2, 2],
+    ["V002", "C003", "M003", 1, 1],
+    ["V003", "C002", "M002", 3, 2],
+    ["V004", "C001", "M005", 1, 2],
+    ["V005", "C005", "M007", 2, 1],
+    ["V006", "C007", "M004", 1, 2],
+    ["V007", "C003", "M003", 1, 1],
+    ["V008", "C008", "M010", 2, 1],
+    ["V009", "C010", "M009", 1, 1],
+    ["V010", "C005", "M001", 4, 2]
+]
+#FUNCION PARA CALCULAR EL COSTO TOTAL DE CADA MEDICAMENTO
 def calcular_total(precio, cantidad):
     total = precio * cantidad
     return total
@@ -34,9 +54,9 @@ def verificar_disponibilidad(cantidad):
 
 #FUNCION PARA MOSTRAR CADA REPORTE
 def mostrar_reporte(i):
-    nombre = nombre_medicamento[i]
-    cantidad = stock_medicamento[i]
-    precio = precio_medicamento[i]
+    nombre = medicamentos[i][1]
+    cantidad = medicamentos[i][3]
+    precio = medicamentos[i][2]
     total = calcular_total(precio, cantidad)
     disponibilidad = verificar_disponibilidad(cantidad)
 
@@ -44,7 +64,7 @@ def mostrar_reporte(i):
 
 print("PRODUCTO".ljust(20), "CANTIDAD".rjust(20), "PRECIO".rjust(16), "TOTAL".rjust(19), "DISPONIBILIDAD".rjust(20))
 print("-" * 100)
-for i in range(len(nombre_medicamento)):
+for i in range(len(medicamentos)):
     mostrar_reporte(i)
 
 
