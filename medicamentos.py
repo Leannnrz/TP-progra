@@ -14,7 +14,7 @@ matriz_medicamentos = [
 
 def mostrar_medicamentos():
     for fila in matriz_medicamentos:
-        print("-" * 180) 
+        print("-" * 175) 
         for elemento in range(len(fila)):
             if elemento == 5:
                 if fila[elemento] == 1:
@@ -30,7 +30,6 @@ def mostrar_medicamentos():
                 cad = f"|{fila[elemento]:^15} "
             print(cad, end="")
         print()
-        print("-" * 180) 
+        print("-" * 175) 
         print() 
 
-medicamentos = mostrar_medicamentos()
