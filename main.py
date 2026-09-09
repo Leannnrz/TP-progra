@@ -1,8 +1,6 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
-import clientes
-import medicamentos
-import ventas
+from CRUD import clientes, medicamentos, ventas
 
 init(autoreset=True) # Inicialización de colorama
 
