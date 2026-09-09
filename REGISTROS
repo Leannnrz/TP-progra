@@ -1,15 +1,63 @@
 usuariosAdmin = [["admin", 1234, "Administrador"]]
-usuariosEmpleados = [["empleado", 2222, "Empleado"]]
+usuariosCliente = [["cliente", 4321, "Cliente"]]
 
 def registrar_usuario():
-    intentos = 0
     print ("=" * 30 + " REGISTRO " + "=" * 30)
     nombre = input("Ingrese el nombre del usuario: ")
     contraseña = input("Ingrese la contraseña del usuario: ")
 
-    usuariosEmpleados.append([nombre, contraseña, "Empleado"])
+    usuariosCliente.append([nombre, contraseña, "Cliente"])
 
     print("Usuario registrado correctamente.\n")
 
-registrar_usuario()
+def iniciar_sesion():
+
+    intentos = 0
+    while intentos < 3: 
+        intentos += 1
+
+        print("=" * 30 + "Iniciar Sesión" + "=" * 30)
+        nombre = input("Ingrese el nombre de usuario: ")
+        contraseña = input("Ingrese la contraseña: ")
+
+        usuario_encontrado = False
+
+        for usuario in usuariosCliente:
+            if nombre == usuario[0] and contraseña == usuario[1]:
+                usuario_encontrado = True
+
+        if usuario_encontrado:
+            print("Inicio de sesión exitoso. Bienvenido, Cliente. \n")
+            print("Accediendo al menú de cliente...\n")
+        else:
+            print("Nombre de usuario o contraseña incorrectos.\n")
+        if intentos == 3 and usuario_encontrado == False:
+            print("Se alcanzó el maximo de intentos. Saliendo del programa.")
+
+def menu_de_acceso():
+    print("=" * 30 + " Bienvenido al sistema de registro e inicio de sesión. " + "-" * 30 + "\n")
+
+    intentos = 0
+    while intentos < 3:
+
+        print("Seleccione una opción:\n")
+        print("1. Registrar usuario")
+        print("2. Iniciar sesión")
+        print("3. Salir del sistema\n")
+
+        opcion = input("Ingrese el número de la opción deseada: \n")
+
+        if opcion == "1":
+            registrar_usuario()
+            iniciar_sesion()
+        elif opcion == "2":
+            iniciar_sesion()
+        elif opcion == "3":
+            print("Saliendo del sistema...")
+            break
+        else: 
+            print("\nError: Opcion invalida. Por favor, seleccione una de las opciones\n")
+
+menu_de_acceso()
+
 
