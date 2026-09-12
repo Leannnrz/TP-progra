@@ -13,9 +13,7 @@ matriz_medicamentos = [
 ]
 
 
-# -----------------------------
 # ALTA DE MEDICAMENTO
-# -----------------------------
 
 def alta_medicamento():
 
@@ -69,9 +67,7 @@ def alta_medicamento():
     print("Medicamento agregado correctamente.")
 
 
-# -----------------------------
 # MODIFICAR MEDICAMENTO
-# -----------------------------
 
 def modificar_medicamento():
 
@@ -155,9 +151,7 @@ def eliminar_medicamento():
     print("Medicamento eliminado correctamente.")
 
 
-# -----------------------------
 # MOSTRAR MEDICAMENTOS
-# -----------------------------
 
 def mostrar_medicamentos():
 
