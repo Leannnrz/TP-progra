@@ -1,6 +1,7 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
-from CRUD import clientes, medicamentos, ventas
+from CRUD import clientes, ventas, medicamentos
+
 
 init(autoreset=True) # Inicialización de colorama
 
@@ -81,7 +82,7 @@ def submenu_medicamentos():
     while opcion_medicamentos != "5":
 
         print("\n--- MEDICAMENTOS ---")
-        print("1- Crear medicamento")
+        print("1- Añadir medicamento")
         print("2- Modificar medicamento")
         print("3- Eliminar medicamento")
         print("4- Mostrar medicamentos")
@@ -90,18 +91,18 @@ def submenu_medicamentos():
         opcion_medicamentos = input("Seleccione una opción: ")
 
         if opcion_medicamentos == "1":
-            medicamentos.alta_medicamento()
+                medicamentos.alta_medicamento()
         elif opcion_medicamentos == "2":
-            medicamentos.modificar_medicamento()
+                medicamentos.modificar_medicamento()
         elif opcion_medicamentos == "3":
             medicamentos.eliminar_medicamento()
         elif opcion_medicamentos == "4":
             medicamentos.mostrar_medicamentos()
         elif opcion_medicamentos == "5":
-            print("Volviendo al menú principal.\n")
+            print("Volviendo al menú principal. \n")
         else:
             print("Opción inválida.")
-
+        
 
 # Submenú de ventas
 def submenu_ventas():
@@ -123,7 +124,7 @@ def submenu_ventas():
         elif opcion_ventas == "2":
             ventas.modificar_venta()
         elif opcion_ventas == "3":
-            ventas.eliminar_venta()
+            ventas.eliminar_venta(tipo_usuario)
         elif opcion_ventas == "4":
             ventas.mostrar_ventas()
         elif opcion_ventas == "5":
@@ -184,9 +185,6 @@ def mostrar_menu(tipo_usuario):
             print("\n1- Clientes")
             print("2- Medicamentos")
             print("3- Ventas")
-            print("4- Estadísticas")
-            # Realizar una consulta
-            #print("4- Realizar una consulta")
             print("4- Estadísticas")
             print("5- Salir\n")
 

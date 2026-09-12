@@ -12,7 +12,6 @@ matriz_medicamentos = [
     ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
 ]
 
-
 descripcion_medicamentos = [
     ["M001", "Paracetamol", "Analgésico y antipirético indicado para aliviar dolores leves a moderados como cefaleas o molestias musculares y reducir la fiebre. Actúa inhibiendo la síntesis de prostaglandinas en el sistema nervioso central. Destaca por su buen perfil de tolerancia gástrica cuando se administra dentro de las dosis terapéuticas recomendadas.", "$1500", 20, "0", "1"],
     ["M002", "Ibuprofeno", "Antiinflamatorio no esteroideo con propiedades analgésicas y antipiréticas. Está indicado para tratar dolores de origen inflamatorio, artritis y cuadros febriles. Actúa mediante la inhibición de la enzima ciclooxigenasa, reduciendo la producción de prostaglandinas responsables de la respuesta inflamatoria y el dolor en el tejido afectado.", "$2200", 15, "0", "1"],
@@ -25,8 +24,6 @@ descripcion_medicamentos = [
     ["M009", "Enalapril", "Inhibidor de la enzima convertidora de angiotensina utilizado en la hipertensión arterial y la insuficiencia cardíaca. Bloquea la formación de angiotensina II, favoreciendo la dilatación de los vasos sanguíneos, reduciendo la resistencia vascular periférica y disminuyendo notablemente el esfuerzo que requiere el corazón para bombear la sangre.", "$3100", 18, "1", "1"],
     ["M010", "Azitromicina", "Antibiótico macrólido que inhibe la síntesis de proteínas bacterianas al unirse a la subunidad ribosómica 50S. Posee un espectro amplio contra bacterias grampositivas y gramnegativas. Gracias a su prolongada vida media tisular, permite esquemas de dosificación más cortos para tratar infecciones respiratorias, amigdalitis y enfermedades de transmisión sexual.", "$4800", 7, "1", "1"]
 ] 
-
-
 
 '''
 FUNCIONES CRUD DE MEDICAMENTOS
@@ -156,6 +153,3 @@ def describir_medicamentos():
         print()
         print("-" * 175) 
         print() 
-
-med = alta_medicamento()
-med_2 = modificar_medicamento()
