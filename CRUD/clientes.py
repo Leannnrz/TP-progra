@@ -45,15 +45,11 @@ def alta_cliente():
         print("Error: la edad debe ser mayor a 0.")
         edad = int(input("Ingrese la edad: "))
 
-    cobertura = int(input(
-        "Tipo de cobertura (1-Particular / 2-Obra Social): "
-    ))
+    cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
 
     while cobertura != 1 and cobertura != 2:
         print("Tipo de cobertura inválida.")
-        cobertura = int(input(
-            "Tipo de cobertura (1-Particular / 2-Obra Social): "
-        ))
+        cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
 
     matriz_clientes.append([codigo, nombre, edad, cobertura])
 
@@ -79,24 +75,18 @@ def modificar_cliente():
         return
 
     matriz_clientes[posicion][1] = input("Nuevo nombre: ")
-
     matriz_clientes[posicion][2] = int(input("Nueva edad: "))
+
 
     while matriz_clientes[posicion][2] <= 0:
         print("Error: la edad debe ser mayor a 0.")
-        matriz_clientes[posicion][2] = int(
-            input("Ingrese una nueva edad: ")
-        )
+        matriz_clientes[posicion][2] = int(input("Ingrese una nueva edad: "))
 
-    matriz_clientes[posicion][3] = int(
-        input("Nueva cobertura (1-Particular / 2-Obra Social): ")
-    )
+    matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
 
     while matriz_clientes[posicion][3] != 1 and matriz_clientes[posicion][3] != 2:
         print("Tipo de cobertura inválida.")
-        matriz_clientes[posicion][3] = int(
-            input("Nueva cobertura (1-Particular / 2-Obra Social): ")
-        )
+        matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
 
     print("Cliente modificado correctamente.")
 

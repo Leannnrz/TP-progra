@@ -1,4 +1,5 @@
 # Matriz de medicamentos
+
 matriz_medicamentos = [
     ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
     ["M002", "Ibuprofeno", "Bayer", 2200, 15, 2],
@@ -13,6 +14,8 @@ matriz_medicamentos = [
 ]
 
 
+# FUNCIONES CRUD DE MEDICAMENTOS
+
 # ALTA DE MEDICAMENTO
 
 def alta_medicamento():
@@ -23,6 +26,7 @@ def alta_medicamento():
 
     cantidad = 0
 
+    # Verificar si el código ya existe
     for fila in matriz_medicamentos:
         if fila[0] == codigo:
             cantidad = cantidad + 1
@@ -39,9 +43,7 @@ def alta_medicamento():
                 cantidad = cantidad + 1
 
     nombre = input("Ingrese el nombre: ")
-
     laboratorio = input("Ingrese el laboratorio: ")
-
     precio = int(input("Ingrese el precio: "))
 
     while precio <= 0:
@@ -77,6 +79,7 @@ def modificar_medicamento():
 
     posicion = -1
 
+    # Buscar la posición del medicamento
     for i in range(len(matriz_medicamentos)):
         if matriz_medicamentos[i][0] == codigo:
             posicion = i
@@ -85,50 +88,43 @@ def modificar_medicamento():
         print("Medicamento no encontrado.")
         return
 
-    matriz_medicamentos[posicion][1] = input(
-        "Ingrese el nuevo nombre del medicamento: "
-    )
+    # Nombre
+    matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
 
-    matriz_medicamentos[posicion][2] = input(
-        "Ingrese el nuevo laboratorio: "
-    )
+    # Laboratorio
+    matriz_medicamentos[posicion][2] = input("Ingrese el nuevo laboratorio: ")
 
-    matriz_medicamentos[posicion][3] = int(
-        input("Nuevo precio: ")
-    )
+    # Precio
+    matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
 
     while matriz_medicamentos[posicion][3] <= 0:
-        print("Error: el precio debe ser mayor a 0.")
-        matriz_medicamentos[posicion][3] = int(
-            input("Nuevo precio: ")
-        )
 
-    matriz_medicamentos[posicion][4] = int(
-        input("Nuevo stock: ")
-    )
+        print("Error: el precio debe ser mayor a 0.")
+
+        matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
+
+    # Stock
+    matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
 
     while matriz_medicamentos[posicion][4] < 0:
-        print("Error: el stock no puede ser negativo.")
-        matriz_medicamentos[posicion][4] = int(
-            input("Nuevo stock: ")
-        )
 
-    matriz_medicamentos[posicion][5] = int(
-        input("Requiere receta (1-Si / 2-No): ")
-    )
+        print("Error: el stock no puede ser negativo.")
+
+        matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
+
+    # Receta
+    matriz_medicamentos[posicion][5] = int(input("Requiere receta (1-Si / 2-No): "))
 
     while matriz_medicamentos[posicion][5] != 1 and matriz_medicamentos[posicion][5] != 2:
+
         print("Opción inválida.")
-        matriz_medicamentos[posicion][5] = int(
-            input("Requiere receta (1-Si / 2-No): ")
-        )
+
+        matriz_medicamentos[posicion][5] = int(input("Requiere receta (1-Si / 2-No): "))
 
     print("Medicamento modificado correctamente.")
 
 
-# -----------------------------
 # ELIMINAR MEDICAMENTO
-# -----------------------------
 
 def eliminar_medicamento():
 
@@ -138,11 +134,14 @@ def eliminar_medicamento():
 
     posicion = -1
 
+    # Buscar la posición del medicamento
     for i in range(len(matriz_medicamentos)):
+
         if matriz_medicamentos[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
+
         print("Medicamento no encontrado.")
         return
 
