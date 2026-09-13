@@ -1,5 +1,5 @@
-from clientes import matriz_clientes
-from medicamentos import matriz_medicamentos
+from .medicamentos import matriz_medicamentos
+from .clientes import matriz_clientes
 
 
 

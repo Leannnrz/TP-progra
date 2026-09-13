@@ -2,6 +2,7 @@
 
 from colorama import init, Fore, Style
 from CRUD import clientes, medicamentos, ventas
+from FUNCIONES import estadisticas
 
 init(autoreset=True)
 
@@ -181,102 +182,62 @@ def submenu_estadisticas():
 
     opcion = ""
 
-    while opcion != "4":
+    while opcion != "7":
 
         print("\n--- ESTADÍSTICAS ---")
-        print("1- Medicamentos que requieren receta")
-        print("2- Valor total del stock")
-        print("3- Clientes con obra social")
-        print("4- Volver\n")
+        print("1- Mostrar clientes con obra social")
+        print("2- Mostrar cantidad total de clientes")
+        print("3- Mostrar medicamentos que requieren receta")
+        print("4- Mostrar valor total del stock")
+        print("5- Mostrar ventas con receta")
+        print("6- Mostrar cantidad total vendida")
+        print("7- Volver\n")
 
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
 
-            mostrar_medicamentos_con_receta()
+            estadisticas.mostrar_clientes_obra_social(
+                clientes.matriz_clientes
+            )
 
         elif opcion == "2":
 
-            mostrar_valor_total_stock()
+            estadisticas.mostrar_cantidad_clientes(
+                clientes.matriz_clientes
+            )
 
         elif opcion == "3":
 
-            mostrar_clientes_obra_social()
+            estadisticas.mostrar_medicamentos_con_receta(
+                medicamentos.matriz_medicamentos
+            )
 
         elif opcion == "4":
+
+            estadisticas.mostrar_valor_total_stock(
+                medicamentos.matriz_medicamentos
+            )
+
+        elif opcion == "5":
+
+            estadisticas.mostrar_ventas_con_receta(
+                ventas.matriz_ventas
+            )
+
+        elif opcion == "6":
+
+            estadisticas.mostrar_cantidad_total_vendida(
+                ventas.matriz_ventas
+            )
+
+        elif opcion == "7":
 
             print("Volviendo al menú principal.\n")
 
         else:
 
             print("Opción inválida.")
-
-
-# ESTADÍSTICAS
-
-def mostrar_medicamentos_con_receta():
-
-    print("\n--- MEDICAMENTOS QUE REQUIEREN RECETA ---")
-
-    encontrados = False
-
-    for medicamento in medicamentos.matriz_medicamentos:
-
-        if medicamento[5] == 1:
-
-            print(
-                medicamento[0],
-                "-",
-                medicamento[1],
-                "- Laboratorio:",
-                medicamento[2]
-            )
-
-            encontrados = True
-
-    if not encontrados:
-
-        print("No hay medicamentos que requieran receta.")
-
-
-def mostrar_valor_total_stock():
-
-    total = 0
-
-    for medicamento in medicamentos.matriz_medicamentos:
-
-        precio = medicamento[3]
-        stock = medicamento[4]
-
-        total = total + precio * stock
-
-    print("\n--- VALOR TOTAL DEL STOCK ---")
-    print("Valor total del stock: $", total)
-
-
-def mostrar_clientes_obra_social():
-
-    print("\n--- CLIENTES CON OBRA SOCIAL ---")
-
-    encontrados = False
-
-    for cliente in clientes.matriz_clientes:
-
-        if cliente[3] == 2:
-
-            print(
-                cliente[0],
-                "-",
-                cliente[1],
-                "- Edad:",
-                cliente[2]
-            )
-
-            encontrados = True
-
-    if not encontrados:
-
-        print("No hay clientes con obra social.")
 
 
 # MENÚ PRINCIPAL
