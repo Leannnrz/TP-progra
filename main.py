@@ -1,6 +1,6 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
-from CRUD import clientes, ventas, medicamentos
+from CRUD import clientes, ventas, medicamentos 
 
 
 init(autoreset=True) # Inicialización de colorama
@@ -108,14 +108,15 @@ def submenu_medicamentos():
 def submenu_ventas():
     opcion_ventas = ""
 
-    while opcion_ventas != "5":
+    while opcion_ventas != "6":
 
         print("\n--- VENTAS ---")
         print("1- Crear venta")
         print("2- Modificar venta")
         print("3- Eliminar venta")
         print("4- Mostrar ventas")
-        print("5- Volver.\n")
+        print("5- Buscar venta")    
+        print("6- Volver.\n")
 
         opcion_ventas = input("Seleccione una opción: ")
 
@@ -128,6 +129,8 @@ def submenu_ventas():
         elif opcion_ventas == "4":
             ventas.mostrar_ventas()
         elif opcion_ventas == "5":
+            ventas.buscar_venta()
+        elif opcion_ventas == "6":
             print("Volviendo al menú principal.\n")
         else:
             print("Opción inválida.")

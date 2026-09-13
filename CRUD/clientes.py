@@ -53,7 +53,6 @@ def alta_cliente():
     matriz_clientes.append([codigo, nombre, edad, cobertura])
     print("Cliente agregado correctamente.")
 
-
 # Para modificar un cliente
 def modificar_cliente():
 
@@ -84,8 +83,6 @@ def modificar_cliente():
 
     print("Cliente modificado correctamente.")
     
-
-
 # Para eliminar un cliente
 def eliminar_cliente():
 
@@ -110,8 +107,6 @@ def eliminar_cliente():
     matriz_clientes.pop(posicion)
     print("Cliente eliminado correctamente.")
     
-
-
 # Para mostrar lista clientes
 def mostrar_clientes():
 
