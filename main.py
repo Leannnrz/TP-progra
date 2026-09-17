@@ -27,7 +27,7 @@ def login(max_intentos):
             return usuario_admin
 
         elif usuario == usuario_normal and contrasenia == contrasenia_normal:
-            print(f"{Fore.GREEN}Login exitoso!")
+            print(f"{Fore.GREEN}¡Login exitoso!")
             print("Ingresó como usuario.\n")
             return usuario_normal
 

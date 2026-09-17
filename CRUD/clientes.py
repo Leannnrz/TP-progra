@@ -117,17 +117,17 @@ def eliminar_cliente():
 
 # Para mostrar lista clientes
 def mostrar_clientes():
+    ancho_total = 70
+    print()
+    print(" LISTADO DE CLIENTES ".center(70, "="))
+    print(f'{"Código":<12}{"Nombre":<28}{"Edad":<10}{"Cobertura":>20}')
+    print("-" * ancho_total)
 
-    print("\n---- LISTADO DE CLIENTES ----\n")
-
-    for i in clientes:
-        print("Código:", clientes["ID"])
-        print("Nombre:", clientes["Nombre"])
-        print("Edad:", clientes["Edad"])
-        
-        if clientes["Cobertura"] == 1:
-            print("Cobertura: Particular")
+    for cliente in clientes:
+        if cliente["Cobertura"] == 1:
+            cobertura = "Particular"
         else:
-            print("Cobertura: Obra Social")
+            cobertura = "Obra Social"
 
-        print("----------------------")
+        print(f'{cliente["ID"]:<12}{cliente["Nombre"]:<28}{cliente["Edad"]:<10}{cobertura:>20}')
+        print()
