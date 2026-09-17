@@ -1,163 +1,410 @@
-# Listas de ventas
-id_venta = ["V001", "V002", "V003", "V004", "V005", "V006", "V007", "V008", "V009", "V010"]
-id_cliente_venta = ["C001", "C003", "C002", "C001", "C005", "C007", "C003", "C008", "C010", "C005"]
-id_medicamento_venta = ["M001", "M003", "M002", "M005", "M007", "M004", "M003", "M010", "M009", "M001"]
-cantidad_ventas = [2, 1, 3, 1, 2, 1, 1, 2, 1, 4]
-presento_receta = [2, 1, 2, 2, 1, 2, 1, 1, 1, 2]
+from .medicamentos import matriz_medicamentos
+from .clientes import matriz_clientes
 
-'''
-FUNCIÓN VENTAS (CRUD)
-'''
+matriz_ventas = [
+    ["V001", "C001", "M001", 2, 2],
+    ["V002", "C003", "M003", 1, 1],
+    ["V003", "C002", "M002", 3, 2],
+    ["V004", "C001", "M005", 1, 2],
+    ["V005", "C005", "M007", 2, 1],
+    ["V006", "C007", "M004", 1, 2],
+    ["V007", "C003", "M003", 1, 1],
+    ["V008", "C008", "M010", 2, 1],
+    ["V009", "C010", "M009", 1, 1],
+    ["V010", "C005", "M001", 4, 2],
+    ["V011", "C002", "M006", 3, 1],
+    ["V012", "C004", "M002", 5, 2],
+    ["V013", "C006", "M008", 1, 1],
+    ["V014", "C009", "M003", 2, 1],
+    ["V015", "C001", "M010", 4, 1],
+    ["V016", "C003", "M001", 2, 2],
+    ["V017", "C007", "M007", 1, 1],
+    ["V018", "C005", "M009", 3, 1],
+    ["V019", "C008", "M004", 5, 1],
+    ["V020", "C010", "M001", 2, 2],
+    ["V021", "C004", "M007", 1, 1],
+    ["V022", "C001", "M003", 4, 1],
+    ["V023", "C006", "M009", 2, 1],
+    ["V024", "C010", "M001", 5, 2],
+    ["V025", "C002", "M005", 3, 2],
+    ["V026", "C007", "M001", 1, 2],
+    ["V027", "C003", "M008", 2, 1],
+    ["V028", "C005", "M004", 4, 1],
+    ["V029", "C009", "M010", 3, 1],
+    ["V030", "C008", "M006", 1, 1], ]
+
+#FUNCIONES RELACIONADAS A VENTAS
+
 # Para agregar una venta
 def alta_venta():
 
     print("\n--- AGREGAR VENTA ---")
     codigo = input("Ingrese código de venta: ")
-
-    while codigo in id_venta:
-        print("Error: La venta ya existe.")
-        codigo = input("Ingrese otro código: ")
-
-    cliente = input("Ingrese el código del cliente: ")
+    cantidad = 0 
+    for fila in matriz_ventas:  
+        if fila[0] == codigo: 
+            cantidad = cantidad + 1
     
-    while cliente not in id_cliente:
+    while cantidad > 0:
+        print("Error: la venta ya existe.")
+        codigo = input("Ingrese otro código: ")
+        cantidad = 0
+        for fila in matriz_ventas:
+            if fila[0] == codigo:
+                cantidad = cantidad + 1
+    
+    cliente = input("Ingrese el código del cliente: ")
+    cantidad_c = 0 
+    for fila in matriz_clientes: 
+        if fila[0] == cliente:
+            cantidad_c = cantidad_c + 1
+
+    while cantidad_c == 0:
         print("Error: Cliente inexistente.")
         cliente = input("Ingrese el código del cliente: ")
-        
+        cantidad_c = 0
+        for fila in matriz_clientes:
+            if fila[0] == cliente:
+                cantidad_c = cantidad_c + 1
+
     medicamento = input("Ingrese el código del medicamento: ")
-    
-    while medicamento not in id_medicamento:
+    cantidad_m = 0
+    for fila in matriz_medicamentos:
+        if fila[0] == medicamento:
+            cantidad_m = cantidad_m + 1
+
+    while cantidad_m == 0:
         print("Error: Medicamento inexistente.")
         medicamento = input("Ingrese el código del medicamento: ")
+        cantidad_m = 0
+        for fila in matriz_medicamentos:
+            if fila[0] == medicamento:
+                cantidad_m = cantidad_m + 1
 
-    ventas = int(input("Ingrese la cantidad de ventas: "))
-    
+    lista_cod_medicamentos = []
+    for i in range(len(matriz_medicamentos)):
+        lista_cod_medicamentos.append(matriz_medicamentos[i][0])
+    pos_m = lista_cod_medicamentos.index(medicamento)
+
+    ventas = int(input("Ingrese la cantidad de unidades vendidas: "))
     while ventas <= 0:
         print("Error: la cantidad debe ser mayor a 0.")
-        ventas = int(input("Ingrese la cantidad de ventas: "))
+        ventas = int(input("Ingrese la cantidad de unidades vendidas: "))
+
+    while matriz_medicamentos[pos_m][4] < ventas:
+        print("Error: No hay suficiente stock.")
+        print("¿Desea continuar con la venta? (1-Si / 2-No)")
+        respuesta = input("Seleccione una opcion: ")
+        while respuesta != "1" and respuesta != "2":
+                print("Error!, Seleccione una opcion valida")
+                receta = input("¿Desea continuar con la venta? (1-Si / 2-No): ")
+        if respuesta == "1":
+            ventas = int(input("Ingrese la cantidad de unidades vendidas: "))
+            while ventas <= 0:
+                print("Error: la cantidad debe ser mayor a 0.")
+                ventas = int(input("Ingrese la cantidad de unidades vendidas: "))
+        if respuesta == "2":
+            print("Se cancelo la venta")
+            return
         
-    receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
-    
+    matriz_medicamentos[pos_m][4] = matriz_medicamentos[pos_m][4] - ventas
 
-    permitido = 1  # 1= la venta se puede realizar, 0= la venta no se permite
+    receta = input("¿Presentó receta? (1-Si / 2-No): ")
+    while receta != "1" and receta != "2":
+        print("Error!, Seleccione una opcion valida")
+        receta = input("¿Presentó receta? (1-Si / 2-N0): ")
 
-    for i in range(len(id_medicamento)):
-        if id_medicamento[i] == medicamento:
+    if matriz_medicamentos[pos_m][5] == "1" and receta == "2":
+        print("Error: Este medicamento requiere receta.")
+        print("Venta no registrada.")
+    else:
+        matriz_ventas.append([codigo, cliente, medicamento, ventas, receta])
+        print("Venta registrada correctamente.")
 
-            if requiere_receta[i] == 1 and receta == 2:  #Para revisar si la receta es obligatoria y no se presento
-                print("Error: Este medicamento requiere receta.")
-                permitido = 0
-
-    if permitido == 1:
-        id_venta.append(codigo)
-        id_cliente_venta.append(cliente)
-        id_medicamento_venta.append(medicamento)
-        cantidad_ventas.append(ventas)
-        presento_receta.append(receta)
-
-        print("Venta agregada correctamente.")
-
-
+    print()
+    return 
 
 # Para modificar una venta
 def modificar_venta():
 
     print("\n--- MODIFICAR VENTA ---")
     codigo = input("Ingrese código de venta: ")
-    posicion = -1
+    cantidad_v = 0 
+  
+    for fila in matriz_ventas: 
+        if fila[0] == codigo:
+            cantidad_v = cantidad_v + 1
 
-    for i in range(len(id_venta)):
-        if id_venta[i] == codigo:
-            posicion = i
+    if cantidad_v == 0:
+        print("Error: Venta inexistente.")
+        pregunta = input("¿Desea buscar otra venta? (1-Si / 2-No): ")
+        if pregunta == "1":
+            modificar_venta()
+        else:  
+            return
 
-    if posicion == -1:
-        print("Venta no encontrada.")
-        return
+    lista_cod_ventas = []
+    for i in range(len(matriz_ventas)):
+        lista_cod_ventas.append(matriz_ventas[i][0])
 
-    cliente = input("Nuevo código de cliente: ")
+    pos_v = lista_cod_ventas.index(codigo)
+    print("Venta encontrada.")
+    print()
+    print("¿Cómo desea modificar la venta?")
+    print("1- Modificar cliente")
+    print("2- Modificar medicamento")
+    print("3- Modificar cantidad")
+    print("4- Salir. \n")
+    opcion = input("Seleccione una opción: ")
 
-    while cliente not in id_cliente:
-        print("Error: Cliente inexistente.")
-        cliente = input("Nuevo código de cliente: ")
+    if opcion == "1":
+        print("Ingresando a Modificar cliente...")
+        nuevo_cliente = input("Ingrese el nuevo código de cliente: ")
 
-    medicamento = input("Nuevo código de medicamento: ")
+        while nuevo_cliente == matriz_ventas[pos_v][1]:
+            print("Error: El cliente ingresado es el mismo que el actual.")
+            nuevo_cliente = input("Ingrese el nuevo código de cliente: ")
 
-    while medicamento not in id_medicamento:
-        print("Error: Medicamento inexistente.")
-        medicamento = input("Nuevo código de medicamento: ")
-
-    receta = int(input("¿Presentó receta? (1-Si / 2-No)"))
-    
-    while receta != 1 and receta != 2:
-        print("Error: Ingrese una de las opciones.")
-        receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
+        cantidad_c = 0
+        for fila in matriz_clientes: 
+            if fila[0] == nuevo_cliente:
+                cantidad_c = cantidad_c + 1
         
-    cantidad = int(input("Ingrese nueva cantidad vendida: "))
-    while cantidad <= 0:
-        print("Error: la cantidad debe ser mayor a 0.")
+        while cantidad_c == 0:
+            print("Error: Cliente inexistente.")
+            nuevo_cliente = input("Ingrese el código del cliente: ")
+            cantidad_c = 0
+        
+            for fila in matriz_clientes:
+                if fila[0] == nuevo_cliente:
+                    cantidad_c = cantidad_c + 1
+
+        while nuevo_cliente == matriz_ventas[pos_v][1]:
+                    print("Error: El cliente ingresado es el mismo que el actual.")
+                    nuevo_cliente = input("Ingrese el nuevo código de cliente: ")
+
+        matriz_ventas[pos_v][1] = nuevo_cliente
+        print("Cliente modificado correctamente.")
+
+        print(matriz_ventas[pos_v][1])
+
+    elif opcion == "2":
+        nuevo_medicamento = input("Ingrese el nuevo código de medicamento: ")
+
+        while nuevo_medicamento == matriz_ventas[pos_v][2]:
+            print("Error: El medicamento ingresado es el mismo que el actual.")
+            nuevo_medicamento = input("Ingrese el nuevo código de medicamento: ")
+
+        cantidad_m = 0
+        for fila in matriz_medicamentos:
+            if fila[0] == nuevo_medicamento:
+                cantidad_m = cantidad_m + 1
+
+        while cantidad_m == 0:
+            print("Error: Medicamento inexistente.")
+            nuevo_medicamento = input("Ingrese el código del medicamento: ")
+            cantidad_m = 0
+
+            for fila in matriz_medicamentos:
+                if fila[0] == nuevo_medicamento:
+                    cantidad_m = cantidad_m + 1
+
+        while nuevo_medicamento == matriz_ventas[pos_v][2]:
+                    print("Error: El medicamento ingresado es el mismo que el actual.")
+                    nuevo_medicamento = input("Ingrese el nuevo código de medicamento: ")
+
+        matriz_ventas[pos_v][2] = nuevo_medicamento
+        print("Medicamento modificado correctamente.")
+
+    elif opcion == "3":
+        nueva_cantidad = int(input("Ingrese la nueva cantidad de unidades vendidas: "))
+        cantidad_vieja = matriz_ventas[pos_v][3]
+
+        while nueva_cantidad <= 0:
+            print("Error: la cantidad debe ser mayor a 0.")
+            nueva_cantidad = int(input("Ingrese la nueva cantidad de unidades vendidas: "))
+
+        lista_cod_medicamentos = []
+        for i in range(len(matriz_medicamentos)):
+            lista_cod_medicamentos.append(matriz_medicamentos[i][0])
+
+        pos_m = lista_cod_medicamentos.index(matriz_ventas[pos_v][2])
+
+        while matriz_medicamentos[pos_m][4] < nueva_cantidad:
+            print("Error: No hay suficiente stock.")
+            nueva_cantidad = int(input("Ingrese la nueva cantidad de unidades vendidas: "))
+
+        cantidad_diferencia = cantidad_vieja - nueva_cantidad
+        matriz_medicamentos[pos_m][4] = matriz_medicamentos[pos_m][4] + cantidad_diferencia
+        matriz_ventas[pos_v][3] = nueva_cantidad
+        print("Cantidad modificada correctamente.")
+
+    else:
+        print("Regresando al Menú")
+        return 
     
-    permitido = 1
-    
-    for i in range(len(id_medicamento)):
-        if id_medicamento[i] == medicamento:
-            if requiere_receta[i] == 1 and receta == 2:
-                print("Error: Este medicamento requiere receta.")
-                permitido = 0
-
-    if permitido == 0:
-        return
-
-
-    id_cliente_venta[posicion] = cliente
-    id_medicamento_venta[posicion] = medicamento
-    cantidad_ventas[posicion] = cantidad
-    presento_receta[posicion] = receta
-
-    print("Venta modificada correctamente.")
-
-
-
 # Para eliminar una venta
-def eliminar_venta():
+def eliminar_venta(usuario):
 
     print("\n--- ELIMINAR VENTA ---")
     codigo = input("Ingrese código de la venta: ")
-    posicion = -1
+    cantidad_v = 0 
+      
+    for fila in matriz_ventas: 
+        if fila[0] == codigo:
+            cantidad_v = cantidad_v + 1
+    
+        if cantidad_v == 0:
+            print("Error: Venta inexistente.")
+            pregunta = input("¿Desea buscar otra venta? (1-Si / 2-No): ")
+            if pregunta == "1":
+                eliminar_venta()
+            else:  
+                return
+    
+    lista_cod_ventas = []
+    for i in range(len(matriz_ventas)):
+        lista_cod_ventas.append(matriz_ventas[i][0])
 
-    for i in range(len(id_venta)):
-        if id_venta[i] == codigo:
-            posicion = i
-
-    if posicion == -1:
-        print("Venta no encontrada.")
+    print("Se encontro la venta")
+    if usuario == "admin":
+        seguro = input("¿Está seguro que desea eliminar la venta? (1-Si / 2-No): ")
+        if seguro == "1":
+            pos_v = lista_cod_ventas.index(codigo)
+            cantidad_vendida = matriz_ventas[pos_v][3]
+            matriz_medicamentos[pos_v][4] = matriz_medicamentos[pos_v][4] + cantidad_vendida
+            matriz_ventas.pop(pos_v)
+            print("Venta eliminada correctamente.")
+        else:
+            print("No se elimino ninguna venta")
+            return 
+    else:
+        print("No tiene permisos para eliminar la venta.")
         return
-
-    id_venta.pop(posicion)
-    id_cliente_venta.pop(posicion)
-    id_medicamento_venta.pop(posicion)
-    cantidad_ventas.pop(posicion)
-    presento_receta.pop(posicion)
-
-    print("Venta eliminada correctamente.")
-
-
 
 # Para mostrar lista de ventas
 def mostrar_ventas():
+    ancho_total = 122
+    print("\n---- LISTADO DE VENTAS ----\n")
+    print("-" * ancho_total)
+    print(f'{"Código de Venta":<25}{"Código de Cliente":<25}{"Código de Medicamento":<30}{"Cantidad Vendida":>15}{"¿Presentó Receta?":>25}')
+    print("-" * ancho_total)
 
-    print("\n--- LISTADO DE VENTAS ORDENADAS POR CANTIDAD---")
+    for venta in matriz_ventas:
+        receta = lambda x: "Si" if x == 1 else "No"
+        print(f'{" ":<5}{venta[0]:<25}{venta[1]:<25}{venta[2]:<25}{venta[3]:>9}{receta(venta[4]):>25}')
+    print("-" * ancho_total)
+    print()
 
-    for i in range(len(id_cliente_venta)):
-
-        print("Código venta:", id_venta[i])
-        print("Código cliente:", id_cliente_venta[i])
-        print("Código medicamento:", id_medicamento_venta[i])
-        print("Cantidad de ventas:", cantidad_ventas[i])
+# Para buscar alguna venta 
+def buscar_venta():
+    print("\n--- BUSCAR VENTA ---")
+    print("¿Cómo desea buscar la venta?")   
+    print("1- Por Codigo")
+    print("2- Por Cliente ")
+    print("3- Por Medicamento")   
+    print("4- Salir. \n")
+    opcion = input("Ingrese la opción: ")  
+    if opcion == "1":
+        codigo = input("Ingrese código de venta: ")
+        cantidad_v = 0 
+      
+        for fila in matriz_ventas: 
+            if fila[0] == codigo:
+                cantidad_v = cantidad_v + 1
         
-        if presento_receta[i] == 1:
-            print("Presento receta: Si")
-        else:
-            print("Presento receta: No\n")
+        if cantidad_v == 0:
+            print("Error: Venta inexistente.")
+            pregunta = input("¿Desea buscar otra venta? (1-Si / 2-No): ")
+            if pregunta == "1":
+                buscar_venta()
+            else:  
+                return
+        
+        lista_cod_ventas = []
+        for i in range(len(matriz_ventas)):
+            lista_cod_ventas.append(matriz_ventas[i][0])
+        pos_v = lista_cod_ventas.index(codigo)
 
-        print("----------------------")
+        print("Venta Encontrada")
+        ancho_total = 122
+        print("-" * ancho_total)
+        print(f'{"Código de Venta":<25}{"Código de Cliente":<25}{"Código de Medicamento":<30}{"Cantidad Vendida":>15}{"¿Presentó Receta?":>25}')
+        print("-" * ancho_total)
+        receta = matriz_ventas[pos_v][4]
+        receta = lambda x: "Si" if x == 1 else "No"
+        print(f'{" ":<5}{matriz_ventas[pos_v][0]:<25}{matriz_ventas[pos_v][1]:<25}{matriz_ventas[pos_v][2]:<25}{matriz_ventas[pos_v][3]:>9}{matriz_ventas[pos_v][4]:>25}')
+        print("-" * ancho_total)
+        print()
 
+    
+    elif opcion == "2":
+        codigo = input("Ingrese el codigo del Cliente para buscar sus Compras: ") 
+        cantidad_c = 0
+        for fila in matriz_clientes:
+            if fila[0] == codigo:
+                cantidad_c = cantidad_c + 1
+                        
+        while cantidad_c == 0:
+            print("Error: Cliente inexistente.")
+            codigo = input("Ingrese el código del medicamento: ")
+            cantidad_c = 0
+            for fila in matriz_clientes:
+                if fila[0] == codigo:
+                    cantidad_c = cantidad_c + 1
+                        
+        lista_cod_clientes = []
+        pos = 0
+        for i in range(len(matriz_ventas)):
+            if codigo == matriz_ventas[i][1]:
+                lista_cod_clientes.append(pos)
+            pos = pos + 1 
+        
+        ancho_total = 122
+        print("\n---- LISTADO DE VENTAS RELACIONADAS AL CLIENTE",codigo,"---\n")
+        print("-" * ancho_total)
+        print(f'{"Código de Venta":<25}{"Código de Cliente":<25}{"Código de Medicamento":<30}{"Cantidad Vendida":>15}{"¿Presentó Receta?":>25}')
+        print("-" * ancho_total)
+        for j in lista_cod_clientes:
+            receta = lambda x: "Si" if x == 1 else "No"           
+            print(f'{" ":<5}{matriz_ventas[j][0]:<25}{matriz_ventas[j][1]:<25}{matriz_ventas[j][2]:<25}{matriz_ventas[j][3]:>9}{receta(matriz_ventas[j][4]):>25}')
+        print("-" * ancho_total)
+        print() 
+               
+    elif opcion == "3":
+        codigo = input("Ingrese el codigo del Medicamento para Buscar sus Ventas: ")
+        cantidad_m = 0
+        for fila in matriz_medicamentos:
+            if fila[0] == codigo:
+                cantidad_m = cantidad_m + 1
+                
+        while cantidad_m == 0:
+            print("Error: Medicamento inexistente.")
+            medicamento = input("Ingrese el código del medicamento: ")
+            cantidad_m = 0
+            for fila in matriz_medicamentos:
+                if fila[0] == medicamento:
+                    cantidad_m = cantidad_m + 1
+                
+        lista_cod_medicamentos = []
+        pos = 0
+        for i in range(len(matriz_ventas)):
+            if codigo == matriz_ventas[i][2]:
+                lista_cod_medicamentos.append(pos)
+            pos = pos + 1 
+
+        ancho_total = 122
+        print("\n---- LISTADO DE VENTAS RELACIONADAS AL MEDICAMENTO",codigo,"---\n")
+        print("-" * ancho_total)
+        print(f'{"Código de Venta":<25}{"Código de Cliente":<25}{"Código de Medicamento":<30}{"Cantidad Vendida":>15}{"¿Presentó Receta?":>25}')
+        print("-" * ancho_total)
+        for j in lista_cod_medicamentos:
+            receta = lambda x: "Si" if x == 1 else "No"           
+            print(f'{" ":<5}{matriz_ventas[j][0]:<25}{matriz_ventas[j][1]:<25}{matriz_ventas[j][2]:<25}{matriz_ventas[j][3]:>9}{receta(matriz_ventas[j][4]):>25}')
+        print("-" * ancho_total)
+        print() 
+        
+
+    else:
+        print("Regresando al Menu")
+        return

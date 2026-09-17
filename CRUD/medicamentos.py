@@ -12,8 +12,6 @@ matriz_medicamentos = [
     ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
 ]
 
-
-
 '''
 FUNCIONES CRUD DE MEDICAMENTOS
 '''
@@ -30,7 +28,7 @@ def alta_medicamento():
             cantidad = cantidad + 1
     
     while cantidad > 0:
-        print("Error: el cliente ya existe.")
+        print("Error: el medicamento ya existe.")
         codigo = input("Ingrese otro código: ")
     
         cantidad = 0
@@ -39,11 +37,8 @@ def alta_medicamento():
             if fila[0] == codigo:
                 cantidad = cantidad + 1
 
-    '''while codigo in id_medicamento:
-        print("Error: el medicamento ya existe.")
-        codigo = input("Ingrese otro código: ")'''
-
     nombre = input("Ingrese el nombre: ")
+    laboratorio = input("Ingrese el laboratorio: ")
     precio = int(input("Ingrese el precio: "))
     stock = int(input("Ingrese el stock: "))
 
@@ -52,7 +47,7 @@ def alta_medicamento():
         print ("Opción inválida: Ingrese una de las opciones.")
         receta = int(input("Requiere receta (1- Si / 2- No): "))
 
-    matriz_medicamentos.append([codigo, nombre, precio, stock, receta])  
+    matriz_medicamentos.append([codigo, nombre, laboratorio, precio, stock, receta])  
     print("Medicamento agregado correctamente.\n")
 
 
@@ -111,10 +106,6 @@ def mostrar_medicamentos():
     print("-" * ancho_total)
 
     for medicamento in matriz_medicamentos:
-        if medicamento[5] == 1:
-            receta = "Si"
-        else:
-            receta = "No"
+        receta = lambda x: "Si" if x == 1 else "No"
+        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10}{medicamento[4]:>8}{receta(medicamento[5]):>10}')
 
-        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10.2f}{medicamento[4]:>8}{receta:>10}')
-    
