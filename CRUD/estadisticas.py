@@ -46,6 +46,7 @@ def total_recaudado():
     print(" "*82,"Ganancia Total: ",ganancia_final)
     print()
 
+#Funcion Para Conocer la Mayor Venta
 def mayor_venta():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
@@ -84,6 +85,7 @@ def mayor_venta():
     print("-" * 100)
     print()
 
+#Funcion Para Conocer la Menor Venta 
 def menor_venta():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
@@ -122,6 +124,7 @@ def menor_venta():
     print("-" * 100)
     print()
 
+#Funcion Para Conocer el Medicamento Mas Vendido
 def med_mas_vendido():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
@@ -179,6 +182,7 @@ def med_mas_vendido():
     print("-" * ancho_total)
     print() 
 
+#Funcion Para Conocer las Ganancias de los Medicamentos
 def ganancia_x_medicamento():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
