@@ -96,12 +96,6 @@ def eliminar_cliente():
     if posicion == -1:
         print("Cliente no encontrado.")
         return
-    '''
-    for i in range(len(id_cliente_venta)):  # Verifica que el cliente no tenga ventas
-        if id_cliente_venta[i] == codigo:
-            print("No se puede eliminar, el cliente tiene ventas registradas.")
-            return'''
-
     
     matriz_clientes.pop(posicion)
     print("Cliente eliminado correctamente.")

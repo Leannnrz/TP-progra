@@ -88,12 +88,7 @@ def eliminar_medicamento():
     if posicion == -1:
         print("Medicamento no encontrado.")
         return
-    '''
-    for i in range(len(id_medicamento_venta)): # Verifica que el medicamento no este asociado a una venta.
-        if id_medicamento_venta[i] == codigo:
-            print("No se puede eliminar, el medicamento tiene ventas asociadas.")
-            return'''
-
+    
     matriz_medicamentos.pop(posicion)
     print("Medicamento eliminado correctamente.")
 
