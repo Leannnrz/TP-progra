@@ -1,6 +1,6 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
-from CRUD import clientes, ventas, medicamentos 
+from CRUD import clientes, ventas, medicamentos, estadisticas
 
 
 init(autoreset=True) # Inicialización de colorama
@@ -109,8 +109,6 @@ def submenu_ventas():
     opcion_ventas = ""
 
     while opcion_ventas != "6":
-
-        print("\n--- VENTAS ---")
         print("1- Crear venta")
         print("2- Modificar venta")
         print("3- Eliminar venta")
@@ -136,43 +134,35 @@ def submenu_ventas():
             print("Opción inválida.")
 
 
-'''
 #Submenú de Estadisticas
-def matriz_estadisticas():
+def submenu_estadisticas(): 
+    opcion_estadisticas = ""
 
-    matriz = [
-        [0, 0],  # Particular
-        [0, 0]   # Obra Social
-    ]
+    while opcion_estadisticas != "6":
+        print("1- Ganancia Total")
+        print("2- Venta Más Grande")
+        print("3- Venta Más Pequeña")
+        print("4- Medicamento Más Vendido")
+        print("5- Buscar Ganancias por Medicamento")    
+        print("6- Volver.\n")
 
-    for i in range(len(id_venta)):
+        opcion_estadisticas = input("Seleccione una opción: ")
 
-        # buscar posición del cliente
-        posicion_cliente = -1
+        if opcion_estadisticas == "1":
+            estadisticas.total_recaudado()
+        elif opcion_estadisticas == "2":
+            estadisticas.mayor_venta()
+        elif opcion_estadisticas == "3":
+            estadisticas.menor_venta()
+        elif opcion_estadisticas == "4":
+            estadisticas.med_mas_vendido()
+        elif opcion_estadisticas == "5":
+            estadisticas.ganancia_x_medicamento()
+        elif opcion_estadisticas == "6":
+            print("Volviendo al menú principal.\n")
+        else:
+            print("Opción inválida.")
 
-        for i_cliente in range(len(id_cliente)):
-            if id_cliente[i_cliente] == id_cliente_venta[i]:
-                posicion_cliente = i_cliente
-
-        # fila = cobertura 
-        fila = tipo_cobertura[posicion_cliente] - 1
-
-        # columna = receta 
-        columna = presento_receta[i] - 1
-
-        matriz[fila][columna] += 1
-
-    return matriz
-
-
-def mostrar_estadistica(matriz):
-
-    print("\nVENTAS POR COBERTURA Y RECETA\n")
-
-    print("              Con receta   Sin receta")
-    print("Particular    ", matriz[0][0], "          ", matriz[0][1])
-    print("Obra Social   ", matriz[1][0], "          ", matriz[1][1])
-'''
 
 
 '''
@@ -202,9 +192,7 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "3":
                 submenu_ventas()
             elif opcion == "4":
-                ...
-                #matriz = matriz_estadisticas()
-                #mostrar_estadistica(matriz)
+                submenu_estadisticas()
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:

@@ -109,34 +109,3 @@ def mostrar_medicamentos():
         receta = lambda x: "Si" if x == 1 else "No"
         print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10}{medicamento[4]:>8}{receta(medicamento[5]):>10}')
 
-
-    for fila in descripcion_medicamentos:
-        print("-" * 175) 
-        for elemento in range(len(fila)):
-            if elemento == 0:
-                cad = f"| Código de Medicamento:{fila[elemento]:^15} "
-            elif elemento == 1:
-                cad = f"| Nombre de Medicamento:{fila[elemento]:^15} "
-            elif elemento == 2:
-                cad = f"| Descripción de Medicamento: {fila[elemento]:^15} "[:75] + "..."
-            elif elemento == 3:
-                cad = f"| Precio de Medicamento:{fila[elemento]:^15} "
-            elif elemento == 4:
-                cad = f"| Stock de Medicamento:{fila[elemento]:^15} "
-            elif elemento == 5:
-                if fila[elemento] == 1:
-                    cad = f"| ¿Requiere Receta?{'Si':^15} "
-                else:   
-                    cad = f"| ¿Requiere Receta?{'No':^15} "
-            elif elemento == 6:
-                if fila[elemento] == 1:
-                    cad = f"| ¿Esta Disponible?{'Si':^15} "
-                else:   
-                    cad = f"| ¿Esta Disponible?{'No':^15} "
-            else:
-                cad =f"| {fila[elemento]:^15} "[:75] + "..."
-            print(f'{cad[0:75]:<90}', end="|")
-            print()
-        print()
-        print("-" * 175) 
-        print() 

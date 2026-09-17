@@ -1,66 +1,238 @@
-matriz_medicamentos = [
-    ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
-    ["M002", "Ibuprofeno", "Bayer", 2200, 15, 2],
-    ["M003", "Amoxicilina", "Roemmers", 3500, 6, 1],
-    ["M004", "Loratadina", "Bagó", 1800, 10, 2],
-    ["M005", "Omeprazol", "Gador", 2700, 25, 2],
-    ["M006", "Diclofenac", "Elea", 2500, 5, 1],
-    ["M007", "Metformina", "Montpellier", 4200, 12, 1],
-    ["M008", "Salbutamol", "Cassará", 3900, 3, 1],
-    ["M009", "Enalapril", "Bernabó", 3100, 18, 1],
-    ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
-]
-matriz_clientes = [
-    ["C001", "Juan Perez", 25, 1],
-    ["C002", "Maria Gomez", 42, 2],
-    ["C003", "Carlos Lopez", 31, 1],
-    ["C004", "Ana Martinez", 55, 2],
-    ["C005", "Luis Fernandez", 19, 1],
-    ["C006", "Sofia Torres", 38, 2],
-    ["C007", "Diego Ramirez", 47, 1],
-    ["C008", "Valentina Castro", 29, 2],
-    ["C009", "Martin Rojas", 61, 2],
-    ["C010", "Lucia Diaz", 34, 2]
-]
-matriz_ventas = [
-    ["V001", "C001", "M001", 2, 2],
-    ["V002", "C003", "M003", 1, 1],
-    ["V003", "C002", "M002", 3, 2],
-    ["V004", "C001", "M005", 1, 2],
-    ["V005", "C005", "M007", 2, 1],
-    ["V006", "C007", "M004", 1, 2],
-    ["V007", "C003", "M003", 1, 1],
-    ["V008", "C008", "M010", 2, 1],
-    ["V009", "C010", "M009", 1, 1],
-    ["V010", "C005", "M001", 4, 2],
-    ["V011", "C002", "M006", 3, 1],
-    ["V012", "C004", "M002", 5, 2],
-    ["V013", "C006", "M008", 1, 1],
-    ["V014", "C009", "M003", 2, 2],
-    ["V015", "C001", "M010", 4, 1],
-    ["V016", "C003", "M005", 2, 2],
-    ["V017", "C007", "M007", 1, 1],
-    ["V018", "C005", "M009", 3, 2],
-    ["V019", "C008", "M004", 5, 1],
-    ["V020", "C010", "M001", 2, 2],
-    ["V021", "C004", "M007", 1, 2],
-    ["V022", "C001", "M003", 4, 1],
-    ["V023", "C006", "M009", 2, 2],
-    ["V024", "C010", "M002", 5, 1],
-    ["V025", "C002", "M005", 3, 2],
-    ["V026", "C007", "M001", 1, 1],
-    ["V027", "C003", "M008", 2, 2],
-    ["V028", "C005", "M004", 4, 1],
-    ["V029", "C009", "M010", 3, 2],
-    ["V030", "C008", "M006", 1, 1], ]
+from .medicamentos import matriz_medicamentos
+from .clientes import matriz_clientes
+from .ventas import matriz_ventas
 
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''
+#Funcion Para Calcular El Total Recaudado
+def total_recaudado():
+    lista_cant_productos = []
+    for i in range(len(matriz_ventas)):
+        lista_cant_productos.append(matriz_ventas[i][3])
 
-def promedio_ventas:
-    print("1")
-def ganancia_x_medicamento:
-    print("2")
-def ganancia_general:
-    print("3")
+    lista_medicamentos_vendidos = []
+    for j in range(len(matriz_ventas)):
+        lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
+
+    lista_id_medicamentos = []
+    lista_precios_medicamento = []
+    for h in range(len(matriz_medicamentos)): 
+        lista_id_medicamentos.append(matriz_medicamentos[h][0])
+        lista_precios_medicamento.append(matriz_medicamentos[h][3])
+
+    lista_precio_indiv_med = []
+    for k in range(len(lista_medicamentos_vendidos)):
+        precio_med = lista_id_medicamentos.index(lista_medicamentos_vendidos[k])
+        lista_precio_indiv_med.append(lista_precios_medicamento[precio_med])
+
+    total_recaudado_x_venta = []
+    for l in range(len(lista_precio_indiv_med)):
+        ganancia_venta = lista_precio_indiv_med[l] * lista_cant_productos[l]
+        total_recaudado_x_venta.append(ganancia_venta)
+
+    ganancia_total = sum(total_recaudado_x_venta)
+    ganancia_final = "$"+str(ganancia_total)
+
+    ancho_total = 122
+    print("\n---- LISTADO DE GANANCIA POR VENTAS ----\n")
+    print("-" * ancho_total)
+    print(f'{"Código de Venta":<25}{"Código de Medicamento Vendido":<30}{"Cantidad Vendida":>25}{"Ganancia Total Por Venta:":>35}')
+    print("-" * ancho_total)
+    
+    for p in range(len(total_recaudado_x_venta)):
+        print(f'{" ":<5}{matriz_ventas[p][0]:<32}{lista_medicamentos_vendidos[p]:<35}{lista_cant_productos[p]:<28}${total_recaudado_x_venta[p]:>}')
+    print("-" * ancho_total)
+    print(" "*82,"Ganancia Total: ",ganancia_final)
+    print()
+
+def mayor_venta():
+    lista_cant_productos = []
+    for i in range(len(matriz_ventas)):
+        lista_cant_productos.append(matriz_ventas[i][3])
+    
+    lista_medicamentos_vendidos = []
+    for j in range(len(matriz_ventas)):
+        lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
+    
+    lista_id_medicamentos = []
+    lista_precios_medicamento = []
+    for h in range(len(matriz_medicamentos)): 
+        lista_id_medicamentos.append(matriz_medicamentos[h][0])
+        lista_precios_medicamento.append(matriz_medicamentos[h][3])
+    
+    lista_precio_indiv_med = []
+    for k in range(len(lista_medicamentos_vendidos)):
+        precio_med = lista_id_medicamentos.index(lista_medicamentos_vendidos[k])
+        lista_precio_indiv_med.append(lista_precios_medicamento[precio_med])
+    
+    total_recaudado_x_venta = []
+    for l in range(len(lista_precio_indiv_med)):
+        ganancia_venta = lista_precio_indiv_med[l] * lista_cant_productos[l]
+        total_recaudado_x_venta.append(ganancia_venta)
+
+    venta_mas_grande = max(total_recaudado_x_venta)
+    pos_v = total_recaudado_x_venta.index(venta_mas_grande)
+
+    print("-" * 100)
+    print("La Venta Mayor Registrada: ")
+    print(" "*4, "-Id de Venta: ", matriz_ventas[pos_v][0])
+    print(" "*4, "-Id de Cliente: ", matriz_ventas[pos_v][1])
+    print(" "*4, "-Id de Medicamento: ", matriz_ventas[pos_v][2])
+    print(" "*4, "-Cantidad Vendida: ", matriz_ventas[pos_v][3])
+    print(" "*4, "-Ganancia de Venta: ", "$",venta_mas_grande)
+    print("-" * 100)
+    print()
+
+def menor_venta():
+    lista_cant_productos = []
+    for i in range(len(matriz_ventas)):
+        lista_cant_productos.append(matriz_ventas[i][3])
+        
+    lista_medicamentos_vendidos = []
+    for j in range(len(matriz_ventas)):
+            lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
+        
+    lista_id_medicamentos = []
+    lista_precios_medicamento = []
+    for h in range(len(matriz_medicamentos)): 
+        lista_id_medicamentos.append(matriz_medicamentos[h][0])
+        lista_precios_medicamento.append(matriz_medicamentos[h][3])
+        
+    lista_precio_indiv_med = []
+    for k in range(len(lista_medicamentos_vendidos)):
+        precio_med = lista_id_medicamentos.index(lista_medicamentos_vendidos[k])
+        lista_precio_indiv_med.append(lista_precios_medicamento[precio_med])
+        
+    total_recaudado_x_venta = []
+    for l in range(len(lista_precio_indiv_med)):
+        ganancia_venta = lista_precio_indiv_med[l] * lista_cant_productos[l]
+        total_recaudado_x_venta.append(ganancia_venta)
+    
+    venta_mas_grande = min(total_recaudado_x_venta)
+    pos_v = total_recaudado_x_venta.index(venta_mas_grande)
+    
+    print("-" * 100)
+    print("La Venta Menor Registrada: ")
+    print(" "*4, "-Id de Venta: ", matriz_ventas[pos_v][0])
+    print(" "*4, "-Id de Cliente: ", matriz_ventas[pos_v][1])
+    print(" "*4, "-Id de Medicamento: ", matriz_ventas[pos_v][2])
+    print(" "*4, "-Cantidad Vendida: ", matriz_ventas[pos_v][3])
+    print(" "*4, "-Ganancia de Venta: ", "$",venta_mas_grande)
+    print("-" * 100)
+    print()
+
+def med_mas_vendido():
+    lista_cant_productos = []
+    for i in range(len(matriz_ventas)):
+        lista_cant_productos.append(matriz_ventas[i][3])
+        
+    lista_medicamentos_vendidos = []
+    for j in range(len(matriz_ventas)):
+            lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
+        
+    lista_id_medicamentos = []
+    lista_precios_medicamento = []
+    for h in range(len(matriz_medicamentos)): 
+        lista_id_medicamentos.append(matriz_medicamentos[h][0])
+        lista_precios_medicamento.append(matriz_medicamentos[h][3])
+        
+    lista_precio_indiv_med = []
+    for k in range(len(lista_medicamentos_vendidos)):
+        precio_med = lista_id_medicamentos.index(lista_medicamentos_vendidos[k])
+        lista_precio_indiv_med.append(lista_precios_medicamento[precio_med])
+        
+    total_recaudado_x_venta = []
+    for l in range(len(lista_precio_indiv_med)):
+        ganancia_venta = lista_precio_indiv_med[l] * lista_cant_productos[l]
+        total_recaudado_x_venta.append(ganancia_venta)  
+
+    lista_aparaciones_med = []
+    for o in range(len(lista_id_medicamentos)):
+        cant_apariciones = lista_medicamentos_vendidos.count(lista_id_medicamentos[o])
+        lista_aparaciones_med.append(cant_apariciones)
+    
+    med_mas_aparariciones = max(lista_aparaciones_med)
+    pos_m = lista_aparaciones_med.index(med_mas_aparariciones)
+
+    print("Medicamento con más Ventas:")
+    print("ID Medicamento: ", matriz_medicamentos[pos_m][0])
+    print("Nombre Medicamento: ", matriz_medicamentos[pos_m][1])
+    print()
+
+                    
+    lista_cod_medicamentos = []
+    pos = 0
+    for i in range(len(matriz_ventas)):
+        if matriz_medicamentos[pos_m][0] == matriz_ventas[i][2]:
+            lista_cod_medicamentos.append(pos)
+        pos = pos + 1 
+    
+    ancho_total = 122
+    print("\n---- LISTADO DE VENTAS RELACIONADAS AL MEDICAMENTO",matriz_medicamentos[pos_m][1],"---\n")
+    print("-" * ancho_total)
+    print(f'{"Código de Venta":<25}{"Código de Cliente":<25}{"Código de Medicamento":<30}{"Cantidad Vendida":>15}{"¿Presentó Receta?":>25}')
+    print("-" * ancho_total)
+    for j in lista_cod_medicamentos:
+        receta = lambda x: "Si" if x == 1 else "No"           
+        print(f'{" ":<5}{matriz_ventas[j][0]:<25}{matriz_ventas[j][1]:<25}{matriz_ventas[j][2]:<25}{matriz_ventas[j][3]:>9}{receta(matriz_ventas[j][4]):>25}')
+    print("-" * ancho_total)
+    print() 
+
+def ganancia_x_medicamento():
+    lista_cant_productos = []
+    for i in range(len(matriz_ventas)):
+        lista_cant_productos.append(matriz_ventas[i][3])
+        
+    lista_medicamentos_vendidos = []
+    for j in range(len(matriz_ventas)):
+            lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
+        
+    lista_id_medicamentos = []
+    lista_precios_medicamento = []
+    for h in range(len(matriz_medicamentos)): 
+        lista_id_medicamentos.append(matriz_medicamentos[h][0])
+        lista_precios_medicamento.append(matriz_medicamentos[h][3])
+        
+    lista_precio_indiv_med = []
+    for k in range(len(lista_medicamentos_vendidos)):
+        precio_med = lista_id_medicamentos.index(lista_medicamentos_vendidos[k])
+        lista_precio_indiv_med.append(lista_precios_medicamento[precio_med])
+        
+    med_a_buscar = input("Ingrese el Codigo del Medicamento: ")
+    pos_m = lista_id_medicamentos.index(med_a_buscar)
+    print()
+    print("-" * 122)
+    print("Medicamento a Buscar:")
+    print("Nombre Medicamento: ", matriz_medicamentos[pos_m][1])
+    print("Precio Medicamento: $",lista_precios_medicamento[pos_m])
+    print("-" * 122)
+
+    total_recaudado_x_venta = []
+    for s in range(len(lista_precio_indiv_med)):
+        if med_a_buscar == lista_medicamentos_vendidos[s]:
+            ganancia_venta = lista_precio_indiv_med[pos_m] * lista_cant_productos[s]
+            total_recaudado_x_venta.append(ganancia_venta)  
+
+    recaudacion_total = sum(total_recaudado_x_venta)
+    recaudacion_total_formal = "$"+str(recaudacion_total)
+    
+    lista_cod_medicamentos = []
+    pos = 0
+    for i in range(len(matriz_ventas)):
+        if med_a_buscar == matriz_ventas[i][2]:
+            lista_cod_medicamentos.append(pos)
+        pos = pos + 1 
+    
+    ancho_total = 122
+    print("\n---- LISTADO DE VENTAS RELACIONADAS AL MEDICAMENTO",matriz_medicamentos[pos_m][1],"---\n")
+    print("-" * ancho_total)
+    print(f'{"Código de Venta":<25}{"Código de Cliente":<25}{"Código de Medicamento":<30}{"Cantidad Vendida":>15}{"¿Presentó Receta?":>25}')
+    print("-" * ancho_total)
+    for j in lista_cod_medicamentos:
+        receta = lambda x: "Si" if x == 1 else "No"           
+        print(f'{" ":<5}{matriz_ventas[j][0]:<25}{matriz_ventas[j][1]:<25}{matriz_ventas[j][2]:<25}{matriz_ventas[j][3]:>9}{receta(matriz_ventas[j][4]):>25}')
+    print("-" * ancho_total)
+    print("Ganancias Totales del Medicamento: ",recaudacion_total_formal)
+    print("-" * ancho_total)
+    print()     
