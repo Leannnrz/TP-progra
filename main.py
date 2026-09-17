@@ -1,6 +1,7 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
 from CRUD import clientes, medicamentos, ventas
+import re
 
 init(autoreset=True) # Inicialización de colorama
 
@@ -21,18 +22,18 @@ def login(max_intentos):
         contrasenia = input("Ingrese la contraseña: ")
 
         if usuario == usuario_admin and contrasenia == contrasenia_admin:
-            print("Login exitoso!")
+            print(f"{Fore.GREEN}Login exitoso!")
             print("Ingresó como administrador.\n")
             return usuario_admin
 
         elif usuario == usuario_normal and contrasenia == contrasenia_normal:
-            print("Login exitoso!")
+            print(f"{Fore.GREEN}Login exitoso!")
             print("Ingresó como usuario.\n")
             return usuario_normal
 
         else:
             intentos += 1
-            print("Usuario o contraseña incorrectos.")
+            print(f"{Fore.RED}Usuario o contraseña incorrectos.")
             print("Intentos restantes:", max_intentos - intentos)
 
     print("Ha superado el límite de intentos.")
@@ -40,7 +41,7 @@ def login(max_intentos):
 
 
 '''
-SUBMENUS
+SUBMENÚS
 '''
 # Submenú clientes
 def submenu_clientes():
@@ -69,7 +70,7 @@ def submenu_clientes():
         elif opcion_clientes == "5":
             clientes.buscar_clientes()
         elif opcion_clientes == "6":
-            print("Volviendo al menú principal. \n")
+            print("Volviendo al menú principal... \n")
         else:
             print("Opción inválida.")
 

@@ -11,6 +11,9 @@ matriz_clientes = [
     ["C009", "Martin Rojas", 61, 2],
     ["C010", "Lucia Diaz", 34, 2]
 ]
+encabezados =  ['ID', 'Nombre', 'Edad', 'Cobertura']
+clientes = [dict(zip(encabezados, fila)) for fila in matriz_clientes]
+
 
 '''
 FUNCIONES CRUD DE CLIENTES
