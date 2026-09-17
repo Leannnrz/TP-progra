@@ -3,63 +3,84 @@ usuariosCliente = [["cliente", "4321", "Cliente"]]
 
 def registrar_usuario():
     print ("=" * 30 + " REGISTRO " + "=" * 30)
+
     nombre = input("Ingrese el nombre del usuario: ")
     contraseña = input("Ingrese la contraseña del usuario: ")
 
-    usuariosCliente.append([nombre, contraseña, "Cliente"])
+    usuarios = set()
 
-    print("Usuario registrado correctamente.\n")
+    for usuario in usuariosCliente:
+        usuarios.add(usuario[0])
+
+    if nombre in usuarios:
+        print("\nEl usuario ya existe.\n")
+    else:
+        usuariosCliente.append([nombre, contraseña, "Cliente"])
+        print("Usuario registrado correctamente.\n")
 
 def iniciar_sesion():
 
     intentos = 0
 
     while intentos < 3: 
-        intentos += 1
-        rol = ""
 
         print("=" * 30 + "Iniciar Sesión" + "=" * 30)
+
         nombre = input("Ingrese el nombre de usuario: ")
-        contraseña = input("Ingrese la contraseña: ")
+        contraseña = (input("Ingrese la contraseña: "))
+
+        rol = ""
 
         for usuario in usuariosCliente:
             if nombre == usuario[0] and contraseña == usuario[1]:
                 rol = "Cliente"
+                break
 
-        for usuario in usuariosAdmin:
-            if nombre == usuario[0] and contraseña == usuario[1]:
-                rol = "Administrador"
-        
+        if rol == "":
+            for usuario in usuariosAdmin:
+                if nombre == usuario[0] and contraseña == usuario[1]:
+                    rol = "Administrador"
+                    break
+
         if rol == "Cliente":
             print("Inicio de sesión exitoso. Bienvenido, Cliente. \n")
             print("Accediendo al menú de cliente...\n")
             "menu_cliente()"
-                
+
+            return
+
         elif rol == "Administrador":
             print("Inicio de sesión exitoso. Bienvenido, Administrador. \n")
             print("Accediendo al menú de administrador...\n")
             "menu_admin()"
 
-        else:
-            print("Nombre de usuario o contraseña incorrectos.\n")
+            return
 
-        if intentos == 3 and rol == "":
-            print("Se alcanzó el maximo de intentos. Saliendo del programa.")
+        else:
+
+            intentos = intentos + 1
+
+            print("Nombre de usuario o contraseña incorrectos.\n")
+            print("Intentos restantes: ", 3 - intentos)
+
 
 def menu_de_acceso():
-    print("=" * 175)
-    print("Bienvenido al sistema de registo e inicio de sesion".rjust(100))
-    print("=" * 175)
 
-    intentos = 0
-    while intentos != 3:
+    opcion = ""
+    while opcion != "3":
+
+        print("=" * 175)
+        print("Bienvenido al sistema de registo e inicio de sesion".rjust(100))
+        print("=" * 175)
+
 
         print("Seleccione una opción:\n")
+
         print("1. Registrar usuario")
         print("2. Iniciar sesión")
         print("3. Salir del sistema\n")
 
-        opcion = input("Ingrese el número de la opción deseada: \n")
+        opcion = input("Ingrese el número de la opción deseada: ")
 
         if opcion == "1":
             registrar_usuario()
@@ -69,8 +90,6 @@ def menu_de_acceso():
 
         elif opcion == "3":
             print("Saliendo del sistema...")
-            break
-
         else: 
             print("\nError: Opcion invalida. Por favor, seleccione una de las opciones\n")
 
