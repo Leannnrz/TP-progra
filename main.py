@@ -18,7 +18,7 @@ def login(max_intentos):
     intentos = 0
 
     while intentos < max_intentos:
-        usuario = input("Ingrese el usuario: ")
+        usuario = input("Ingrese el usuario: ").lower()
         contrasenia = input("Ingrese la contraseña: ")
 
         if usuario == usuario_admin and contrasenia == contrasenia_admin:

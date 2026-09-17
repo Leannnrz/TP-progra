@@ -123,6 +123,9 @@ def mostrar_clientes():
     print(f'{"Código":<12}{"Nombre":<28}{"Edad":<10}{"Cobertura":>20}')
     print("-" * ancho_total)
 
+    # Ordena la lista por el largo del nombre antes de mostrarla
+    clientes.sort(key=lambda cliente: len(cliente["Nombre"]))
+
     for cliente in clientes:
         if cliente["Cobertura"] == 1:
             cobertura = "Particular"
