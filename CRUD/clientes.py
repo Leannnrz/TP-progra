@@ -1,3 +1,5 @@
+from FUNCIONES import validaciones
+
 # Matriz de clientes
 matriz_clientes = [
     ["C001", "Juan Perez", 25, 1],
@@ -21,6 +23,16 @@ def alta_cliente():
 
     codigo = input("Ingrese el código del cliente: ")
 
+    valido = validaciones.validar_codigo_cliente(codigo)
+
+    while valido == False:
+
+        print("Error: el código debe tener el formato C001.")
+
+        codigo = input("Ingrese el código del cliente: ")
+
+        valido = validaciones.validar_codigo_cliente(codigo)
+
     cantidad = 0
 
     for fila in matriz_clientes:
@@ -30,6 +42,17 @@ def alta_cliente():
     while cantidad > 0:
         print("Error: el cliente ya existe.")
         codigo = input("Ingrese otro código: ")
+
+        valido = validaciones.validar_codigo_cliente(codigo)
+
+        while valido == False:
+
+            print("Error: el código debe tener el formato C001.")
+
+            codigo = input("Ingrese otro código: ")
+
+            valido = validaciones.validar_codigo_cliente(codigo)
+
 
         cantidad = 0
 
@@ -132,3 +155,46 @@ def mostrar_clientes():
             print("Cobertura: Obra Social")
 
         print("----------------------")
+
+
+# BUSCAR CLIENTES POR NOMBRE
+
+def buscar_clientes():
+
+    print("\n--- BUSCAR CLIENTE ---")
+
+    busqueda = input("Ingrese el nombre o texto a buscar: ")
+
+    encontrados = 0
+
+    for cliente in matriz_clientes:
+
+        resultado = validaciones.buscar_texto(
+            cliente[1],
+            busqueda
+        )
+
+        if resultado:
+
+            coincidencias = validaciones.encontrar_coincidencias(
+                cliente[1],
+                busqueda
+            )
+
+            print(
+                cliente[0],
+                "-",
+                cliente[1],
+                "- Edad:",
+                cliente[2],
+                "- Coincidencias:",
+                coincidencias,
+                "- Cantidad:",
+                len(coincidencias)
+            )
+
+            encontrados = encontrados + 1
+
+    if encontrados == 0:
+
+        print("No se encontraron clientes.")

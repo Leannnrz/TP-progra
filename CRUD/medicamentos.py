@@ -1,3 +1,4 @@
+from FUNCIONES import validaciones
 # Matriz de medicamentos
 
 matriz_medicamentos = [
@@ -24,6 +25,16 @@ def alta_medicamento():
 
     codigo = input("Ingrese el código del medicamento: ")
 
+    valido = validaciones.validar_codigo_medicamento(codigo)
+
+    while valido == False:
+
+        print("Error: el código debe tener el formato M001.")
+
+        codigo = input("Ingrese el código del medicamento: ")
+
+        valido = validaciones.validar_codigo_medicamento(codigo)
+
     cantidad = 0
 
     # Verificar si el código ya existe
@@ -35,6 +46,16 @@ def alta_medicamento():
 
         print("Error: el medicamento ya existe.")
         codigo = input("Ingrese otro código: ")
+
+        valido = validaciones.validar_codigo_medicamento(codigo)
+        
+        while valido == False:
+        
+            print("Error: el código debe tener el formato M001.")
+        
+            codigo = input("Ingrese el código del medicamento: ")
+        
+            valido = validaciones.validar_codigo_medicamento(codigo)
 
         cantidad = 0
 
@@ -182,3 +203,48 @@ def mostrar_medicamentos():
             f'{medicamento[4]:>8}'
             f'{receta:>10}'
         )
+
+
+# BUSCAR MEDICAMENTOS POR NOMBRE
+
+def buscar_medicamentos():
+
+    print("\n--- BUSCAR MEDICAMENTO ---")
+
+    busqueda = input("Ingrese el texto a buscar: ")
+
+    encontrados = 0
+
+    for medicamento in matriz_medicamentos:
+
+        resultado = validaciones.buscar_texto(
+            medicamento[1],
+            busqueda
+        )
+
+        if resultado:
+
+            coincidencias = validaciones.encontrar_coincidencias(
+                medicamento[1],
+                busqueda
+            )
+
+            print(
+                medicamento[0],
+                "-",
+                medicamento[1],
+                "- Laboratorio:",
+                medicamento[2],
+                "- Precio: $",
+                medicamento[3],
+                "- Coincidencias:",
+                coincidencias,
+                "- Cantidad:",
+                len(coincidencias)
+            )
+
+            encontrados = encontrados + 1
+
+    if encontrados == 0:
+
+        print("No se encontraron medicamentos.")

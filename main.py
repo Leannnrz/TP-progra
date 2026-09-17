@@ -56,14 +56,15 @@ def submenu_clientes():
 
     opcion_clientes = ""
 
-    while opcion_clientes != "5":
+    while opcion_clientes != "6":
 
         print("\n--- CLIENTES ---")
         print("1- Agregar cliente")
         print("2- Modificar cliente")
         print("3- Eliminar cliente")
         print("4- Mostrar clientes")
-        print("5- Volver\n")
+        print("5- Mostrar clientes")
+        print("6- Volver\n")
 
         opcion_clientes = input("Seleccione una opción: ")
 
@@ -84,6 +85,10 @@ def submenu_clientes():
             clientes.mostrar_clientes()
 
         elif opcion_clientes == "5":
+        
+            clientes.buscar_clientes()
+
+        elif opcion_clientes == "6":
 
             print("Volviendo al menú principal.\n")
 
@@ -98,14 +103,15 @@ def submenu_medicamentos():
 
     opcion_medicamentos = ""
 
-    while opcion_medicamentos != "5":
+    while opcion_medicamentos != "6":
 
         print("\n--- MEDICAMENTOS ---")
         print("1- Crear medicamento")
         print("2- Modificar medicamento")
         print("3- Eliminar medicamento")
         print("4- Mostrar medicamentos")
-        print("5- Volver\n")
+        print("5- Mostrar medicamentos")
+        print("6- Volver\n")
 
         opcion_medicamentos = input("Seleccione una opción: ")
 
@@ -126,6 +132,10 @@ def submenu_medicamentos():
             medicamentos.mostrar_medicamentos()
 
         elif opcion_medicamentos == "5":
+
+            medicamentos.buscar_medicamentos()    
+
+        elif opcion_medicamentos == "6":
 
             print("Volviendo al menú principal.\n")
 
