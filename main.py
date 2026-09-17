@@ -22,7 +22,7 @@ def login(max_intentos):
         contrasenia = input("Ingrese la contraseña: ")
 
         if usuario == usuario_admin and contrasenia == contrasenia_admin:
-            print(f"{Fore.GREEN}Login exitoso!")
+            print(f"{Fore.GREEN}¡Login exitoso!")
             print("Ingresó como administrador.\n")
             return usuario_admin
 
@@ -50,7 +50,7 @@ def submenu_clientes():
 
     while opcion_clientes != "6":
 
-        print("\n--- CLIENTES ---")
+        print(f"{Fore.MAGENTA}{'CLIENTES'.center(25)}\n{'-' * 25}")
         print("1- Agregar cliente")
         print("2- Modificar cliente")
         print("3- Eliminar cliente")
@@ -74,7 +74,7 @@ def submenu_clientes():
         elif opcion_clientes == "6":
             print("Volviendo al menú principal... \n")
         else:
-            print("Opción inválida.")
+            print(f"{Fore.RED}Opción no válida.")
 
 
 # Submenú medicamentos
@@ -83,7 +83,7 @@ def submenu_medicamentos():
 
     while opcion_medicamentos != "5":
 
-        print("\n--- MEDICAMENTOS ---")
+        print(f"{Fore.MAGENTA}{'MEDICAMENTOS'.center(25)}\n{'-' * 25}")        
         print("1- Crear medicamento")
         print("2- Modificar medicamento")
         print("3- Eliminar medicamento")
@@ -104,7 +104,7 @@ def submenu_medicamentos():
         elif opcion_medicamentos == "5":
             print("Volviendo al menú principal.\n")
         else:
-            print("Opción inválida.")
+            print(f"{Fore.RED}Opción no válida.")
 
 
 # Submenú de ventas
@@ -113,7 +113,7 @@ def submenu_ventas():
 
     while opcion_ventas != "5":
 
-        print("\n--- VENTAS ---")
+        print(f"{Fore.MAGENTA}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Crear venta")
         print("2- Modificar venta")
         print("3- Eliminar venta")
@@ -134,7 +134,7 @@ def submenu_ventas():
         elif opcion_ventas == "5":
             print("Volviendo al menú principal.\n")
         else:
-            print("Opción inválida.")
+            print(f"{Fore.RED}Opción no válida.")
 
 
 '''
@@ -208,7 +208,7 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:
-                print(f"{Fore.BLUE}Opción no válida.")
+                print(f"{Fore.RED}Opción no válida.")
 
     elif tipo_usuario == "usuario":
         opcion = ""
@@ -220,9 +220,9 @@ def mostrar_menu(tipo_usuario):
             print("1- Ver Clientes")
             print("2- Ver Medicamentos")
             print("3- Ver Ventas")
-            print("4- Salir")
+            print("4- Salir\n")
 
-            opcion = input("\nSeleccione una opción: ")
+            opcion = input("Seleccione una opción: ")
             print()
 
             if opcion == "1":
@@ -234,10 +234,10 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "4":
                 print("Saliendo del programa.")
             else:
-                print("Opción no válida.")
+                print(f"{Fore.RED}Opción no válida.")
 
     else:
-        print("Acceso denegado.")
+        print(f"{Fore.RED}Acceso denegado.")
 
 
 

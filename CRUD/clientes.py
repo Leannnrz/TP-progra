@@ -24,14 +24,14 @@ FUNCIONES CRUD DE CLIENTES
 # Para agregar un cliente
 def alta_cliente():
 
-    print(" Agregar cliente ".center(30, "="))
+    print(f"{Fore.CYAN}" + " Agregar cliente ".center(30, "="))
     codigo = input("Ingrese el código del cliente: ")
 
     cantidad = 0  # No existe el código, si existe se convierte en 1
 
     for cliente in lista_clientes:  # Recorremos la fila
         if cliente["ID"] == codigo:     # El primer elemento de la fila es el código
-            cantidad =+ 1
+            cantidad = cantidad + 1
 
     while cantidad > 0:
         print(f"{Fore.RED}Error: el cliente ya existe.")
@@ -41,7 +41,7 @@ def alta_cliente():
 
         for cliente in lista_clientes:
             if cliente["ID"] == codigo:
-                cantidad =+ 1
+                cantidad = cantidad + 1
 
     nombre = input("Ingrese el nombre: ")
     edad = int(input("Ingrese la edad: "))
@@ -71,7 +71,7 @@ def alta_cliente():
 # Para modificar un cliente
 def modificar_cliente():
 
-    print("\n--- MODIFICAR CLIENTE ---")
+    print(f"{Fore.CYAN}" + " Modificar cliente ".center(30, "="))
     codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
@@ -102,7 +102,7 @@ def modificar_cliente():
 # Para eliminar un cliente
 def eliminar_cliente():
 
-    print("\n--- ELIMINAR CLIENTE ---")
+    print(f"{Fore.CYAN}" + " Eliminar cliente ".center(30, '='))
     codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
@@ -122,7 +122,7 @@ def eliminar_cliente():
 def mostrar_clientes():
     ancho_total = 70
     print()
-    print(" LISTADO DE CLIENTES ".center(70, "="))
+    print(f"{Fore.CYAN}" + " LISTADO DE CLIENTES ".center(70, '='))
     print(f'{"Código":<12}{"Nombre":<28}{"Edad":<10}{"Cobertura":>20}')
     print("-" * ancho_total)
 
