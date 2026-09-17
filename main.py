@@ -35,6 +35,7 @@ def login(max_intentos):
             intentos += 1
             print(f"{Fore.RED}Usuario o contraseña incorrectos.")
             print("Intentos restantes:", max_intentos - intentos)
+            print()
 
     print("Ha superado el límite de intentos.")
     return
@@ -58,6 +59,7 @@ def submenu_clientes():
         print("6- Volver.\n")
 
         opcion_clientes = input("Seleccione una opción: ")
+        print()
 
         if opcion_clientes == "1":
             clientes.alta_cliente()
@@ -89,6 +91,7 @@ def submenu_medicamentos():
         print("5- Volver. \n")
 
         opcion_medicamentos = input("Seleccione una opción: ")
+        print()
 
         if opcion_medicamentos == "1":
             medicamentos.alta_medicamento()
@@ -118,6 +121,7 @@ def submenu_ventas():
         print("5- Volver.\n")
 
         opcion_ventas = input("Seleccione una opción: ")
+        print()
 
         if opcion_ventas == "1":
             ventas.alta_venta()
@@ -181,21 +185,17 @@ def mostrar_menu(tipo_usuario):
         opcion = ""
 
         while opcion != "5":
-            print(f"{Fore.BLUE}{Style.BRIGHT}\n----------------------- \nMenú Principal\n-----------------------")
-            print("\n1- Clientes")
-            print("2- Medicamentos")
-            print("3- Ventas")
-            print("4- Estadísticas")
-            # Realizar una consulta
-            #print("4- Realizar una consulta")
-            print("4- Estadísticas")
-            print("5- Salir\n")
+            print(f"{Fore.BLUE}{Style.BRIGHT}{'-' * 25}\n{'Menú Principal'.center(25)}\n{'-' * 25}")
+            print(f"{Fore.BLUE}{Style.BRIGHT}\n1- Clientes")
+            print(f"{Fore.BLUE}{Style.BRIGHT}2- Medicamentos")
+            print(f"{Fore.BLUE}{Style.BRIGHT}3- Ventas")
+            print(f"{Fore.BLUE}{Style.BRIGHT}4- Estadísticas")
+            print(f"{Fore.BLUE}{Style.BRIGHT}5- Salir\n")
 
             opcion = input("Seleccione una opción: ")
             print()
 
             if opcion == "1":
-                #clientes.alta_cliente()
                 submenu_clientes()
             elif opcion == "2":
                 submenu_medicamentos()
@@ -208,7 +208,7 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:
-                print("Opción no válida.")
+                print(f"{Fore.BLUE}Opción no válida.")
 
     elif tipo_usuario == "usuario":
         opcion = ""
