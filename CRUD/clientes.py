@@ -120,12 +120,12 @@ def mostrar_clientes():
 
     print("\n---- LISTADO DE CLIENTES ----\n")
 
-    for i in range(len(matriz_clientes)):
-        print("Código:", matriz_clientes[i][0])
-        print("Nombre:", matriz_clientes[i][1])
-        print("Edad:", matriz_clientes[i][2])
+    for i in clientes:
+        print("Código:", clientes["ID"])
+        print("Nombre:", clientes["Nombre"])
+        print("Edad:", clientes["Edad"])
         
-        if matriz_clientes[i][3] == 1:
+        if clientes["Cobertura"] == 1:
             print("Cobertura: Particular")
         else:
             print("Cobertura: Obra Social")
