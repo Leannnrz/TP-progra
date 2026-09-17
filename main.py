@@ -137,44 +137,6 @@ def submenu_ventas():
             print(f"{Fore.RED}Opción no válida.")
 
 
-'''
-#Submenú de Estadisticas
-def matriz_estadisticas():
-
-    matriz = [
-        [0, 0],  # Particular
-        [0, 0]   # Obra Social
-    ]
-
-    for i in range(len(id_venta)):
-
-        # buscar posición del cliente
-        posicion_cliente = -1
-
-        for i_cliente in range(len(id_cliente)):
-            if id_cliente[i_cliente] == id_cliente_venta[i]:
-                posicion_cliente = i_cliente
-
-        # fila = cobertura 
-        fila = tipo_cobertura[posicion_cliente] - 1
-
-        # columna = receta 
-        columna = presento_receta[i] - 1
-
-        matriz[fila][columna] += 1
-
-    return matriz
-
-
-def mostrar_estadistica(matriz):
-
-    print("\nVENTAS POR COBERTURA Y RECETA\n")
-
-    print("              Con receta   Sin receta")
-    print("Particular    ", matriz[0][0], "          ", matriz[0][1])
-    print("Obra Social   ", matriz[1][0], "          ", matriz[1][1])
-'''
-
 
 '''
 MENÚ PRINCIPAL
@@ -203,8 +165,6 @@ def mostrar_menu(tipo_usuario):
                 submenu_ventas()
             elif opcion == "4":
                 ...
-                #matriz = matriz_estadisticas()
-                #mostrar_estadistica(matriz)
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:
