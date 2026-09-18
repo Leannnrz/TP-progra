@@ -240,3 +240,73 @@ def ganancia_x_medicamento():
     print("Ganancias Totales del Medicamento: ",recaudacion_total_formal)
     print("-" * ancho_total)
     print()     
+
+def stats_clientes():
+    print
+    print("Ver Porcentajes de Clientes: ")
+    print("1- Por Edad")
+    print("2- Por Cobertura")
+    opcion_stats = input("Ingrese una Opcion: ")
+
+    while opcion_stats != "1" and opcion_stats != "2":
+        print("Opcion Invalida")
+        print("Ver Porcentajes de Clientes: ")
+        print("1- Por Edad")
+        print("2- Por Cobertura")
+        opcion_stats = input("Ingrese Una Opcion: ")
+
+    lista_edades = []
+    for h in range(len(matriz_clientes)): 
+        lista_edades.append(matriz_clientes[h][2])
+
+    if opcion_stats == "1":
+        edad = int(input("Determine el rango de edad: "))
+        while edad < 0 and edad > 100:
+            print("Edad no Valida")
+            edad = int(input("Determine el rango de edad: "))
+
+        
+        edades_mayores_iguales = []
+        edades_menores = []
+        for i in range (len(lista_edades)):
+            if int(lista_edades[i]) <= edad:
+                edades_mayores_iguales.append(lista_edades[i])
+            else:
+                edades_menores.append(lista_edades[i])
+
+        len_edades = int(len(lista_edades))
+        len_edades_mayores = int(len(edades_mayores_iguales))
+        len_edades_menores = int(len(edades_menores))
+        porcentajes_mayores = len_edades_mayores * 100 / len_edades
+        porcentaje_menores = len_edades_menores * 100 / len_edades
+
+        print("-" * 100)
+        print("El porcentaje de Clientes que superan la edad", edad, "es del", porcentajes_mayores,"%")
+        print("Mientras que el porcentaje de Clientes menores a esa edad es del", porcentaje_menores, "%")
+        print("-" * 100) 
+
+    else:
+        lista_coberturas = []
+        for h in range(len(matriz_clientes)): 
+            lista_edades.append(matriz_clientes[h][3])
+             
+        cobertura_obra_social = []
+        cobertura_particular = []
+        for i in range (len(lista_coberturas)):
+            if int(lista_coberturas[i]) == 1:
+                cobertura_particular.append(lista_coberturas[i])
+            else:
+                cobertura_obra_social.append(lista_coberturas[i])
+        
+        len_ = int(len(lista_coberturas))
+        len_edades_mayores = int(len(cobertura_obra_social))
+        len_edades_menores = int(len(cobertura_obra_social))
+        
+        porcentajes_mayores = len_edades_mayores * 100 / len_edades
+        porcentaje_menores = len_edades_menores * 100 / len_edades
+        
+        print("-" * 100)
+        print("El porcentaje de Clientes que superan la edad", edad, "es del", porcentajes_mayores,"%")
+        print("Mientras que el porcentaje de Clientes menores a esa edad es del", porcentaje_menores, "%")
+        print("-" * 100) 
+        
