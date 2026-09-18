@@ -1,9 +1,18 @@
-# Listas de ventas
-id_venta = ["V001", "V002", "V003", "V004", "V005", "V006", "V007", "V008", "V009", "V010"]
-id_cliente_venta = ["C001", "C003", "C002", "C001", "C005", "C007", "C003", "C008", "C010", "C005"]
-id_medicamento_venta = ["M001", "M003", "M002", "M005", "M007", "M004", "M003", "M010", "M009", "M001"]
-cantidad_ventas = [2, 1, 3, 1, 2, 1, 1, 2, 1, 4]
-presento_receta = [2, 1, 2, 2, 1, 2, 1, 1, 1, 2]
+#Matriz ventas
+matriz_ventas = [
+    ("V001", "C001", "M001", 2, 2),
+    ("V002", "C003", "M003", 1, 1),
+    ("V003", "C002", "M002", 3, 2),
+    ("V004", "C001", "M005", 1, 2),
+    ("V005", "C005", "M007", 2, 1),
+    ("V006", "C007", "M004", 1, 2),
+    ("V007", "C003", "M003", 1, 1),
+    ("V008", "C008", "M010", 2, 1),
+    ("V009", "C010", "M009", 1, 1),
+    ("V010", "C005", "M001", 4, 2)
+]
+
+
 
 '''
 FUNCIÓN VENTAS (CRUD)
@@ -14,21 +23,23 @@ def alta_venta():
     print("\n--- AGREGAR VENTA ---")
     codigo = input("Ingrese código de venta: ")
 
-    while codigo in id_venta:
-        print("Error: La venta ya existe.")
-        codigo = input("Ingrese otro código: ")
-
-    cliente = input("Ingrese el código del cliente: ")
-    
-    while cliente not in id_cliente:
-        print("Error: Cliente inexistente.")
-        cliente = input("Ingrese el código del cliente: ")
+    cantidad = 0  # No existe el código, si existe se convierte en 1
         
-    medicamento = input("Ingrese el código del medicamento: ")
-    
-    while medicamento not in id_medicamento:
-        print("Error: Medicamento inexistente.")
-        medicamento = input("Ingrese el código del medicamento: ")
+    for fila in matriz_ventas:  # Recorremos la fila
+            if fila[0] == codigo:         # El primer elemento de la fila es el código
+                cantidad = cantidad + 1
+
+    while cantidad > 0:
+            print("Error: la venta ya existe.")
+            codigo = input("Ingrese otro código: ")
+        
+            cantidad = 0
+
+            for fila in matriz_ventas:
+                        if fila[0] == codigo:
+                            cantidad = cantidad + 1
+
+
 
     ventas = int(input("Ingrese la cantidad de ventas: "))
     
@@ -124,40 +135,31 @@ def eliminar_venta():
     codigo = input("Ingrese código de la venta: ")
     posicion = -1
 
-    for i in range(len(id_venta)):
-        if id_venta[i] == codigo:
+    for i in range(len(matriz_ventas)):
+        if matriz_ventas[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
         print("Venta no encontrada.")
         return
 
-    id_venta.pop(posicion)
-    id_cliente_venta.pop(posicion)
-    id_medicamento_venta.pop(posicion)
-    cantidad_ventas.pop(posicion)
-    presento_receta.pop(posicion)
-
+    matriz_ventas.pop(posicion)
     print("Venta eliminada correctamente.")
-
 
 
 # Para mostrar lista de ventas
 def mostrar_ventas():
 
-    print("\n--- LISTADO DE VENTAS ORDENADAS POR CANTIDAD---")
+    print("\n--- LISTADO DE VENTAS ---")
 
-    for i in range(len(id_cliente_venta)):
-
-        print("Código venta:", id_venta[i])
-        print("Código cliente:", id_cliente_venta[i])
-        print("Código medicamento:", id_medicamento_venta[i])
-        print("Cantidad de ventas:", cantidad_ventas[i])
-        
-        if presento_receta[i] == 1:
-            print("Presento receta: Si")
+    for venta in matriz_ventas:
+        if venta[4] == 1:
+            receta = "Si"
         else:
-            print("Presento receta: No\n")
+            receta = "No"
+        
+            print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{venta[4]:>8}')
+            
 
         print("----------------------")
 
