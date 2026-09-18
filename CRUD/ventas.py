@@ -1,3 +1,8 @@
+from clientes import matriz_clientes
+from medicamentos import matriz_medicamentos
+
+
+
 #Matriz ventas
 matriz_ventas = [
     ("V001", "C001", "M001", 2, 2),
@@ -17,7 +22,9 @@ matriz_ventas = [
 '''
 FUNCIÓN VENTAS (CRUD)
 '''
-# Para agregar una venta
+#-------------------------
+# Agregar una venta
+#-------------------------
 def alta_venta():
 
     print("\n--- AGREGAR VENTA ---")
@@ -39,38 +46,69 @@ def alta_venta():
                         if fila[0] == codigo:
                             cantidad = cantidad + 1
 
+    cliente = input("Ingrese código de cliente: ")
+    cantidad = 0
 
+    # Verifica que el cliente exista
+    for fila in matriz_clientes:
+        if fila[0] == cliente:
+            cantidad = cantidad + 1
+
+    while cantidad == 0:
+        print("Error: Cliente inexistente.")
+        cliente = input("Ingrese código de cliente: ")
+
+        cantidad = 0
+
+        for fila in matriz_clientes:
+            if fila[0] == cliente:
+                cantidad = cantidad + 1
+
+    medicamento = input("Ingrese el código del medicamento: ")
+    cantidad = 0
+    requiere_receta = 0
+
+    # Verifica que el medicamento exista
+    for fila in matriz_medicamentos:
+        if fila[0] == medicamento:
+            cantidad = cantidad + 1
+            requiere_receta = fila[5]
+
+    while cantidad == 0:
+        print("Error: Medicamento inexistente.")
+        medicamento = input("Ingrese el código del medicamento: ")
+
+        cantidad = 0
+        requiere_receta = 0
+
+        for fila in matriz_medicamentos:
+            if fila[0] == medicamento:
+                cantidad = cantidad + 1
+                requiere_receta = fila[5]
 
     ventas = int(input("Ingrese la cantidad de ventas: "))
-    
     while ventas <= 0:
         print("Error: la cantidad debe ser mayor a 0.")
         ventas = int(input("Ingrese la cantidad de ventas: "))
-        
+
+    # Verifica receta
     receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
-    
+    while receta != 1 and receta != 2:
+        print("Opción inválida: Ingrese una de las opciones.")
+        receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
 
-    permitido = 1  # 1= la venta se puede realizar, 0= la venta no se permite
+    # Verificar si el medicamento requiere receta
+    if requiere_receta == 1 and receta == 2:
+        print("Error: Este medicamento requiere receta.")
+        return
 
-    for i in range(len(id_medicamento)):
-        if id_medicamento[i] == medicamento:
+    matriz_ventas.append([codigo, cliente, medicamento, ventas, receta])
 
-            if requiere_receta[i] == 1 and receta == 2:  #Para revisar si la receta es obligatoria y no se presento
-                print("Error: Este medicamento requiere receta.")
-                permitido = 0
+    print("Venta agregada correctamente.")
 
-    if permitido == 1:
-        id_venta.append(codigo)
-        id_cliente_venta.append(cliente)
-        id_medicamento_venta.append(medicamento)
-        cantidad_ventas.append(ventas)
-        presento_receta.append(receta)
-
-        print("Venta agregada correctamente.")
-
-
-
-# Para modificar una venta
+#-------------------------
+# Modificar una venta
+#-------------------------
 def modificar_venta():
 
     print("\n--- MODIFICAR VENTA ---")
@@ -157,8 +195,9 @@ def modificar_venta():
     print("Venta modificada correctamente.")
 
 
-
-# Para eliminar una venta
+#-------------------------
+# Eliminar una venta
+#-------------------------
 def eliminar_venta():
 
     print("\n--- ELIMINAR VENTA ---")
@@ -176,8 +215,9 @@ def eliminar_venta():
     matriz_ventas.pop(posicion)
     print("Venta eliminada correctamente.")
 
-
-# Para mostrar lista de ventas
+#-------------------------
+# Mostrar lista de ventas
+#-------------------------
 def mostrar_ventas():
 
     print("\n--- LISTADO DE VENTAS ---")
