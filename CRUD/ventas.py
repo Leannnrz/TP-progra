@@ -1,5 +1,6 @@
 from clientes import matriz_clientes
 from medicamentos import matriz_medicamentos
+import re
 
 
 
@@ -28,65 +29,111 @@ FUNCIÓN VENTAS (CRUD)
 def alta_venta():
 
     print("\n--- AGREGAR VENTA ---")
-    codigo = input("Ingrese código de venta: ")
 
-    cantidad = 0  # No existe el código, si existe se convierte en 1
-        
-    for fila in matriz_ventas:  # Recorremos la fila
-            if fila[0] == codigo:         # El primer elemento de la fila es el código
-                cantidad = cantidad + 1
+    codigo = input("Ingrese código de venta: ")
+    patron = "^V[0-9]{3}$"
+    resultado = re.search(patron, codigo)
+    valido = 0 # Suponiendo que el codigo no es correcto
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato V001.")
+        codigo = input("Ingrese código de venta: ")
+
+        resultado = re.search(patron, codigo)
+
+        if resultado:
+            valido = 1
+
+    # Verifica que el código de venta no exista
+    cantidad = 0
+
+    for fila in matriz_ventas:
+        if fila[0] == codigo:
+            cantidad = cantidad + 1
 
     while cantidad > 0:
-            print("Error: la venta ya existe.")
-            codigo = input("Ingrese otro código: ")
-        
+        print("Error: la venta ya existe.")
+        codigo = input("Ingrese otro código de venta: ")
+
+        # Verifica nuevamente el formato
+        resultado = re.search(patron, codigo)
+
+        if resultado:
             cantidad = 0
 
             for fila in matriz_ventas:
-                        if fila[0] == codigo:
-                            cantidad = cantidad + 1
+                if fila[0] == codigo:
+                    cantidad = cantidad + 1
 
+        else:
+            print("Error: el código debe tener el formato V001.")
+
+
+    # Código de cliente
     cliente = input("Ingrese código de cliente: ")
-    cantidad = 0
+    patron = "^C[0-9]{3}$"
+    resultado = re.search(patron, cliente)
+    valido = 0
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato C001.")
+        cliente = input("Ingrese código de cliente: ")
+
+        resultado = re.search(patron, cliente)
+
+        if resultado:
+            valido = 1
 
     # Verifica que el cliente exista
+    cantidad = 0
+
     for fila in matriz_clientes:
         if fila[0] == cliente:
             cantidad = cantidad + 1
 
-    while cantidad == 0:
+    if cantidad == 0:
         print("Error: Cliente inexistente.")
-        cliente = input("Ingrese código de cliente: ")
+        return
 
-        cantidad = 0
-
-        for fila in matriz_clientes:
-            if fila[0] == cliente:
-                cantidad = cantidad + 1
-
+    # Código de medicamento
     medicamento = input("Ingrese el código del medicamento: ")
+    patron = "^M[0-9]{3}$"
+    resultado = re.search(patron, medicamento)
+    valido = 0
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato M001.")
+        medicamento = input("Ingrese el código del medicamento: ")
+
+        resultado = re.search(patron, medicamento)
+        if resultado:
+            valido = 1
+
+    # Verifica que el medicamento exista
     cantidad = 0
     requiere_receta = 0
 
-    # Verifica que el medicamento exista
     for fila in matriz_medicamentos:
         if fila[0] == medicamento:
             cantidad = cantidad + 1
             requiere_receta = fila[5]
 
-    while cantidad == 0:
+    if cantidad == 0:
         print("Error: Medicamento inexistente.")
-        medicamento = input("Ingrese el código del medicamento: ")
+        return
 
-        cantidad = 0
-        requiere_receta = 0
-
-        for fila in matriz_medicamentos:
-            if fila[0] == medicamento:
-                cantidad = cantidad + 1
-                requiere_receta = fila[5]
-
+    # Cantidad de ventas
     ventas = int(input("Ingrese la cantidad de ventas: "))
+
     while ventas <= 0:
         print("Error: la cantidad debe ser mayor a 0.")
         ventas = int(input("Ingrese la cantidad de ventas: "))
@@ -106,13 +153,31 @@ def alta_venta():
     print("Venta agregada correctamente.")
 
 
+
 #-------------------------
 # Modificar una venta
 #-------------------------
 def modificar_venta():
 
     print("\n--- MODIFICAR VENTA ---")
+
+    # Código de venta
     codigo = input("Ingrese código de venta: ")
+    patron = "^V[0-9]{3}$"
+    resultado = re.search(patron, codigo)
+    valido = 0
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato V001.")
+        codigo = input("Ingrese código de venta: ")
+        resultado = re.search(patron, codigo)
+
+        if resultado:
+            valido = 1
+
     posicion = -1
 
     for i in range(len(matriz_ventas)):
@@ -122,70 +187,91 @@ def modificar_venta():
     if posicion == -1:
         print("Venta no encontrada.")
         return
-    
+
+    # Código de cliente
     cliente = input("Nuevo código de cliente: ")
-    cantidad = 0
+    patron = "^C[0-9]{3}$"
+    resultado = re.search(patron, cliente)
+    valido = 0
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato C001.")
+        cliente = input("Nuevo código de cliente: ")
+
+        resultado = re.search(patron, cliente)
+
+        if resultado:
+            valido = 1
 
     # Verifica que el cliente exista
+    cantidad = 0
+
     for fila in matriz_clientes:
         if fila[0] == cliente:
             cantidad = cantidad + 1
 
-    while cantidad == 0:
+    if cantidad == 0:
         print("Error: Cliente inexistente.")
-        cliente = input("Nuevo código de cliente: ")
+        return
 
-        cantidad = 0
-
-        for fila in matriz_clientes:
-            if fila[0] == cliente:
-                cantidad = cantidad + 1
-        
-
+    # Código de medicamento
     medicamento = input("Nuevo código de medicamento: ")
+    patron = "^M[0-9]{3}$"
+    resultado = re.search(patron, medicamento)
+    valido = 0
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato M001.")
+        medicamento = input("Nuevo código de medicamento: ")
+        resultado = re.search(patron, medicamento)
+
+        if resultado:
+            valido = 1
+
+    # Verifica que el medicamento exista
     cantidad = 0
     requiere_receta = 0
 
-    # Verifica que el medicamento exista
     for fila in matriz_medicamentos:
         if fila[0] == medicamento:
             cantidad = cantidad + 1
             requiere_receta = fila[5]
 
-    while cantidad == 0:
+    if cantidad == 0:
         print("Error: Medicamento inexistente.")
-        medicamento = input("Nuevo código de medicamento: ")
+        return
 
-        cantidad = 0
-        requiere_receta = 0
-
-        for fila in matriz_medicamentos:
-            if fila[0] == medicamento:
-                cantidad = cantidad + 1
-                requiere_receta = fila[5]
-
+    # Nueva cantidad
     cantidad_venta = int(input("Ingrese nueva cantidad: "))
+
     while cantidad_venta <= 0:
         print("Error: la cantidad debe ser mayor a 0.")
         cantidad_venta = int(input("Ingrese nueva cantidad vendida: "))
 
-    receta = int(input("¿Presentó receta? (1-Si / 2-No)"))
+    # Verificar receta
+    receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
+
     while receta != 1 and receta != 2:
         print("Opción inválida: Ingrese una de las opciones.")
         receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
-    
+
     # Verificar si el medicamento requiere receta
     if requiere_receta == 1 and receta == 2:
         print("Error: Este medicamento requiere receta.")
         return
 
-
     matriz_ventas[posicion][1] = cliente
     matriz_ventas[posicion][2] = medicamento
     matriz_ventas[posicion][3] = cantidad_venta
     matriz_ventas[posicion][4] = receta
-
     print("Venta modificada correctamente.")
+
 
 
 #-------------------------
@@ -194,7 +280,24 @@ def modificar_venta():
 def eliminar_venta():
 
     print("\n--- ELIMINAR VENTA ---")
+
     codigo = input("Ingrese código de la venta: ")
+    patron = "^V[0-9]{3}$"
+    resultado = re.search(patron, codigo)
+    valido = 0
+
+    if resultado:
+        valido = 1
+
+    while valido == 0:
+        print("Error: el código debe tener el formato V001.")
+        codigo = input("Ingrese código de la venta: ")
+
+        resultado = re.search(patron, codigo)
+
+        if resultado:
+            valido = 1
+
     posicion = -1
 
     for i in range(len(matriz_ventas)):
@@ -206,7 +309,9 @@ def eliminar_venta():
         return
 
     matriz_ventas.pop(posicion)
+
     print("Venta eliminada correctamente.")
+
 
 #-------------------------
 # Mostrar lista de ventas
