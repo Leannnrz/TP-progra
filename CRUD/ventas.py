@@ -103,8 +103,8 @@ def alta_venta():
         return
 
     matriz_ventas.append([codigo, cliente, medicamento, ventas, receta])
-
     print("Venta agregada correctamente.")
+
 
 #-------------------------
 # Modificar una venta
@@ -127,7 +127,7 @@ def modificar_venta():
     cantidad = 0
 
     # Verifica que el cliente exista
-    for fila in matriz_ventas:
+    for fila in matriz_clientes:
         if fila[0] == cliente:
             cantidad = cantidad + 1
 
@@ -170,20 +170,13 @@ def modificar_venta():
         cantidad_venta = int(input("Ingrese nueva cantidad vendida: "))
 
     receta = int(input("¿Presentó receta? (1-Si / 2-No)"))
-    
     while receta != 1 and receta != 2:
-        print("Error: Ingrese una de las opciones.")
+        print("Opción inválida: Ingrese una de las opciones.")
         receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
     
-    permitido = 1
-    
-    for i in range(len(matriz_medicamentos)):
-        if matriz_medicamentos[i] == medicamento:
-            if requiere_receta[i][0] == 1 and receta == 2:
-                print("Error: Este medicamento requiere receta.")
-                permitido = 0
-
-    if permitido == 0:
+    # Verificar si el medicamento requiere receta
+    if requiere_receta == 1 and receta == 2:
+        print("Error: Este medicamento requiere receta.")
         return
 
 
@@ -221,6 +214,8 @@ def eliminar_venta():
 def mostrar_ventas():
 
     print("\n--- LISTADO DE VENTAS ---")
+    print(f'{"Código":<8}{"Cliente":<20}{"Medicamento":<20}{"Cantidad":>10}{"Receta":>8}')
+    print("-" * 66)
 
     for venta in matriz_ventas:
         if venta[4] == 1:
@@ -228,8 +223,8 @@ def mostrar_ventas():
         else:
             receta = "No"
         
-            print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{venta[4]:>8}')
+            print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{receta[4]:>8}')
             
 
-        print("----------------------")
+    print("----------------------")
 
