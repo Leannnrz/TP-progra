@@ -135,4 +135,4 @@ def mostrar_clientes():
         else:
             cobertura = "Obra Social"
 
-        print(f'{cliente["ID"]:<12}{cliente["Nombre"]:<28}{cliente["Edad"]:<10}{cobertura:>20}')
+        print(f'{cliente["ID"]:<12}{cliente["Nombre"]:<28}{cliente["Edad"]:<10}{cobertura:>20}\n')

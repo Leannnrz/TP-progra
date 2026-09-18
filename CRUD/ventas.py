@@ -326,10 +326,9 @@ def mostrar_ventas():
         else:
             receta = "No"
         
-            print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{receta[4]:>8}')
+            print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{receta:>8}\n')
             
 
-    print("----------------------")
 
 #-------------------------
 # Buscar ventas

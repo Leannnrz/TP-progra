@@ -124,5 +124,5 @@ def mostrar_medicamentos():
         else:
             receta = "No"
 
-        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10.2f}{medicamento[4]:>8}{receta:>10}')
+        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10.2f}{medicamento[4]:>8}{receta:>10}\n')
     
