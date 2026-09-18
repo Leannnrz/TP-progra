@@ -30,7 +30,7 @@ def alta_medicamento():
             cantidad = cantidad + 1
     
     while cantidad > 0:
-        print("Error: el cliente ya existe.")
+        print("Error: el medicamento ya existe.")
         codigo = input("Ingrese otro código: ")
     
         cantidad = 0
@@ -44,15 +44,16 @@ def alta_medicamento():
         codigo = input("Ingrese otro código: ")'''
 
     nombre = input("Ingrese el nombre: ")
+    laboratorio = input("Ingrese el laboratorio: ")
     precio = int(input("Ingrese el precio: "))
     stock = int(input("Ingrese el stock: "))
 
     receta = int(input("Requiere receta (1- Si / 2- No): "))
     while receta != 1 and receta != 2:
-        print ("Opción inválida: Ingrese una de las opciones.")
+        print ("Opción no válida: Ingrese una de las opciones.")
         receta = int(input("Requiere receta (1- Si / 2- No): "))
 
-    matriz_medicamentos.append([codigo, nombre, precio, stock, receta])  
+    matriz_medicamentos.append([codigo, nombre, laboratorio, precio, stock, receta])  
     print("Medicamento agregado correctamente.\n")
 
 
@@ -72,11 +73,20 @@ def modificar_medicamento():
         return
 
     matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
-    matriz_medicamentos[posicion][2] = int(input("Nuevo precio: "))
-    matriz_medicamentos[posicion][3] = int(input("Nuevo stock: "))
-    matriz_medicamentos[posicion][4] = int(input("Requiere receta? (1-Si / 2-No): \n"))
+    matriz_medicamentos[posicion][2] = int(input("Nuevo laboratorio: "))
+    matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
+    matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
+
+    receta = int(input("Requiere receta? (1-Si / 2-No): "))
+    while receta != 1 and receta != 2:
+        print("Opción no válida: Ingrese una de las opciones.")
+
+        receta = int(input("Requiere receta? (1-Si / 2-No): "))
+
+    matriz_medicamentos[posicion][5] = receta
 
     print("Medicamento modificado correctamente.")
+
 
 
 # Para eliminar un medicamento
@@ -93,11 +103,6 @@ def eliminar_medicamento():
     if posicion == -1:
         print("Medicamento no encontrado.")
         return
-    '''
-    for i in range(len(id_medicamento_venta)): # Verifica que el medicamento no este asociado a una venta.
-        if id_medicamento_venta[i] == codigo:
-            print("No se puede eliminar, el medicamento tiene ventas asociadas.")
-            return'''
 
     matriz_medicamentos.pop(posicion)
     print("Medicamento eliminado correctamente.")
