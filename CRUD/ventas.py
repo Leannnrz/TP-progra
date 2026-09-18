@@ -1,6 +1,6 @@
+from FUNCIONES import validaciones
 from .medicamentos import matriz_medicamentos
 from .clientes import matriz_clientes
-
 
 
 # MATRIZ DE VENTAS
@@ -292,3 +292,49 @@ def mostrar_ventas():
             print("Presentó receta: No")
 
         print("----------------------")
+
+# BUSCAR VENTAS
+
+def buscar_ventas():
+
+    print("\n--- BUSCAR VENTA ---")
+
+    busqueda = input(
+        "Ingrese código de cliente o código de medicamento: "
+    )
+
+    encontrados = 0
+
+    for venta in matriz_ventas:
+
+        resultado_cliente = validaciones.buscar_texto(
+            venta[1],
+            busqueda
+        )
+
+        resultado_medicamento = validaciones.buscar_texto(
+            venta[2],
+            busqueda
+        )
+
+        if resultado_cliente or resultado_medicamento:
+
+            print(
+                "Código venta:", venta[0],
+                "- Cliente:", venta[1],
+                "- Medicamento:", venta[2],
+                "- Cantidad:", venta[3]
+            )
+
+            if venta[4] == 1:
+                print("Presentó receta: Si")
+            else:
+                print("Presentó receta: No")
+
+            print("----------------------")
+
+            encontrados = encontrados + 1
+
+    if encontrados == 0:
+
+        print("No se encontraron ventas.")
