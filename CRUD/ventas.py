@@ -77,41 +77,71 @@ def modificar_venta():
     codigo = input("Ingrese código de venta: ")
     posicion = -1
 
-    for i in range(len(id_venta)):
-        if id_venta[i] == codigo:
+    for i in range(len(matriz_ventas)):
+        if matriz_ventas[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
         print("Venta no encontrada.")
         return
-
+    
     cliente = input("Nuevo código de cliente: ")
+    cantidad = 0
 
-    while cliente not in id_cliente:
+    # Verifica que el cliente exista
+    for fila in matriz_ventas:
+        if fila[0] == cliente:
+            cantidad = cantidad + 1
+
+    while cantidad == 0:
         print("Error: Cliente inexistente.")
         cliente = input("Nuevo código de cliente: ")
 
-    medicamento = input("Nuevo código de medicamento: ")
+        cantidad = 0
 
-    while medicamento not in id_medicamento:
+        for fila in matriz_clientes:
+            if fila[0] == cliente:
+                cantidad = cantidad + 1
+        
+
+    medicamento = input("Nuevo código de medicamento: ")
+    cantidad = 0
+    requiere_receta = 0
+
+    # Verifica que el medicamento exista
+    for fila in matriz_medicamentos:
+        if fila[0] == medicamento:
+            cantidad = cantidad + 1
+            requiere_receta = fila[5]
+
+    while cantidad == 0:
         print("Error: Medicamento inexistente.")
         medicamento = input("Nuevo código de medicamento: ")
+
+        cantidad = 0
+        requiere_receta = 0
+
+        for fila in matriz_medicamentos:
+            if fila[0] == medicamento:
+                cantidad = cantidad + 1
+                requiere_receta = fila[5]
+
+    cantidad_venta = int(input("Ingrese nueva cantidad: "))
+    while cantidad_venta <= 0:
+        print("Error: la cantidad debe ser mayor a 0.")
+        cantidad_venta = int(input("Ingrese nueva cantidad vendida: "))
 
     receta = int(input("¿Presentó receta? (1-Si / 2-No)"))
     
     while receta != 1 and receta != 2:
         print("Error: Ingrese una de las opciones.")
         receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
-        
-    cantidad = int(input("Ingrese nueva cantidad vendida: "))
-    while cantidad <= 0:
-        print("Error: la cantidad debe ser mayor a 0.")
     
     permitido = 1
     
-    for i in range(len(id_medicamento)):
-        if id_medicamento[i] == medicamento:
-            if requiere_receta[i] == 1 and receta == 2:
+    for i in range(len(matriz_medicamentos)):
+        if matriz_medicamentos[i] == medicamento:
+            if requiere_receta[i][0] == 1 and receta == 2:
                 print("Error: Este medicamento requiere receta.")
                 permitido = 0
 
@@ -119,10 +149,10 @@ def modificar_venta():
         return
 
 
-    id_cliente_venta[posicion] = cliente
-    id_medicamento_venta[posicion] = medicamento
-    cantidad_ventas[posicion] = cantidad
-    presento_receta[posicion] = receta
+    matriz_ventas[posicion][1] = cliente
+    matriz_ventas[posicion][2] = medicamento
+    matriz_ventas[posicion][3] = cantidad_venta
+    matriz_ventas[posicion][4] = receta
 
     print("Venta modificada correctamente.")
 
