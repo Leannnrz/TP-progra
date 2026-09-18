@@ -24,7 +24,7 @@ FUNCIONES CRUD DE CLIENTES
 # Para agregar un cliente
 def alta_cliente():
 
-    print(f"{Fore.CYAN}" + " Agregar cliente ".center(30, "="))
+    print(f"{Fore.MAGENTA}{' Agregar Cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
 
     cantidad = 0  # No existe el código, si existe se convierte en 1
@@ -71,7 +71,7 @@ def alta_cliente():
 # Para modificar un cliente
 def modificar_cliente():
 
-    print(f"{Fore.CYAN}" + " Modificar cliente ".center(30, "="))
+    print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
@@ -102,7 +102,7 @@ def modificar_cliente():
 # Para eliminar un cliente
 def eliminar_cliente():
 
-    print(f"{Fore.CYAN}" + " Eliminar cliente ".center(30, '='))
+    print(f"{Fore.MAGENTA}{' Eliminar cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
@@ -122,7 +122,7 @@ def eliminar_cliente():
 def mostrar_clientes():
     ancho_total = 70
     print()
-    print(f"{Fore.CYAN}" + " LISTADO DE CLIENTES ".center(70, '='))
+    print(f"{Fore.MAGENTA}{' LISTADO DE CLIENTES '.center(70, '=')}")
     print(f'{"Código":<12}{"Nombre":<28}{"Edad":<10}{"Cobertura":>20}')
     print("-" * ancho_total)
 

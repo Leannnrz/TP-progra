@@ -48,15 +48,14 @@ SUBMENÚS
 def submenu_clientes():
     opcion_clientes = ""
 
-    while opcion_clientes != "6":
+    while opcion_clientes != "5":
 
-        print(f"{Fore.MAGENTA}{'CLIENTES'.center(25)}\n{'-' * 25}")
+        print(f"{Fore.CYAN}{'CLIENTES'.center(25)}\n{'-' * 25}")
         print("1- Agregar cliente")
         print("2- Modificar cliente")
         print("3- Eliminar cliente")
         print("4- Mostrar cliente")
-        print("5- Buscar cliente")
-        print("6- Volver.\n")
+        print("5- Volver.\n")
 
         opcion_clientes = input("Seleccione una opción: ")
         print()
@@ -70,8 +69,6 @@ def submenu_clientes():
         elif opcion_clientes == "4":
             clientes.mostrar_clientes()
         elif opcion_clientes == "5":
-            clientes.buscar_clientes()
-        elif opcion_clientes == "6":
             print("Volviendo al menú principal... \n")
         else:
             print(f"{Fore.RED}Opción no válida.")
@@ -83,7 +80,7 @@ def submenu_medicamentos():
 
     while opcion_medicamentos != "5":
 
-        print(f"{Fore.MAGENTA}{'MEDICAMENTOS'.center(25)}\n{'-' * 25}")        
+        print(f"{Fore.CYAN}{'MEDICAMENTOS'.center(25)}\n{'-' * 25}")        
         print("1- Crear medicamento")
         print("2- Modificar medicamento")
         print("3- Eliminar medicamento")
@@ -111,14 +108,15 @@ def submenu_medicamentos():
 def submenu_ventas():
     opcion_ventas = ""
 
-    while opcion_ventas != "5":
+    while opcion_ventas != "6":
 
-        print(f"{Fore.MAGENTA}{'VENTAS'.center(20)}\n{'-' * 20}")
+        print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Crear venta")
         print("2- Modificar venta")
         print("3- Eliminar venta")
         print("4- Mostrar ventas")
-        print("5- Volver.\n")
+        print("5- Buscar venta")
+        print("6- Volver.\n")
 
         opcion_ventas = input("Seleccione una opción: ")
         print()
@@ -132,6 +130,8 @@ def submenu_ventas():
         elif opcion_ventas == "4":
             ventas.mostrar_ventas()
         elif opcion_ventas == "5":
+            ventas.buscar_venta()
+        elif opcion_ventas == "6":
             print("Volviendo al menú principal.\n")
         else:
             print(f"{Fore.RED}Opción no válida.")

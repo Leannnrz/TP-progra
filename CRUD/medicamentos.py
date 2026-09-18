@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 # Matriz de medicamentos
 matriz_medicamentos = [
     ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
@@ -20,7 +22,7 @@ FUNCIONES CRUD DE MEDICAMENTOS
 # Para agregar un medicamento
 def alta_medicamento():
 
-    print("\n--- AGREGAR MEDICAMENTO ---\n")
+    print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese el código del medicamento: ")
 
     cantidad = 0  # No existe el código, si existe se convierte en 1
@@ -60,7 +62,7 @@ def alta_medicamento():
 # Para modificar un medicamento
 def modificar_medicamento():
 
-    print("\n--- MODIFICAR MEDICAMENTO ---")
+    print(f"{Fore.MAGENTA}{' Modificar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
     posicion = -1
 
@@ -92,7 +94,7 @@ def modificar_medicamento():
 # Para eliminar un medicamento
 def eliminar_medicamento():
 
-    print("\n--- ELIMINAR MEDICAMENTO ---")
+    print(f"{Fore.MAGENTA}{' Eliminar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
     posicion = -1
 
@@ -112,7 +114,8 @@ def eliminar_medicamento():
 def mostrar_medicamentos():
     ancho_total = 80
     print("\n---- LISTADO DE MEDICAMENTOS ----\n")
-    print(f'{"Código":<8}{"Nombre":<20}{"Laboratorio":<20}{"Precio":>10}{"Stock":>8}{"Receta":>10}')
+    print(f"{Fore.MAGENTA}{' Listado de Medicamentos '.center(70, '=')}")
+    print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<20}{"Precio":>10}{"Stock":>5}{"Receta":>5}')
     print("-" * ancho_total)
 
     for medicamento in matriz_medicamentos:
