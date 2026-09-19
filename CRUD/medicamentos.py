@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 # Matriz de medicamentos
 matriz_medicamentos = [
     ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
@@ -12,13 +14,15 @@ matriz_medicamentos = [
     ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
 ]
 
+
+
 '''
 FUNCIONES CRUD DE MEDICAMENTOS
 '''
 # Para agregar un medicamento
 def alta_medicamento():
 
-    print("\n--- AGREGAR MEDICAMENTO ---\n")
+    print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese el código del medicamento: ")
 
     cantidad = 0  # No existe el código, si existe se convierte en 1
@@ -37,6 +41,10 @@ def alta_medicamento():
             if fila[0] == codigo:
                 cantidad = cantidad + 1
 
+    '''while codigo in id_medicamento:
+        print("Error: el medicamento ya existe.")
+        codigo = input("Ingrese otro código: ")'''
+
     nombre = input("Ingrese el nombre: ")
     laboratorio = input("Ingrese el laboratorio: ")
     precio = int(input("Ingrese el precio: "))
@@ -44,7 +52,7 @@ def alta_medicamento():
 
     receta = int(input("Requiere receta (1- Si / 2- No): "))
     while receta != 1 and receta != 2:
-        print ("Opción inválida: Ingrese una de las opciones.")
+        print ("Opción no válida: Ingrese una de las opciones.")
         receta = int(input("Requiere receta (1- Si / 2- No): "))
 
     matriz_medicamentos.append([codigo, nombre, laboratorio, precio, stock, receta])  
@@ -54,7 +62,7 @@ def alta_medicamento():
 # Para modificar un medicamento
 def modificar_medicamento():
 
-    print("\n--- MODIFICAR MEDICAMENTO ---")
+    print(f"{Fore.MAGENTA}{' Modificar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
     posicion = -1
 
@@ -67,17 +75,26 @@ def modificar_medicamento():
         return
 
     matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
-    matriz_medicamentos[posicion][2] = int(input("Nuevo precio: "))
-    matriz_medicamentos[posicion][3] = int(input("Nuevo stock: "))
-    matriz_medicamentos[posicion][4] = int(input("Requiere receta? (1-Si / 2-No): \n"))
+    matriz_medicamentos[posicion][2] = int(input("Nuevo laboratorio: "))
+    matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
+    matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
+
+    receta = int(input("Requiere receta? (1-Si / 2-No): "))
+    while receta != 1 and receta != 2:
+        print("Opción no válida: Ingrese una de las opciones.")
+
+        receta = int(input("Requiere receta? (1-Si / 2-No): "))
+
+    matriz_medicamentos[posicion][5] = receta
 
     print("Medicamento modificado correctamente.")
+
 
 
 # Para eliminar un medicamento
 def eliminar_medicamento():
 
-    print("\n--- ELIMINAR MEDICAMENTO ---")
+    print(f"{Fore.MAGENTA}{' Eliminar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
     posicion = -1
 
@@ -88,7 +105,7 @@ def eliminar_medicamento():
     if posicion == -1:
         print("Medicamento no encontrado.")
         return
-    
+
     matriz_medicamentos.pop(posicion)
     print("Medicamento eliminado correctamente.")
 
@@ -97,10 +114,15 @@ def eliminar_medicamento():
 def mostrar_medicamentos():
     ancho_total = 80
     print("\n---- LISTADO DE MEDICAMENTOS ----\n")
-    print(f'{"Código":<8}{"Nombre":<20}{"Laboratorio":<20}{"Precio":>10}{"Stock":>8}{"Receta":>10}')
+    print(f"{Fore.MAGENTA}{' Listado de Medicamentos '.center(70, '=')}")
+    print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<20}{"Precio":>10}{"Stock":>5}{"Receta":>5}')
     print("-" * ancho_total)
 
     for medicamento in matriz_medicamentos:
-        receta = lambda x: "Si" if x == 1 else "No"
-        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10}{medicamento[4]:>8}{receta(medicamento[5]):>10}')
+        if medicamento[5] == 1:
+            receta = "Si"
+        else:
+            receta = "No"
 
+        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10.2f}{medicamento[4]:>8}{receta:>10}\n')
+    
