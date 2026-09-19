@@ -156,13 +156,13 @@ def alta_venta():
         ventas = int(input("Ingrese la cantidad de ventas: "))
 
     # Verifica receta
-    receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
-    while receta != 1 and receta != 2:
+    receta = (input("¿Presentó receta? (1-Si / 2-No): "))
+    while receta != "1" and receta != "2":
         print(f"{Fore.RED}Opción inválida: Ingrese una de las opciones.")
-        receta = int(input("¿Presentó receta? (1-Si / 2-No): "))
+        receta = (input("¿Presentó receta? (1-Si / 2-No): "))
 
     # Verificar si el medicamento requiere receta
-    if requiere_receta == 1 and receta == 2:
+    if requiere_receta == "1" and receta == "2":
         print(f"{Fore.RED}Error: Este medicamento requiere receta.")
         return
 
@@ -345,7 +345,7 @@ def mostrar_ventas():
         else:
             receta = "No"
         
-            print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{receta:>8}\n')
+        print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{receta:>8}\n')
             
 
 
