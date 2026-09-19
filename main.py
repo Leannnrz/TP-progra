@@ -198,7 +198,7 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "3":
                 submenu_ventas()
             elif opcion == "4":
-                ...
+                submenu_estadisticas()
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:
