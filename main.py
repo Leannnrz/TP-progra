@@ -221,10 +221,13 @@ def mostrar_menu(tipo_usuario):
 
             if opcion == "1":
                 print("Mostrando clientes...")
+                clientes.mostrar_clientes()
             elif opcion == "2":
                 print("Mostrando medicamentos...")
+                medicamentos.mostrar_medicamentos()
             elif opcion == "3":
                 print("Mostrando ventas...")
+                ventas.mostrar_ventas()
             elif opcion == "4":
                 print("Saliendo del programa.")
             else:
