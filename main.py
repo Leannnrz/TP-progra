@@ -140,7 +140,7 @@ def submenu_ventas():
 def submenu_estadisticas(): 
     opcion_estadisticas = ""
 
-    while opcion_estadisticas != "6":
+    while opcion_estadisticas != "7":
 
         print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Ganancia Total")
@@ -198,7 +198,7 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "3":
                 submenu_ventas()
             elif opcion == "4":
-                ...
+                submenu_estadisticas
             elif opcion == "5":
                 print("Saliendo del programa.")
             else:
