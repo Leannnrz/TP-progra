@@ -310,10 +310,6 @@ def stats_clientes():
         print("Mientras que el porcentaje de Clientes de forma Particular es del", porcentaje_particular, "%")
         print("-" * 100) 
 
-
-#TUPLA DE CATEGORIAS
-categorias = ("Receta", "Venta libre")
-
 #FUNCION PARA CALCULAR EL COSTO TOTAL DE CADA MEDICAMENTO
 def calcular_total(precio, cantidad):
 

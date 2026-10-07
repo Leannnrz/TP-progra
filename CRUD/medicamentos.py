@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+from CRUD import validaciones
 
 # Matriz de medicamentos
 matriz_medicamentos = [
@@ -24,6 +25,13 @@ def alta_medicamento():
 
     print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese el código del medicamento: ")
+
+    valido = validaciones.validar_codigo_medicamento(codigo)
+
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo)
 
     cantidad = 0  # No existe el código, si existe se convierte en 1
     
@@ -53,7 +61,6 @@ def alta_medicamento():
 
     matriz_medicamentos.append([codigo, nombre, laboratorio, precio, stock, receta])  
     print("Medicamento agregado correctamente.\n")
-
 
 # Para modificar un medicamento
 def modificar_medicamento():
@@ -85,8 +92,6 @@ def modificar_medicamento():
 
     print("Medicamento modificado correctamente.")
 
-
-
 # Para eliminar un medicamento
 def eliminar_medicamento():
 
@@ -104,7 +109,6 @@ def eliminar_medicamento():
 
     matriz_medicamentos.pop(posicion)
     print("Medicamento eliminado correctamente.")
-
 
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():
