@@ -140,7 +140,7 @@ def submenu_ventas():
 def submenu_estadisticas(): 
     opcion_estadisticas = ""
 
-    while opcion_estadisticas != "7":
+    while opcion_estadisticas != "8":
 
         print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Ganancia Total")
