@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+from CRUD import validaciones
 
 # Matriz de clientes
 matriz_clientes = [
@@ -27,6 +28,13 @@ def alta_cliente():
     print(f"{Fore.MAGENTA}{' Agregar Cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
 
+    valido = validaciones.validar_codigo_cliente(codigo)
+
+    while valido == False:
+        print("Error: el código debe tener el formato C001.")
+        codigo = input("Ingrese el código del cliente: ")
+        valido = validaciones.validar_codigo_cliente(codigo)
+    
     cantidad = 0  # No existe el código, si existe se convierte en 1
 
     for cliente in lista_clientes:  # Recorremos la fila
