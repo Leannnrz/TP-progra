@@ -148,8 +148,9 @@ def submenu_estadisticas():
         print("3- Venta Más Pequeña")
         print("4- Medicamento Más Vendido")
         print("5- Buscar Ganancias por Medicamento")  
-        print("6- Ver Estadisticas de Clientes")  
-        print("7- Volver.\n")
+        print("6- Ver Estadisticas de Clientes") 
+        print("7- Ver Reporte de Medicamentos")
+        print("8- Volver.\n")
 
         opcion_estadisticas = input("Seleccione una opción: ")
 
@@ -166,6 +167,8 @@ def submenu_estadisticas():
         elif opcion_estadisticas == "6":
             estadisticas.stats_clientes()
         elif opcion_estadisticas == "7":
+            estadisticas.reporte_medicamento()
+        elif opcion_estadisticas == "8":
             print("Volviendo al menú principal.\n")
         else:
             print(f"{Fore.RED}Opción no válida.")

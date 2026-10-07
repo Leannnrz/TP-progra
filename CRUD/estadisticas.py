@@ -309,4 +309,58 @@ def stats_clientes():
         print("El porcentaje de Clientes que tienen Obra Social es del", porcentaje_obra_social,"%")
         print("Mientras que el porcentaje de Clientes de forma Particular es del", porcentaje_particular, "%")
         print("-" * 100) 
-        
+
+
+#TUPLA DE CATEGORIAS
+categorias = ("Receta", "Venta libre")
+
+#FUNCION PARA CALCULAR EL COSTO TOTAL DE CADA MEDICAMENTO
+def calcular_total(precio, cantidad):
+
+    total = precio * cantidad
+    return total
+
+#FUNCION PARA VERIFICAR LA DISPONIBILIDAD DE CADA MEDICAMENTO
+def verificar_disponibilidad(cantidad):
+
+    if cantidad > 0:
+        disponibilidad = "Si"
+    else:
+        disponibilidad = "No"
+
+    return disponibilidad 
+
+#FUNCION PARA MOSTRAR CADA REPORTE
+def mostrar_reporte(i):
+
+    #TUPLA DE CATEGORIAS
+    categorias = ("Receta", "Venta libre")
+
+    nombre = matriz_medicamentos[i][1]
+    cantidad = matriz_medicamentos[i][4]
+    precio = matriz_medicamentos[i][3]
+    categoria = categorias[matriz_medicamentos[i][5] - 1]
+
+    total = calcular_total(precio, cantidad)
+    disponibilidad = verificar_disponibilidad(cantidad)
+
+    print(nombre.ljust(20), str(cantidad).rjust(17), f"${precio:.2f}".rjust(20), f"${total:.2f}".rjust(20), disponibilidad.rjust(12), categoria.rjust(22))
+
+
+def reporte_medicamento():
+
+    print("PRODUCTO".ljust(20), "CANTIDAD".rjust(20), "PRECIO".rjust(16), "TOTAL".rjust(19), "DISPONIBILIDAD".rjust(20), "CATEGORIA".rjust(15))
+    print("-" * 140)
+
+    for i in range(len(matriz_medicamentos)):
+        mostrar_reporte(i)
+
+    print("\nIngrese (1) para volver.\n")
+
+    opcion = input("Ingrese una opcion: ")
+
+    while opcion != "1":
+        print("Opcion invalida.")
+        opcion = input("Ingrese una opcion: ")
+
+    print("Volviendo al menu de medicamentos...")

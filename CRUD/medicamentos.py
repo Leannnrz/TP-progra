@@ -41,10 +41,6 @@ def alta_medicamento():
             if fila[0] == codigo:
                 cantidad = cantidad + 1
 
-    '''while codigo in id_medicamento:
-        print("Error: el medicamento ya existe.")
-        codigo = input("Ingrese otro código: ")'''
-
     nombre = input("Ingrese el nombre: ")
     laboratorio = input("Ingrese el laboratorio: ")
     precio = int(input("Ingrese el precio: "))
