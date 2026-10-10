@@ -1,6 +1,7 @@
 from .medicamentos import matriz_medicamentos
 from .clientes import matriz_clientes
 from .ventas import matriz_ventas
+from functools import reduce
 
 '''
 FUNCIONES CRUD DE PROMEDIOS
@@ -241,6 +242,7 @@ def ganancia_x_medicamento():
     print("-" * ancho_total)
     print()     
 
+#Funcion Para Calcular Estadisticas de Clientes
 def stats_clientes():
     print
     print("Ver Porcentajes de Clientes: ")
@@ -310,17 +312,13 @@ def stats_clientes():
         print("Mientras que el porcentaje de Clientes de forma Particular es del", porcentaje_particular, "%")
         print("-" * 100) 
 
-
-#TUPLA DE CATEGORIAS
-categorias = ("Receta", "Venta libre")
-
-#FUNCION PARA CALCULAR EL COSTO TOTAL DE CADA MEDICAMENTO
+#Funcion Para Calcular el Total
 def calcular_total(precio, cantidad):
 
     total = precio * cantidad
     return total
 
-#FUNCION PARA VERIFICAR LA DISPONIBILIDAD DE CADA MEDICAMENTO
+#Funcion Para Verificar Disponibilidad de Medicamentos
 def verificar_disponibilidad(cantidad):
 
     if cantidad > 0:
@@ -330,7 +328,7 @@ def verificar_disponibilidad(cantidad):
 
     return disponibilidad 
 
-#FUNCION PARA MOSTRAR CADA REPORTE
+#Funcion Para Mostrar Reporte de Medicamentos
 def mostrar_reporte(i):
 
     #TUPLA DE CATEGORIAS
@@ -346,21 +344,77 @@ def mostrar_reporte(i):
 
     print(nombre.ljust(20), str(cantidad).rjust(17), f"${precio:.2f}".rjust(20), f"${total:.2f}".rjust(20), disponibilidad.rjust(12), categoria.rjust(22))
 
-
+#Funcion Para Hacer El Reporte de Medicamentos
 def reporte_medicamento():
-
+    print()
+    print("\n--- REPORTE DE MEDICAMENTOS ---\n")
+    print("-" * 140)
     print("PRODUCTO".ljust(20), "CANTIDAD".rjust(20), "PRECIO".rjust(16), "TOTAL".rjust(19), "DISPONIBILIDAD".rjust(20), "CATEGORIA".rjust(15))
     print("-" * 140)
 
     for i in range(len(matriz_medicamentos)):
         mostrar_reporte(i)
+    print("-" * 140)
+    print()
 
-    print("\nIngrese (1) para volver.\n")
 
-    opcion = input("Ingrese una opcion: ")
+# MEDICAMENTOS
+def medicamentos_con_receta(matriz_medicamentos): #FILTRAR MEDICAMENTOS QUE REQUIEREN RECETA
 
-    while opcion != "1":
-        print("Opcion invalida.")
-        opcion = input("Ingrese una opcion: ")
+    return list(filter(lambda medicamento: medicamento[5] == 1, matriz_medicamentos))
 
-    print("Volviendo al menu de medicamentos...")
+def valor_total_stock(matriz_medicamentos):
+
+    return reduce( lambda total, medicamento: total + medicamento[3] * medicamento[4], matriz_medicamentos, 0)
+
+# VENTAS
+def ventas_con_receta(matriz_ventas): #FILTRAR VENTAS POR RECETA
+
+    return list(filter(lambda venta: venta[4] == 1, matriz_ventas))
+
+def cantidad_total_vendida(matriz_ventas):
+
+    return reduce(lambda total, venta: total + venta[3], matriz_ventas, 0)
+
+# MOSTRAR ESTADÍSTICAS
+def mostrar_medicamentos_con_receta(matriz_medicamentos):
+    medicamentos = medicamentos_con_receta(matriz_medicamentos)
+    print("\n--- MEDICAMENTOS QUE REQUIEREN RECETA ---")
+    if len(medicamentos) == 0:
+        print("No hay medicamentos que requieran receta.")
+    else:
+        for medicamento in medicamentos:
+            print(
+                medicamento[0],
+                "-",
+                medicamento[1],
+                "- Laboratorio:",
+                medicamento[2]
+            )
+
+def mostrar_valor_total_stock(matriz_medicamentos):
+    total = valor_total_stock(matriz_medicamentos)
+    print("\n--- VALOR TOTAL DEL STOCK ---")
+    print("Valor total del stock: $", total)
+
+def mostrar_ventas_con_receta(matriz_ventas):
+    ventas = ventas_con_receta(matriz_ventas)
+    print("\n--- VENTAS CON RECETA ---")
+    if len(ventas) == 0:
+        print("No hay ventas con receta.")
+    else:
+        for venta in ventas:
+            print(
+                venta[0],
+                "- Cliente:",
+                venta[1],
+                "- Medicamento:",
+                venta[2],
+                "- Cantidad:",
+                venta[3]
+            )
+
+def mostrar_cantidad_total_vendida(matriz_ventas):
+    cantidad = cantidad_total_vendida(matriz_ventas)
+    print("\n--- CANTIDAD TOTAL VENDIDA ---")
+    print("Cantidad total de medicamentos vendidos:", cantidad)
