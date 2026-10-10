@@ -78,7 +78,7 @@ def modificar_medicamento():
         return
 
     matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
-    matriz_medicamentos[posicion][2] = int(input("Nuevo laboratorio: "))
+    matriz_medicamentos[posicion][2] = input("Nuevo laboratorio: ")
     matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
     matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
 
