@@ -1,5 +1,6 @@
 from colorama import Fore, Style
 from CRUD import validaciones
+import os
 
 # Matriz de medicamentos
 matriz_medicamentos = [
@@ -72,31 +73,81 @@ def modificar_medicamento():
 
     print(f"{Fore.MAGENTA}{' Modificar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
-    posicion = -1
+    valido = validaciones.validar_codigo_medicamento(codigo)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo)
 
-    for i in range(len(matriz_medicamentos)): #Busca la posicion del medicamento
-        if matriz_medicamentos[i][0] == codigo:
-            posicion = i
 
-    if posicion == -1:
-        print("Medicamento no encontrado.")
-        return
+    temp = "temp.txt"
+    encontrado = False
 
-    matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
-    matriz_medicamentos[posicion][2] = input("Nuevo laboratorio: ")
-    matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
-    matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
+    try:
+        arch = open("medicamentos.txt", "rt", encoding="UTF-8")
+        aux = open("temp.txt", "wt", encoding="UTF-8")
 
-    receta = int(input("Requiere receta? (1-Si / 2-No): "))
-    while receta != 1 and receta != 2:
-        print("Opción no válida: Ingrese una de las opciones.")
+        for linea in arch:
+            datos = linea.strip().split(";")
+            codigo_viejo = datos[0]
 
-        receta = int(input("Requiere receta? (1-Si / 2-No): "))
+            if codigo == codigo_viejo:
+                encontrado = True
+                nombre = datos[1]
+                precio = float(datos[3])
+                print(f"Producto encontrado: {codigo} - {nombre} - ${precio:.2f}")
 
-    matriz_medicamentos[posicion][5] = receta
+                nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip()
+                if nuevo_nombre == "":
+                    nuevo_nombre = nombre
 
-    print("Medicamento modificado correctamente.")
+                nuevo_precio = input("Nuevo precio (Enter para mantener): ").strip()
+                if nuevo_precio == "":
+                    nuevo_precio = precio
+                else:
+                    nuevo_precio = float(nuevo_precio)
 
+                nuevo_stock = input("Nuevo stock (Enter para mantener): ").strip()
+                if nuevo_stock == "":
+                    nuevo_stock = datos[4]
+
+                nuevo_laboratorio = input("Nuevo laboratorio (Enter para mantener): ").strip()
+                if nuevo_laboratorio == "":
+                    nuevo_laboratorio = datos[2]
+                
+                receta = int(input("Requiere receta? (1-Si / 2-No): "))
+                while receta != 1 and receta != 2:
+                    print("Opción no válida: Ingrese una de las opciones.")
+                    receta = int(input("Requiere receta? (1-Si / 2-No): "))
+
+                
+                nueva_linea = f"{codigo};{nuevo_nombre};{nuevo_laboratorio};{nuevo_precio};{nuevo_stock};{receta}\n"
+                aux.write(nueva_linea)
+                print(f"Producto {codigo} modificado.")
+            else:
+                aux.write(linea)
+    except FileNotFoundError:
+        print("El archivo no existe.")
+    except OSError as error:
+        print("Error en el acceso al archivo:", error)
+    finally:
+        try:
+            arch.close()
+            aux.close()
+        except:
+            print("Error en el cierre del archivo:")
+
+    if encontrado:
+        try:
+            os.remove("medicamentos.txt")
+            os.rename("temp.txt", "medicamentos.txt")
+        except OSError as error:
+            print("Error al reemplazar el archivo:", error)
+    else:
+        os.remove("temp.txt")
+        print(f"No se encontró el producto {codigo}.")
+    
 # Para eliminar un medicamento
 def eliminar_medicamento():
 
