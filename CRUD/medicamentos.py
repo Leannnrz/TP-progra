@@ -116,17 +116,29 @@ def eliminar_medicamento():
 
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():
-    ancho_total = 80
-    print("\n---- LISTADO DE MEDICAMENTOS ----\n")
-    print(f"{Fore.MAGENTA}{' Listado de Medicamentos '.center(70, '=')}")
-    print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<20}{"Precio":>10}{"Stock":>5}{"Receta":>5}')
-    print("-" * ancho_total)
+    try: 
+        arch = open("medicamentos.txt", "r", encoding="UTF-8")
+        linea = arch.readline().strip()
+        ancho_total = 82
+        print(f"{Fore.MAGENTA}{' Listado de Medicamentos '.center(80, '=')}")
+        print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<21}{"Precio":>10}{"Stock":>10}{"Receta":>10}')
+        print("-" * ancho_total)
 
-    for medicamento in matriz_medicamentos:
-        if medicamento[5] == 1:
-            receta = "Si"
-        else:
-            receta = "No"
-
-        print(f'{medicamento[0]:<8}{medicamento[1]:<20}{medicamento[2]:<20}{medicamento[3]:>10.2f}{medicamento[4]:>8}{receta:>10}\n')
+        while linea:
+                codigo, nombre, laboratorio, precio, stock, receta = linea.split(";")
+                if int(receta) == 1:
+                    receta = "Si"
+                else:
+                    receta = "No"
+                print(f'{codigo:10}{nombre:20}{laboratorio:20}{precio:>10}{stock:>10}{receta:>10}')
+                linea = arch.readline().strip() # Leemos la línea siguiente
+        print("-" * ancho_total)
+        print()
     
+    except OSError:
+            print("No se pudo leer el archivo")
+    finally:
+        try:
+            arch.close()
+        except:
+            print("No se pudo cerrar el archivo")
