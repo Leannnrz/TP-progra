@@ -33,34 +33,39 @@ def alta_medicamento():
         codigo = input("Ingrese el código del medicamento: ")
         valido = validaciones.validar_codigo_medicamento(codigo)
 
-    cantidad = 0  # No existe el código, si existe se convierte en 1
-    
-    for fila in matriz_medicamentos:  # Recorremos la fila
-        if fila[0] == codigo:         # El primer elemento de la fila es el código
-            cantidad = cantidad + 1
-    
-    while cantidad > 0:
-        print("Error: el medicamento ya existe.")
-        codigo = input("Ingrese otro código: ")
-    
-        cantidad = 0
-    
-        for fila in matriz_medicamentos:
-            if fila[0] == codigo:
-                cantidad = cantidad + 1
-
     nombre = input("Ingrese el nombre: ")
     laboratorio = input("Ingrese el laboratorio: ")
     precio = int(input("Ingrese el precio: "))
     stock = int(input("Ingrese el stock: "))
-
     receta = int(input("Requiere receta (1- Si / 2- No): "))
     while receta != 1 and receta != 2:
         print ("Opción no válida: Ingrese una de las opciones.")
         receta = int(input("Requiere receta (1- Si / 2- No): "))
-
-    matriz_medicamentos.append([codigo, nombre, laboratorio, precio, stock, receta])  
-    print("Medicamento agregado correctamente.\n")
+    
+    try:
+        try:
+            with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+                for linea in arch:
+                    datos = linea.strip().split(";")
+                    ultimo_codigo = datos[0]
+                    while ultimo_codigo == codigo:
+                        print(f"{Fore.RED}Error: El código del medicamento ya existe.")
+                        codigo = input("Ingrese un nuevo código del medicamento: ")
+                        valido = validaciones.validar_codigo_medicamento(codigo)
+        except FileNotFoundError:
+            print("El archivo no existe. Se creará uno nuevo.")
+        with open("medicamentos.txt", "at", encoding="UTF-8") as arch:
+            nuevo_medicamento= f'{codigo};{nombre};{laboratorio};{precio};{stock};{receta}\n'
+            arch.write(nuevo_medicamento)
+            print("Se ha agregado el siguiente medicamento:")
+            print(f'{codigo}: {nombre} - $ {precio}')
+    except OSError as mensaje:
+        print("No se puede grabar el archivo:", mensaje)
+    finally:
+        try:
+            arch.close()
+        except NameError:
+            pass
 
 # Para modificar un medicamento
 def modificar_medicamento():
