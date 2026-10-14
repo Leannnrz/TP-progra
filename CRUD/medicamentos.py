@@ -2,28 +2,11 @@ from colorama import Fore, Style
 from CRUD import validaciones
 import os
 
-# Matriz de medicamentos
-matriz_medicamentos = [
-    ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
-    ["M002", "Ibuprofeno", "Bayer", 2200, 15, 2],
-    ["M003", "Amoxicilina", "Roemmers", 3500, 6, 1],
-    ["M004", "Loratadina", "Bagó", 1800, 10, 2],
-    ["M005", "Omeprazol", "Gador", 2700, 25, 2],
-    ["M006", "Diclofenac", "Elea", 2500, 5, 1],
-    ["M007", "Metformina", "Montpellier", 4200, 12, 1],
-    ["M008", "Salbutamol", "Cassará", 3900, 3, 1],
-    ["M009", "Enalapril", "Bernabó", 3100, 18, 1],
-    ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
-]
-
-
-
 '''
 FUNCIONES CRUD DE MEDICAMENTOS
 '''
 # Para agregar un medicamento
 def alta_medicamento():
-
     print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese el código del medicamento: ")
 
@@ -70,7 +53,6 @@ def alta_medicamento():
 
 # Para modificar un medicamento
 def modificar_medicamento():
-
     print(f"{Fore.MAGENTA}{' Modificar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
     valido = validaciones.validar_codigo_medicamento(codigo)
@@ -153,18 +135,42 @@ def eliminar_medicamento():
 
     print(f"{Fore.MAGENTA}{' Eliminar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
-    posicion = -1
+    temp = "temp.txt"
+    encontrado = False
 
-    for i in range(len(matriz_medicamentos)):
-        if matriz_medicamentos[i][0] == codigo:   # Busca el código en la columna 0
-            posicion = i
+    try:
+        arch = open("medicamentos.txt", "rt", encoding="UTF-8")
+        aux = open(temp, "wt", encoding="UTF-8")
 
-    if posicion == -1:
-        print("Medicamento no encontrado.")
-        return
+        for linea in arch:
+            datos = linea.strip().split(";")
+            codigo_1 = datos[0]
+            if codigo != codigo_1:
+                aux.write(linea)
+            else:
+                encontrado = True
 
-    matriz_medicamentos.pop(posicion)
-    print("Medicamento eliminado correctamente.")
+    except FileNotFoundError:
+        print("El archivo no existe.")
+    except OSError as error:
+        print("Error en el acceso al archivo:", error)
+    finally:
+        try:
+            arch.close()
+            aux.close()
+        except:
+            print("Error en el cierre del archivo:")
+
+    if encontrado:
+        try:
+            os.remove("medicamentos.txt")  
+            os.rename("temp.txt", "medicamentos.txt") 
+            print(f"Producto {codigo} eliminado correctamente.")
+        except OSError as error:
+            print("Error al reemplazar el archivo:", error)
+    else:
+        os.remove(temp)  
+        print(f"No se encontró el producto {codigo}.")
 
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():

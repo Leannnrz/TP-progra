@@ -1,4 +1,3 @@
-from .medicamentos import matriz_medicamentos
 from .clientes import matriz_clientes
 from .ventas import matriz_ventas
 from functools import reduce
