@@ -1,5 +1,4 @@
 from CRUD.clientes import matriz_clientes
-from CRUD.medicamentos import matriz_medicamentos
 from colorama import Fore, Style
 
 import re
@@ -37,15 +36,13 @@ matriz_ventas = [
     ["V029", "C009", "M010", 3, 1],
     ["V030", "C008", "M006", 1, 1], ]
 
-
-
 '''
 FUNCIÓN VENTAS (CRUD)
 '''
 #-------------------------
 # Agregar una venta
 #-------------------------
-def alta_venta():
+def alta_venta(): #A modificar
 
     print(f"{Fore.MAGENTA}{' Agregar Venta '.center(30, '=')}")
     codigo = input("Ingrese código de venta: ")
@@ -169,12 +166,10 @@ def alta_venta():
     matriz_ventas.append([codigo, cliente, medicamento, ventas, receta])
     print(f"{Fore.GREEN}Venta agregada correctamente.")
 
-
-
 #-------------------------
 # Modificar una venta
 #-------------------------
-def modificar_venta():
+def modificar_venta(): #A modificar
 
     print(f"{Fore.MAGENTA}{' Modificar Venta '.center(30, '=')}")
 
@@ -289,8 +284,6 @@ def modificar_venta():
     matriz_ventas[posicion][4] = receta
     print(f"{Fore.GREEN}Venta modificada correctamente.")
 
-
-
 #-------------------------
 # Eliminar una venta
 #-------------------------
@@ -347,12 +340,10 @@ def mostrar_ventas():
         
         print(f'{venta[0]:<8}{venta[1]:<20}{venta[2]:<20}{venta[3]:>10.2f}{receta:>8}\n')
             
-
-
 #-------------------------
 # Buscar ventas
 #-------------------------
-def buscar_venta():
+def buscar_venta(): #A modificar
     print(f"{Fore.MAGENTA}{' Buscar Venta '.center(30, '=')}")
     print("¿Cómo desea buscar la venta?")   
     print("1- Por Codigo")
