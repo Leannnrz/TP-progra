@@ -139,16 +139,20 @@ def submenu_ventas():
 #Submenú de Estadisticas
 def submenu_estadisticas(): 
     opcion_estadisticas = ""
-
-    while opcion_estadisticas != "8":
-
+    while opcion_estadisticas != "12":
         print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Ganancia Total")
         print("2- Venta Más Grande")
         print("3- Venta Más Pequeña")
         print("4- Medicamento Más Vendido")
-        print("5- Buscar Ganancias por Medicamento")    
-        print("6- Volver.\n")
+        print("5- Buscar Ganancias por Medicamento")  
+        print("6- Ver Estadisticas de Clientes") 
+        print("7- Ver Reporte de Medicamentos")
+        print("8- Ver Ventas con Receta")
+        print("9- Ver Valor Total del Stock")
+        print("10- Ver Ventas con Receta")
+        print("11- Ver Cantidad Total Vendida")
+        print("12- Volver.\n")  
 
         opcion_estadisticas = input("Seleccione una opción: ")
 
@@ -163,11 +167,21 @@ def submenu_estadisticas():
         elif opcion_estadisticas == "5":
             estadisticas.ganancia_x_medicamento()
         elif opcion_estadisticas == "6":
+            estadisticas.stats_clientes()
+        elif opcion_estadisticas == "7":
+            estadisticas.reporte_medicamento()
+        elif opcion_estadisticas == "8":
+            estadisticas.mostrar_medicamentos_con_receta(medicamentos.matriz_medicamentos)
+        elif opcion_estadisticas == "9":
+            estadisticas.mostrar_valor_total_stock(medicamentos.matriz_medicamentos)
+        elif opcion_estadisticas == "10":
+            estadisticas.mostrar_ventas_con_receta(ventas.matriz_ventas)
+        elif opcion_estadisticas == "11":
+            estadisticas.mostrar_cantidad_total_vendida(ventas.matriz_ventas)
+        elif opcion_estadisticas == "12":
             print("Volviendo al menú principal.\n")
         else:
             print(f"{Fore.RED}Opción no válida.")
-
-
 
 '''
 MENÚ PRINCIPAL

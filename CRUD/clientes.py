@@ -73,12 +73,11 @@ def alta_cliente():
 
 # Para modificar un cliente
 def modificar_cliente():
-    dic_clientes = diccionario_clientes()
     print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
-    for i in range(len(dic_clientes)):    # Busca la posición del cliente
+    for i in range(len(matriz_clientes)):    # Busca la posición del cliente
         if matriz_clientes[i][0] == codigo:
             posicion = i
 
@@ -104,12 +103,11 @@ def modificar_cliente():
 
 # Para eliminar un cliente
 def eliminar_cliente():
-    dic_clientes = diccionario_clientes()
     print(f"{Fore.MAGENTA}{' Eliminar cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
     posicion = -1
 
-    for i in range(len(dic_clientes)):  # Busca la posición del cliente
+    for i in range(len(matriz_clientes)):  # Busca la posición del cliente
         if matriz_clientes[i][0] == codigo:
             posicion = i
 
