@@ -1,4 +1,4 @@
-M001;Paracetamol;Genomma Lab;1500.0;20;1
+M001;Paracetamol;Genomma Lab;1500;20;1
 M002;Ibuprofeno;Bayer;2200;15;2
 M003;Amoxicilina;Roemmers;3500;6;1
 M004;Loratadina;Bagó;1800;10;2
