@@ -1,4 +1,3 @@
-from .medicamentos import matriz_medicamentos
 from .clientes import matriz_clientes
 from .ventas import matriz_ventas
 from functools import reduce
@@ -6,6 +5,18 @@ from functools import reduce
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''
+#Funcion Para Convertir .txt a Matriz
+def convertir_a_matriz():
+    with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+            matriz_medicamentos = []
+            for linea in arch:
+                datos = linea.strip().split(";")
+                datos[3] = float(datos[3])  # Convertir el precio a float
+                datos[4] = int(datos[4])    # Convertir la cantidad a int
+                datos[5] = int(datos[5])    # Convertir la categoría a int
+                matriz_medicamentos.append(datos)
+    return(matriz_medicamentos)
+
 #Funcion Para Calcular El Total Recaudado
 def total_recaudado():
     lista_cant_productos = []
@@ -18,6 +29,7 @@ def total_recaudado():
 
     lista_id_medicamentos = []
     lista_precios_medicamento = []
+    matriz_medicamentos = convertir_a_matriz()
     for h in range(len(matriz_medicamentos)): 
         lista_id_medicamentos.append(matriz_medicamentos[h][0])
         lista_precios_medicamento.append(matriz_medicamentos[h][3])
@@ -56,7 +68,8 @@ def mayor_venta():
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
         lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
-    
+
+    matriz_medicamentos = convertir_a_matriz()
     lista_id_medicamentos = []
     lista_precios_medicamento = []
     for h in range(len(matriz_medicamentos)): 
@@ -95,7 +108,8 @@ def menor_venta():
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
             lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
-        
+
+    matriz_medicamentos = convertir_a_matriz()
     lista_id_medicamentos = []
     lista_precios_medicamento = []
     for h in range(len(matriz_medicamentos)): 
@@ -134,7 +148,8 @@ def med_mas_vendido():
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
             lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
-        
+
+    matriz_medicamentos = convertir_a_matriz()
     lista_id_medicamentos = []
     lista_precios_medicamento = []
     for h in range(len(matriz_medicamentos)): 
@@ -192,7 +207,8 @@ def ganancia_x_medicamento():
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
             lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
-        
+
+    matriz_medicamentos = convertir_a_matriz()
     lista_id_medicamentos = []
     lista_precios_medicamento = []
     for h in range(len(matriz_medicamentos)): 
@@ -243,7 +259,7 @@ def ganancia_x_medicamento():
     print()     
 
 #Funcion Para Calcular Estadisticas de Clientes
-def stats_clientes():
+def stats_clientes(): 
     print
     print("Ver Porcentajes de Clientes: ")
     print("1- Por Edad")
@@ -313,13 +329,13 @@ def stats_clientes():
         print("-" * 100) 
 
 #Funcion Para Calcular el Total
-def calcular_total(precio, cantidad):
+def calcular_total(precio, cantidad): 
 
     total = precio * cantidad
     return total
 
 #Funcion Para Verificar Disponibilidad de Medicamentos
-def verificar_disponibilidad(cantidad):
+def verificar_disponibilidad(cantidad): 
 
     if cantidad > 0:
         disponibilidad = "Si"
@@ -332,8 +348,8 @@ def verificar_disponibilidad(cantidad):
 def mostrar_reporte(i):
 
     #TUPLA DE CATEGORIAS
-    categorias = ("Receta", "Venta libre")
-
+    categorias = ("Receta", "Venta libre")  
+    matriz_medicamentos = convertir_a_matriz()
     nombre = matriz_medicamentos[i][1]
     cantidad = matriz_medicamentos[i][4]
     precio = matriz_medicamentos[i][3]
@@ -352,13 +368,14 @@ def reporte_medicamento():
     print("PRODUCTO".ljust(20), "CANTIDAD".rjust(20), "PRECIO".rjust(16), "TOTAL".rjust(19), "DISPONIBILIDAD".rjust(20), "CATEGORIA".rjust(15))
     print("-" * 140)
 
+    matriz_medicamentos = convertir_a_matriz()
     for i in range(len(matriz_medicamentos)):
         mostrar_reporte(i)
     print("-" * 140)
     print()
 
 
-# MEDICAMENTOS
+# MEDICAMENTOS 
 def medicamentos_con_receta(matriz_medicamentos): #FILTRAR MEDICAMENTOS QUE REQUIEREN RECETA
 
     return list(filter(lambda medicamento: medicamento[5] == 1, matriz_medicamentos))
@@ -377,7 +394,8 @@ def cantidad_total_vendida(matriz_ventas):
     return reduce(lambda total, venta: total + venta[3], matriz_ventas, 0)
 
 # MOSTRAR ESTADÍSTICAS
-def mostrar_medicamentos_con_receta(matriz_medicamentos):
+def mostrar_medicamentos_con_receta():
+    matriz_medicamentos = convertir_a_matriz()
     medicamentos = medicamentos_con_receta(matriz_medicamentos)
     print("\n--- MEDICAMENTOS QUE REQUIEREN RECETA ---")
     if len(medicamentos) == 0:
@@ -392,12 +410,13 @@ def mostrar_medicamentos_con_receta(matriz_medicamentos):
                 medicamento[2]
             )
 
-def mostrar_valor_total_stock(matriz_medicamentos):
+def mostrar_valor_total_stock():
+    matriz_medicamentos = convertir_a_matriz()
     total = valor_total_stock(matriz_medicamentos)
     print("\n--- VALOR TOTAL DEL STOCK ---")
     print("Valor total del stock: $", total)
 
-def mostrar_ventas_con_receta(matriz_ventas):
+def mostrar_ventas_con_receta():
     ventas = ventas_con_receta(matriz_ventas)
     print("\n--- VENTAS CON RECETA ---")
     if len(ventas) == 0:
@@ -414,7 +433,7 @@ def mostrar_ventas_con_receta(matriz_ventas):
                 venta[3]
             )
 
-def mostrar_cantidad_total_vendida(matriz_ventas):
+def mostrar_cantidad_total_vendida():
     cantidad = cantidad_total_vendida(matriz_ventas)
     print("\n--- CANTIDAD TOTAL VENDIDA ---")
     print("Cantidad total de medicamentos vendidos:", cantidad)

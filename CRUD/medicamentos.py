@@ -1,28 +1,12 @@
 from colorama import Fore, Style
 from CRUD import validaciones
-
-# Matriz de medicamentos
-matriz_medicamentos = [
-    ["M001", "Paracetamol", "Genomma Lab", 1500, 20, 2],
-    ["M002", "Ibuprofeno", "Bayer", 2200, 15, 2],
-    ["M003", "Amoxicilina", "Roemmers", 3500, 6, 1],
-    ["M004", "Loratadina", "Bagó", 1800, 10, 2],
-    ["M005", "Omeprazol", "Gador", 2700, 25, 2],
-    ["M006", "Diclofenac", "Elea", 2500, 5, 1],
-    ["M007", "Metformina", "Montpellier", 4200, 12, 1],
-    ["M008", "Salbutamol", "Cassará", 3900, 3, 1],
-    ["M009", "Enalapril", "Bernabó", 3100, 18, 1],
-    ["M010", "Azitromicina", "Pfizer", 4800, 7, 1]
-]
-
-
+import os
 
 '''
 FUNCIONES CRUD DE MEDICAMENTOS
 '''
 # Para agregar un medicamento
 def alta_medicamento():
-
     print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese el código del medicamento: ")
 
@@ -33,86 +17,160 @@ def alta_medicamento():
         codigo = input("Ingrese el código del medicamento: ")
         valido = validaciones.validar_codigo_medicamento(codigo)
 
-    cantidad = 0  # No existe el código, si existe se convierte en 1
-    
-    for fila in matriz_medicamentos:  # Recorremos la fila
-        if fila[0] == codigo:         # El primer elemento de la fila es el código
-            cantidad = cantidad + 1
-    
-    while cantidad > 0:
-        print("Error: el medicamento ya existe.")
-        codigo = input("Ingrese otro código: ")
-    
-        cantidad = 0
-    
-        for fila in matriz_medicamentos:
-            if fila[0] == codigo:
-                cantidad = cantidad + 1
-
     nombre = input("Ingrese el nombre: ")
     laboratorio = input("Ingrese el laboratorio: ")
     precio = int(input("Ingrese el precio: "))
     stock = int(input("Ingrese el stock: "))
-
     receta = int(input("Requiere receta (1- Si / 2- No): "))
     while receta != 1 and receta != 2:
         print ("Opción no válida: Ingrese una de las opciones.")
         receta = int(input("Requiere receta (1- Si / 2- No): "))
-
-    matriz_medicamentos.append([codigo, nombre, laboratorio, precio, stock, receta])  
-    print("Medicamento agregado correctamente.\n")
-
+    
+    try:
+        try:
+            with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+                for linea in arch:
+                    datos = linea.strip().split(";")
+                    ultimo_codigo = datos[0]
+                    while ultimo_codigo == codigo:
+                        print(f"{Fore.RED}Error: El código del medicamento ya existe.")
+                        codigo = input("Ingrese un nuevo código del medicamento: ")
+                        valido = validaciones.validar_codigo_medicamento(codigo)
+        except FileNotFoundError:
+            print("El archivo no existe. Se creará uno nuevo.")
+        with open("medicamentos.txt", "at", encoding="UTF-8") as arch:
+            nuevo_medicamento= f'{codigo};{nombre};{laboratorio};{precio};{stock};{receta}\n'
+            arch.write(nuevo_medicamento)
+            print("Se ha agregado el siguiente medicamento:")
+            print(f'{codigo}: {nombre} - $ {precio}')
+    except OSError as mensaje:
+        print("No se puede grabar el archivo:", mensaje)
+    finally:
+        try:
+            arch.close()
+        except NameError:
+            pass
 
 # Para modificar un medicamento
 def modificar_medicamento():
-
     print(f"{Fore.MAGENTA}{' Modificar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
-    posicion = -1
-
-    for i in range(len(matriz_medicamentos)): #Busca la posicion del medicamento
-        if matriz_medicamentos[i][0] == codigo:
-            posicion = i
-
-    if posicion == -1:
-        print("Medicamento no encontrado.")
-        return
-
-    matriz_medicamentos[posicion][1] = input("Ingrese el nuevo nombre del medicamento: ")
-    matriz_medicamentos[posicion][2] = int(input("Nuevo laboratorio: "))
-    matriz_medicamentos[posicion][3] = int(input("Nuevo precio: "))
-    matriz_medicamentos[posicion][4] = int(input("Nuevo stock: "))
-
-    receta = int(input("Requiere receta? (1-Si / 2-No): "))
-    while receta != 1 and receta != 2:
-        print("Opción no válida: Ingrese una de las opciones.")
-
-        receta = int(input("Requiere receta? (1-Si / 2-No): "))
-
-    matriz_medicamentos[posicion][5] = receta
-
-    print("Medicamento modificado correctamente.")
+    valido = validaciones.validar_codigo_medicamento(codigo)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo)
 
 
+    temp = "temp.txt"
+    encontrado = False
 
+    try:
+        arch = open("medicamentos.txt", "rt", encoding="UTF-8")
+        aux = open("temp.txt", "wt", encoding="UTF-8")
+
+        for linea in arch:
+            datos = linea.strip().split(";")
+            codigo_viejo = datos[0]
+
+            if codigo == codigo_viejo:
+                encontrado = True
+                nombre = datos[1]
+                precio = float(datos[3])
+                print(f"Producto encontrado: {codigo} - {nombre} - ${precio:.2f}")
+
+                nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip()
+                if nuevo_nombre == "":
+                    nuevo_nombre = nombre
+
+                nuevo_precio = input("Nuevo precio (Enter para mantener): ").strip()
+                if nuevo_precio == "":
+                    nuevo_precio = precio
+                else:
+                    nuevo_precio = float(nuevo_precio)
+
+                nuevo_stock = input("Nuevo stock (Enter para mantener): ").strip()
+                if nuevo_stock == "":
+                    nuevo_stock = datos[4]
+
+                nuevo_laboratorio = input("Nuevo laboratorio (Enter para mantener): ").strip()
+                if nuevo_laboratorio == "":
+                    nuevo_laboratorio = datos[2]
+                
+                receta = int(input("Requiere receta? (1-Si / 2-No): "))
+                while receta != 1 and receta != 2:
+                    print("Opción no válida: Ingrese una de las opciones.")
+                    receta = int(input("Requiere receta? (1-Si / 2-No): "))
+
+                
+                nueva_linea = f"{codigo};{nuevo_nombre};{nuevo_laboratorio};{nuevo_precio};{nuevo_stock};{receta}\n"
+                aux.write(nueva_linea)
+                print(f"Producto {codigo} modificado.")
+            else:
+                aux.write(linea)
+    except FileNotFoundError:
+        print("El archivo no existe.")
+    except OSError as error:
+        print("Error en el acceso al archivo:", error)
+    finally:
+        try:
+            arch.close()
+            aux.close()
+        except:
+            print("Error en el cierre del archivo:")
+
+    if encontrado:
+        try:
+            os.remove("medicamentos.txt")
+            os.rename("temp.txt", "medicamentos.txt")
+        except OSError as error:
+            print("Error al reemplazar el archivo:", error)
+    else:
+        os.remove("temp.txt")
+        print(f"No se encontró el producto {codigo}.")
+    
 # Para eliminar un medicamento
 def eliminar_medicamento():
 
     print(f"{Fore.MAGENTA}{' Eliminar Medicamento '.center(30, '=')}")
     codigo = input("Ingrese código del medicamento: ")
-    posicion = -1
+    temp = "temp.txt"
+    encontrado = False
 
-    for i in range(len(matriz_medicamentos)):
-        if matriz_medicamentos[i][0] == codigo:   # Busca el código en la columna 0
-            posicion = i
+    try:
+        arch = open("medicamentos.txt", "rt", encoding="UTF-8")
+        aux = open(temp, "wt", encoding="UTF-8")
 
-    if posicion == -1:
-        print("Medicamento no encontrado.")
-        return
+        for linea in arch:
+            datos = linea.strip().split(";")
+            codigo_1 = datos[0]
+            if codigo != codigo_1:
+                aux.write(linea)
+            else:
+                encontrado = True
 
-    matriz_medicamentos.pop(posicion)
-    print("Medicamento eliminado correctamente.")
+    except FileNotFoundError:
+        print("El archivo no existe.")
+    except OSError as error:
+        print("Error en el acceso al archivo:", error)
+    finally:
+        try:
+            arch.close()
+            aux.close()
+        except:
+            print("Error en el cierre del archivo:")
 
+    if encontrado:
+        try:
+            os.remove("medicamentos.txt")  
+            os.rename("temp.txt", "medicamentos.txt") 
+            print(f"Producto {codigo} eliminado correctamente.")
+        except OSError as error:
+            print("Error al reemplazar el archivo:", error)
+    else:
+        os.remove(temp)  
+        print(f"No se encontró el producto {codigo}.")
 
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():

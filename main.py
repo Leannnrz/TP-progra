@@ -171,13 +171,13 @@ def submenu_estadisticas():
         elif opcion_estadisticas == "7":
             estadisticas.reporte_medicamento()
         elif opcion_estadisticas == "8":
-            estadisticas.mostrar_medicamentos_con_receta(medicamentos.matriz_medicamentos)
+            estadisticas.mostrar_medicamentos_con_receta()
         elif opcion_estadisticas == "9":
-            estadisticas.mostrar_valor_total_stock(medicamentos.matriz_medicamentos)
+            estadisticas.mostrar_valor_total_stock()
         elif opcion_estadisticas == "10":
-            estadisticas.mostrar_ventas_con_receta(ventas.matriz_ventas)
+            estadisticas.mostrar_ventas_con_receta()
         elif opcion_estadisticas == "11":
-            estadisticas.mostrar_cantidad_total_vendida(ventas.matriz_ventas)
+            estadisticas.mostrar_cantidad_total_vendida()
         elif opcion_estadisticas == "12":
             print("Volviendo al menú principal.\n")
         else:
