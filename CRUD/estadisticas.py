@@ -394,7 +394,8 @@ def cantidad_total_vendida(matriz_ventas):
     return reduce(lambda total, venta: total + venta[3], matriz_ventas, 0)
 
 # MOSTRAR ESTADÍSTICAS
-def mostrar_medicamentos_con_receta(matriz_medicamentos):
+def mostrar_medicamentos_con_receta():
+    matriz_medicamentos = convertir_a_matriz()
     medicamentos = medicamentos_con_receta(matriz_medicamentos)
     print("\n--- MEDICAMENTOS QUE REQUIEREN RECETA ---")
     if len(medicamentos) == 0:
@@ -409,12 +410,13 @@ def mostrar_medicamentos_con_receta(matriz_medicamentos):
                 medicamento[2]
             )
 
-def mostrar_valor_total_stock(matriz_medicamentos):
+def mostrar_valor_total_stock():
+    matriz_medicamentos = convertir_a_matriz()
     total = valor_total_stock(matriz_medicamentos)
     print("\n--- VALOR TOTAL DEL STOCK ---")
     print("Valor total del stock: $", total)
 
-def mostrar_ventas_con_receta(matriz_ventas):
+def mostrar_ventas_con_receta():
     ventas = ventas_con_receta(matriz_ventas)
     print("\n--- VENTAS CON RECETA ---")
     if len(ventas) == 0:
@@ -431,7 +433,7 @@ def mostrar_ventas_con_receta(matriz_ventas):
                 venta[3]
             )
 
-def mostrar_cantidad_total_vendida(matriz_ventas):
+def mostrar_cantidad_total_vendida():
     cantidad = cantidad_total_vendida(matriz_ventas)
     print("\n--- CANTIDAD TOTAL VENDIDA ---")
     print("Cantidad total de medicamentos vendidos:", cantidad)
