@@ -1,4 +1,5 @@
-from FUNCIONES import validaciones
+from colorama import Fore, Style
+from CRUD import validaciones
 
 # Matriz de clientes
 matriz_clientes = [
@@ -14,82 +15,69 @@ matriz_clientes = [
     ["C010", "Lucia Diaz", 34, 2]
 ]
 
+'''
+FUNCIONES CRUD DE CLIENTES
+'''
 
-# ALTA DE CLIENTE
+def diccionario_clientes():
+    encabezados =  ['ID', 'Nombre', 'Edad', 'Cobertura']
+    lista_clientes = [dict(zip(encabezados, fila)) for fila in matriz_clientes]
+    return lista_clientes
 
+# Para agregar un cliente
 def alta_cliente():
 
-    print("\n--- AGREGAR CLIENTE ---")
-
+    print(f"{Fore.MAGENTA}{' Agregar Cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
 
     valido = validaciones.validar_codigo_cliente(codigo)
 
     while valido == False:
-
         print("Error: el código debe tener el formato C001.")
-
         codigo = input("Ingrese el código del cliente: ")
-
         valido = validaciones.validar_codigo_cliente(codigo)
+    
+    cantidad = 0  # No existe el código, si existe se convierte en 1
 
-    cantidad = 0
-
-    for fila in matriz_clientes:
-        if fila[0] == codigo:
-            cantidad = cantidad + 1
+    for fila in matriz_clientes:  
+            if fila[0] == codigo:         
+                cantidad = cantidad + 1
 
     while cantidad > 0:
-        print("Error: el cliente ya existe.")
+        print(f"{Fore.RED}Error: el cliente ya existe.")
         codigo = input("Ingrese otro código: ")
-
-        valido = validaciones.validar_codigo_cliente(codigo)
-
-        while valido == False:
-
-            print("Error: el código debe tener el formato C001.")
-
-            codigo = input("Ingrese otro código: ")
-
-            valido = validaciones.validar_codigo_cliente(codigo)
-
 
         cantidad = 0
 
-        for fila in matriz_clientes:
-            if fila[0] == codigo:
+        for cliente in matriz_clientes:
+            if cliente[0] == codigo:
                 cantidad = cantidad + 1
 
     nombre = input("Ingrese el nombre: ")
-
     edad = int(input("Ingrese la edad: "))
-
+        
     while edad <= 0:
-        print("Error: la edad debe ser mayor a 0.")
+        print(f"{Fore.RED}Error: la edad debe ser mayor a 0.")
         edad = int(input("Ingrese la edad: "))
-
+        
     cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
-
+        
     while cobertura != 1 and cobertura != 2:
-        print("Tipo de cobertura inválida.")
-        cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
+        print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
+        cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
 
-    matriz_clientes.append([codigo, nombre, edad, cobertura])
+    matriz_clientes.append([codigo, nombre, edad, cobertura])  
 
-    print("Cliente agregado correctamente.")
+    print(f"{Fore.GREEN}Cliente agregado correctamente.\n")
 
 
-# MODIFICAR CLIENTE
-
+# Para modificar un cliente
 def modificar_cliente():
-
-    print("\n--- MODIFICAR CLIENTE ---")
-
+    print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
-
     posicion = -1
 
-    for i in range(len(matriz_clientes)):
+    for i in range(len(matriz_clientes)):    # Busca la posición del cliente
         if matriz_clientes[i][0] == codigo:
             posicion = i
 
@@ -100,7 +88,6 @@ def modificar_cliente():
     matriz_clientes[posicion][1] = input("Nuevo nombre: ")
     matriz_clientes[posicion][2] = int(input("Nueva edad: "))
 
-
     while matriz_clientes[posicion][2] <= 0:
         print("Error: la edad debe ser mayor a 0.")
         matriz_clientes[posicion][2] = int(input("Ingrese una nueva edad: "))
@@ -108,93 +95,46 @@ def modificar_cliente():
     matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
 
     while matriz_clientes[posicion][3] != 1 and matriz_clientes[posicion][3] != 2:
-        print("Tipo de cobertura inválida.")
+        print("Tipo de cobertura inválida: Ingrese una de las opciones.")
         matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
 
     print("Cliente modificado correctamente.")
 
 
-# ELIMINAR CLIENTE
-
+# Para eliminar un cliente
 def eliminar_cliente():
-
-    print("\n--- ELIMINAR CLIENTE ---")
-
+    print(f"{Fore.MAGENTA}{' Eliminar cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
-
     posicion = -1
 
-    for i in range(len(matriz_clientes)):
+    for i in range(len(matriz_clientes)):  # Busca la posición del cliente
         if matriz_clientes[i][0] == codigo:
             posicion = i
 
     if posicion == -1:
         print("Cliente no encontrado.")
         return
-
+    
     matriz_clientes.pop(posicion)
-
     print("Cliente eliminado correctamente.")
 
 
-# MOSTRAR CLIENTES
-
+# Para mostrar lista clientes
 def mostrar_clientes():
+    dic_clientes = diccionario_clientes()
+    ancho_total = 70
+    print()
+    print(f"{Fore.MAGENTA}{' LISTADO DE CLIENTES '.center(70, '=')}")
+    print(f'{"Código":<12}{"Nombre":<28}{"Edad":<10}{"Cobertura":>20}')
+    print("-" * ancho_total)
 
-    print("\n---- LISTADO DE CLIENTES ----\n")
+    # Ordena la lista por el largo del nombre antes de mostrarla
+    dic_clientes.sort(key=lambda cliente: len(cliente["Nombre"]))
 
-    for i in range(len(matriz_clientes)):
-
-        print("Código:", matriz_clientes[i][0])
-        print("Nombre:", matriz_clientes[i][1])
-        print("Edad:", matriz_clientes[i][2])
-
-        if matriz_clientes[i][3] == 1:
-            print("Cobertura: Particular")
+    for cliente in dic_clientes:
+        if cliente["Cobertura"] == 1:
+            cobertura = "Particular"
         else:
-            print("Cobertura: Obra Social")
+            cobertura = "Obra Social"
 
-        print("----------------------")
-
-
-# BUSCAR CLIENTES POR NOMBRE
-
-def buscar_clientes():
-
-    print("\n--- BUSCAR CLIENTE ---")
-
-    busqueda = input("Ingrese el nombre o texto a buscar: ")
-
-    encontrados = 0
-
-    for cliente in matriz_clientes:
-
-        resultado = validaciones.buscar_texto(
-            cliente[1],
-            busqueda
-        )
-
-        if resultado:
-
-            coincidencias = validaciones.encontrar_coincidencias(
-                cliente[1],
-                busqueda
-            )
-
-            print(
-                cliente[0],
-                "-",
-                cliente[1],
-                "- Edad:",
-                cliente[2],
-                "- Coincidencias:",
-                coincidencias,
-                "- Cantidad:",
-                len(coincidencias)
-            )
-
-            encontrados = encontrados + 1
-
-    if encontrados == 0:
-
-        print("No se encontraron clientes.")
+        print(f'{cliente["ID"]:<12}{cliente["Nombre"]:<28}{cliente["Edad"]:<10}{cobertura:>20}\n')
