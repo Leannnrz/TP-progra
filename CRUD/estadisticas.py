@@ -482,3 +482,41 @@ def promedio_general_ventas():
     return promedio
 
 
+# Funcion para calcular el promedio de ventas con receta
+def promedio_ventas_con_receta():
+    importes = calcular_importes_ventas()
+    lista_importes_receta = []
+
+    for venta, importe in importes:
+        if int(venta[4]) == 1:
+            lista_importes_receta.append(importe)
+
+    if len(lista_importes_receta) == 0:
+        return 0
+
+    total = sum(lista_importes_receta)
+    cantidad = len(lista_importes_receta)
+    promedio = total / cantidad
+
+    return promedio
+
+
+# Funcion para calcular el promedio de ventas sin receta
+def promedio_ventas_sin_receta():
+    importes = calcular_importes_ventas()
+    lista_importes_sin_receta = []
+
+    for venta, importe in importes:
+        if int(venta[4]) == 0:
+            lista_importes_sin_receta.append(importe)
+
+    if len(lista_importes_sin_receta) == 0:
+        return 0
+
+    total = sum(lista_importes_sin_receta)
+    cantidad = len(lista_importes_sin_receta)
+    promedio = total / cantidad
+
+    return promedio
+
+
