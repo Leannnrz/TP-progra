@@ -1,5 +1,6 @@
 from colorama import Fore, Style
 from CRUD import validaciones
+from FUNCIONES import excepciones
 
 # Matriz de clientes
 matriz_clientes = [
@@ -47,25 +48,26 @@ def alta_cliente():
         print(f"{Fore.RED}Error: el cliente ya existe.")
         codigo = input("Ingrese otro código: ")
 
+        valido = validaciones.validar_codigo_cliente(codigo)
+
+        while valido == False:
+            print("Error: el código debe tener el formato C001.")
+            codigo = input("Ingrese otro código: ")
+            valido = validaciones.validar_codigo_cliente(codigo)
+
         cantidad = 0
 
         for cliente in matriz_clientes:
-            if cliente[0] == codigo:
-                cantidad = cantidad + 1
+           if cliente[0] == codigo:
+              cantidad = cantidad + 1
 
-    nombre = input("Ingrese el nombre: ")
-    edad = int(input("Ingrese la edad: "))
-        
-    while edad <= 0:
-        print(f"{Fore.RED}Error: la edad debe ser mayor a 0.")
-        edad = int(input("Ingrese la edad: "))
-        
-    cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
-        
-    while cobertura != 1 and cobertura != 2:
-        print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
-        cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
+    nombre = excepciones.ingresar_texto("Ingrese el nombre: ")
+    edad = excepciones.ingresar_entero_positivo("Ingrese la edad: ")
 
+
+    cobertura = excepciones.ingresar_opcion("Tipo de cobertura (1-Particular / 2-Obra Social): ",[1, 2])
+
+   
     matriz_clientes.append([codigo, nombre, edad, cobertura])  
 
     print(f"{Fore.GREEN}Cliente agregado correctamente.\n")
@@ -74,10 +76,18 @@ def alta_cliente():
 # Para modificar un cliente
 def modificar_cliente():
     print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
+
     codigo = input("Ingrese el código del cliente: ")
+    valido = validaciones.validar_codigo_cliente(codigo)
+
+    while valido == False:
+        print("Error: el código debe tener el formato C001.")
+        codigo = input("Ingrese el código del cliente: ")
+        valido = validaciones.validar_codigo_cliente(codigo)
+
     posicion = -1
 
-    for i in range(len(matriz_clientes)):    # Busca la posición del cliente
+    for i in range(len(matriz_clientes)):
         if matriz_clientes[i][0] == codigo:
             posicion = i
 
@@ -85,18 +95,11 @@ def modificar_cliente():
         print("Cliente no encontrado.")
         return
 
-    matriz_clientes[posicion][1] = input("Nuevo nombre: ")
-    matriz_clientes[posicion][2] = int(input("Nueva edad: "))
+    matriz_clientes[posicion][1] = excepciones.ingresar_texto("Nuevo nombre: ")
 
-    while matriz_clientes[posicion][2] <= 0:
-        print("Error: la edad debe ser mayor a 0.")
-        matriz_clientes[posicion][2] = int(input("Ingrese una nueva edad: "))
+    matriz_clientes[posicion][2] = excepciones.ingresar_entero_positivo("Nueva edad: ")
 
-    matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
-
-    while matriz_clientes[posicion][3] != 1 and matriz_clientes[posicion][3] != 2:
-        print("Tipo de cobertura inválida: Ingrese una de las opciones.")
-        matriz_clientes[posicion][3] = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+    matriz_clientes[posicion][3] = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2]) 
 
     print("Cliente modificado correctamente.")
 
