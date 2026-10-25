@@ -520,3 +520,72 @@ def promedio_ventas_sin_receta():
     return promedio
 
 
+# Funcion para mostrar el resumen estadistico de ventas
+def mostrar_estadisticas_ventas():
+    importes = calcular_importes_ventas()
+
+    if len(importes) == 0:
+        print("No hay ventas registradas.")
+        return
+
+    ancho_total = 80
+
+    total_ventas = len(importes)
+    total_recaudado = 0
+
+    lista_importes = []
+    cantidad_con_receta = 0
+    cantidad_sin_receta = 0
+
+    for venta, importe in importes:
+        lista_importes.append(importe)
+        total_recaudado = total_recaudado + importe
+
+        if int(venta[4]) == 1:
+            cantidad_con_receta = cantidad_con_receta + 1
+        elif int(venta[4]) == 0:
+            cantidad_sin_receta = cantidad_sin_receta + 1
+
+    promedio_general = total_recaudado / total_ventas
+    mayor_importe = max(lista_importes)
+    menor_importe = min(lista_importes)
+
+    porcentaje_con_receta = cantidad_con_receta * 100 / total_ventas
+    porcentaje_sin_receta = cantidad_sin_receta * 100 / total_ventas
+
+    promedio_con_receta = promedio_ventas_con_receta()
+    promedio_sin_receta = promedio_ventas_sin_receta()
+
+    print()
+    print(f"{Fore.MAGENTA}{' RESUMEN ESTADISTICO DE VENTAS '.center(ancho_total, '=')}")
+    print("-" * ancho_total)
+
+    print(f'{"Cantidad de ventas:":<35}{total_ventas:>20}')
+    print(f'{"Total recaudado:":<35}${total_recaudado:>19.2f}')
+    print(f'{"Promedio general por venta:":<35}${promedio_general:>19.2f}')
+    print(f'{"Venta de mayor importe:":<35}${mayor_importe:>19.2f}')
+    print(f'{"Venta de menor importe:":<35}${menor_importe:>19.2f}')
+
+    print("-" * ancho_total)
+    print(f"{Fore.MAGENTA}{' CONTEOS Y PORCENTAJES POR CATEGORIA '.center(ancho_total, '=')}")
+    print("-" * ancho_total)
+
+    print(f'{"Categoría":<25}{"Cantidad":>20}{"Porcentaje":>25}')
+    print("-" * ancho_total)
+
+    print(f'{"Con receta":<25}{cantidad_con_receta:>20}{porcentaje_con_receta:>24.2f} %')
+    print(f'{"Sin receta":<25}{cantidad_sin_receta:>20}{porcentaje_sin_receta:>24.2f} %')
+    print(f'{"TOTAL":<25}{total_ventas:>20}{100.0:>24.2f} %')
+
+    print("-" * ancho_total)
+    print(f"{Fore.MAGENTA}{' PROMEDIOS POR CATEGORIA '.center(ancho_total, '=')}")
+    print("-" * ancho_total)
+
+    print(f'{"Categoría":<35}{"Promedio por venta":>30}')
+    print("-" * ancho_total)
+
+    print(f'{"Con receta":<35}${promedio_con_receta:>29.2f}')
+    print(f'{"Sin receta":<35}${promedio_sin_receta:>29.2f}')
+
+    print("-" * ancho_total)
+    print()
