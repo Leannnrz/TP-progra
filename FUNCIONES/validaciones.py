@@ -51,3 +51,18 @@ def encontrar_coincidencias(texto, busqueda):
     resultados = re.findall(patron, texto, re.IGNORECASE)
 
     return resultados
+
+
+
+# VALIDAR CÓDIGO DE VENTA
+
+def validar_codigo_venta(codigo):
+
+    patron = r"^V[0-9]{3}$"
+
+    resultado = re.search(patron, codigo)
+
+    if resultado:
+        return True
+    else:
+        return False

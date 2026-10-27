@@ -1,5 +1,6 @@
 from colorama import Fore, Style
 from CRUD import validaciones
+from FUNCIONES import excepciones
 import os
 
 '''
@@ -8,8 +9,8 @@ FUNCIONES CRUD DE MEDICAMENTOS
 # Para agregar un medicamento
 def alta_medicamento():
     print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
-    codigo = input("Ingrese el código del medicamento: ")
 
+    codigo = input("Ingrese el código del medicamento: ")
     valido = validaciones.validar_codigo_medicamento(codigo)
 
     while valido == False:
@@ -17,160 +18,208 @@ def alta_medicamento():
         codigo = input("Ingrese el código del medicamento: ")
         valido = validaciones.validar_codigo_medicamento(codigo)
 
-    nombre = input("Ingrese el nombre: ")
-    laboratorio = input("Ingrese el laboratorio: ")
-    precio = int(input("Ingrese el precio: "))
-    stock = int(input("Ingrese el stock: "))
-    receta = int(input("Requiere receta (1- Si / 2- No): "))
-    while receta != 1 and receta != 2:
-        print ("Opción no válida: Ingrese una de las opciones.")
-        receta = int(input("Requiere receta (1- Si / 2- No): "))
-    
+    codigos = []
+
     try:
-        try:
-            with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
-                for linea in arch:
-                    datos = linea.strip().split(";")
-                    ultimo_codigo = datos[0]
-                    while ultimo_codigo == codigo:
-                        print(f"{Fore.RED}Error: El código del medicamento ya existe.")
-                        codigo = input("Ingrese un nuevo código del medicamento: ")
-                        valido = validaciones.validar_codigo_medicamento(codigo)
-        except FileNotFoundError:
-            print("El archivo no existe. Se creará uno nuevo.")
+        with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+            for linea in arch:
+                datos = linea.strip().split(";")
+
+                if len(datos) == 6:
+                    codigos.append(datos[0])
+
+    except FileNotFoundError:
+        print("El archivo no existe. Se creará uno nuevo.")
+
+    except OSError as error:
+        print("Error al leer el archivo:", error)
+        return
+
+    while codigo in codigos:
+        print(f"{Fore.RED}Error: el código del medicamento ya existe.")
+        codigo = input("Ingrese otro código del medicamento: ")
+
+        valido = validaciones.validar_codigo_medicamento(codigo)
+
+        while valido == False:
+            print("Error: el código debe tener el formato M001.")
+            codigo = input("Ingrese otro código del medicamento: ")
+            valido = validaciones.validar_codigo_medicamento(codigo)
+
+    nombre = excepciones.ingresar_texto("Ingrese el nombre: ")
+
+    laboratorio = excepciones.ingresar_texto("Ingrese el laboratorio: ")
+
+    precio = excepciones.ingresar_entero_positivo("Ingrese el precio: ")
+
+    stock = excepciones.ingresar_entero_no_negativo("Ingrese el stock: ")
+
+    receta = excepciones.ingresar_opcion("Requiere receta (1- Si / 2- No): ",[1, 2])
+
+    try:
         with open("medicamentos.txt", "at", encoding="UTF-8") as arch:
-            nuevo_medicamento= f'{codigo};{nombre};{laboratorio};{precio};{stock};{receta}\n'
+            nuevo_medicamento = (
+                f"{codigo};{nombre};{laboratorio};"
+                f"{precio};{stock};{receta}\n"
+            )
+
             arch.write(nuevo_medicamento)
-            print("Se ha agregado el siguiente medicamento:")
-            print(f'{codigo}: {nombre} - $ {precio}')
-    except OSError as mensaje:
-        print("No se puede grabar el archivo:", mensaje)
-    finally:
-        try:
-            arch.close()
-        except NameError:
-            pass
+
+        print("Se ha agregado el siguiente medicamento:")
+        print(f"{codigo}: {nombre} - $ {precio}")
+
+    except OSError as error:
+        print("No se puede grabar el archivo:", error)
+
 
 # Para modificar un medicamento
 def modificar_medicamento():
     print(f"{Fore.MAGENTA}{' Modificar Medicamento '.center(30, '=')}")
+
     codigo = input("Ingrese código del medicamento: ")
     valido = validaciones.validar_codigo_medicamento(codigo)
-    
+
     while valido == False:
         print("Error: el código debe tener el formato M001.")
         codigo = input("Ingrese el código del medicamento: ")
         valido = validaciones.validar_codigo_medicamento(codigo)
-
 
     temp = "temp.txt"
     encontrado = False
 
     try:
-        arch = open("medicamentos.txt", "rt", encoding="UTF-8")
-        aux = open("temp.txt", "wt", encoding="UTF-8")
+        with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+            lineas = arch.readlines()
 
-        for linea in arch:
-            datos = linea.strip().split(";")
-            codigo_viejo = datos[0]
+        with open(temp, "wt", encoding="UTF-8") as aux:
+            for linea in lineas:
+                datos = linea.strip().split(";")
 
-            if codigo == codigo_viejo:
-                encontrado = True
-                nombre = datos[1]
-                precio = float(datos[3])
-                print(f"Producto encontrado: {codigo} - {nombre} - ${precio:.2f}")
+                if len(datos) != 6:
+                    print("Error: hay un registro inválido en el archivo.")
+                    return
 
-                nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip()
-                if nuevo_nombre == "":
-                    nuevo_nombre = nombre
+                codigo_viejo = datos[0]
 
-                nuevo_precio = input("Nuevo precio (Enter para mantener): ").strip()
-                if nuevo_precio == "":
-                    nuevo_precio = precio
+                if codigo == codigo_viejo:
+                    encontrado = True
+
+                    nombre = datos[1]
+                    laboratorio = datos[2]
+                    precio = datos[3]
+                    stock = datos[4]
+
+                    try:
+                        receta_actual = int(datos[5])
+
+                        if receta_actual not in [1, 2]:
+                            raise ValueError
+
+                    except ValueError:
+                        print("Error: el valor de receta del archivo es inválido.")
+                        return
+
+                    print(
+                        f"Producto encontrado: {codigo} - "
+                        f"{nombre} - ${precio}"
+                    )
+
+                    nuevo_nombre = excepciones.ingresar_texto_modificado("Nuevo nombre",nombre)
+
+                    nuevo_laboratorio = excepciones.ingresar_texto_modificado("Nuevo laboratorio",laboratorio)
+
+                    nuevo_precio = excepciones.ingresar_entero_positivo_modificado("Nuevo precio",int(precio))
+
+                    nuevo_stock = excepciones.ingresar_entero_no_negativo_modificado("Nuevo stock",int(stock))
+
+                    receta = excepciones.ingresar_opcion("Requiere receta (1-Sí / 2-No): ",[1, 2])
+
+                    nueva_linea = (
+                        f"{codigo};{nuevo_nombre};{nuevo_laboratorio};"
+                        f"{nuevo_precio};{nuevo_stock};{receta}\n"
+                    )
+
+                    aux.write(nueva_linea)
+                    print(f"Producto {codigo} modificado.")
+
                 else:
-                    nuevo_precio = float(nuevo_precio)
+                    aux.write(linea)
 
-                nuevo_stock = input("Nuevo stock (Enter para mantener): ").strip()
-                if nuevo_stock == "":
-                    nuevo_stock = datos[4]
-
-                nuevo_laboratorio = input("Nuevo laboratorio (Enter para mantener): ").strip()
-                if nuevo_laboratorio == "":
-                    nuevo_laboratorio = datos[2]
-                
-                receta = int(input("Requiere receta? (1-Si / 2-No): "))
-                while receta != 1 and receta != 2:
-                    print("Opción no válida: Ingrese una de las opciones.")
-                    receta = int(input("Requiere receta? (1-Si / 2-No): "))
-
-                
-                nueva_linea = f"{codigo};{nuevo_nombre};{nuevo_laboratorio};{nuevo_precio};{nuevo_stock};{receta}\n"
-                aux.write(nueva_linea)
-                print(f"Producto {codigo} modificado.")
-            else:
-                aux.write(linea)
     except FileNotFoundError:
-        print("El archivo no existe.")
+        print("El archivo medicamentos.txt no existe.")
+        return
+
     except OSError as error:
         print("Error en el acceso al archivo:", error)
-    finally:
-        try:
-            arch.close()
-            aux.close()
-        except:
-            print("Error en el cierre del archivo:")
+        return
 
     if encontrado:
         try:
-            os.remove("medicamentos.txt")
-            os.rename("temp.txt", "medicamentos.txt")
+            os.replace(temp, "medicamentos.txt")
+            print("Archivo actualizado correctamente.")
+
         except OSError as error:
             print("Error al reemplazar el archivo:", error)
+
     else:
-        os.remove("temp.txt")
+        if os.path.exists(temp):
+            os.remove(temp)
+
         print(f"No se encontró el producto {codigo}.")
+
     
 # Para eliminar un medicamento
 def eliminar_medicamento():
 
     print(f"{Fore.MAGENTA}{' Eliminar Medicamento '.center(30, '=')}")
+
     codigo = input("Ingrese código del medicamento: ")
+    valido = validaciones.validar_codigo_medicamento(codigo)
+
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo = input("Ingrese código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo)
+
     temp = "temp.txt"
     encontrado = False
 
     try:
-        arch = open("medicamentos.txt", "rt", encoding="UTF-8")
-        aux = open(temp, "wt", encoding="UTF-8")
+        with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+            lineas = arch.readlines()
 
-        for linea in arch:
-            datos = linea.strip().split(";")
-            codigo_1 = datos[0]
-            if codigo != codigo_1:
-                aux.write(linea)
-            else:
-                encontrado = True
+        with open(temp, "wt", encoding="UTF-8") as aux:
+            for linea in lineas:
+                datos = linea.strip().split(";")
+
+                if len(datos) != 6:
+                    print("Error: hay un registro inválido en el archivo.")
+                    return
+
+                if codigo != datos[0]:
+                    aux.write(linea)
+                else:
+                    encontrado = True
+
+        if encontrado:
+            os.replace(temp, "medicamentos.txt")
+            print(f"Producto {codigo} eliminado correctamente.")
+        else:
+            os.remove(temp)
+            print(f"No se encontró el producto {codigo}.")
 
     except FileNotFoundError:
-        print("El archivo no existe.")
+        print("El archivo medicamentos.txt no existe.")
+
+        if os.path.exists(temp):
+            os.remove(temp)
+
     except OSError as error:
         print("Error en el acceso al archivo:", error)
-    finally:
-        try:
-            arch.close()
-            aux.close()
-        except:
-            print("Error en el cierre del archivo:")
 
-    if encontrado:
-        try:
-            os.remove("medicamentos.txt")  
-            os.rename("temp.txt", "medicamentos.txt") 
-            print(f"Producto {codigo} eliminado correctamente.")
-        except OSError as error:
-            print("Error al reemplazar el archivo:", error)
-    else:
-        os.remove(temp)  
-        print(f"No se encontró el producto {codigo}.")
+        if os.path.exists(temp):
+            os.remove(temp)
+
 
 # Para mostrar lista medicamentos
 def mostrar_medicamentos():
