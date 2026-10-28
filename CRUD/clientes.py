@@ -1,6 +1,7 @@
 import json
 from colorama import Fore, Style
 from CRUD import validaciones
+from FUNCIONES import excepciones
 
 archivo_clientes = "TP-progra/clientes.json"
 
@@ -91,6 +92,27 @@ def alta_cliente():
          if cantidad == 0:
                 break
 
+        valido = validaciones.validar_codigo_cliente(codigo)
+
+        while valido == False:
+            print("Error: el código debe tener el formato C001.")
+            codigo = input("Ingrese otro código: ")
+            valido = validaciones.validar_codigo_cliente(codigo)
+
+        cantidad = 0
+
+        for cliente in matriz_clientes:
+           if cliente[0] == codigo:
+              cantidad = cantidad + 1
+
+    nombre = excepciones.ingresar_texto("Ingrese el nombre: ")
+    edad = excepciones.ingresar_entero_positivo("Ingrese la edad: ")
+
+
+    cobertura = excepciones.ingresar_opcion("Tipo de cobertura (1-Particular / 2-Obra Social): ",[1, 2])
+
+   
+    matriz_clientes.append([codigo, nombre, edad, cobertura])  
          print(f"{Fore.RED}Error: el cliente ya existe.")
          codigo = input("Ingrese el código del cliente: ")
 
@@ -113,6 +135,33 @@ def alta_cliente():
 
          cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
 
+# Para modificar un cliente
+def modificar_cliente():
+    print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
+
+    codigo = input("Ingrese el código del cliente: ")
+    valido = validaciones.validar_codigo_cliente(codigo)
+
+    while valido == False:
+        print("Error: el código debe tener el formato C001.")
+        codigo = input("Ingrese el código del cliente: ")
+        valido = validaciones.validar_codigo_cliente(codigo)
+
+    posicion = -1
+
+    for i in range(len(matriz_clientes)):
+        if matriz_clientes[i][0] == codigo:
+            posicion = i
+
+    if posicion == -1:
+        print("Cliente no encontrado.")
+        return
+
+    matriz_clientes[posicion][1] = excepciones.ingresar_texto("Nuevo nombre: ")
+
+    matriz_clientes[posicion][2] = excepciones.ingresar_entero_positivo("Nueva edad: ")
+
+    matriz_clientes[posicion][3] = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2]) 
          while cobertura != 1 and cobertura != 2:
                 print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
                 cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
