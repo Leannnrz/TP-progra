@@ -56,6 +56,21 @@ def alta_medicamento():
 
     receta = excepciones.ingresar_opcion("Requiere receta (1- Si / 2- No): ",[1, 2])
 
+    nombre = input("Ingrese el nombre: ")
+    laboratorio = input("Ingrese el laboratorio: ")
+    precio = int(input("Ingrese el precio: "))
+    stock = int(input("Ingrese el stock: "))
+    receta = int(input("Requiere receta (1- Si / 2- No): "))
+    print("¿Se quiere agregar una descripción del medicamento? (1- Si / 2- No): ")
+    opcion_descripcion = int(input())
+    if opcion_descripcion == 1:
+        descripcion = input("Ingrese la descripción del medicamento: ")
+    else:
+        descripcion = "No hay descripción disponible."
+    while receta != 1 and receta != 2:
+        print ("Opción no válida: Ingrese una de las opciones.")
+        receta = int(input("Requiere receta (1- Si / 2- No): "))
+    
     try:
         with open("medicamentos.txt", "at", encoding="UTF-8") as arch:
             nuevo_medicamento = (
@@ -63,6 +78,7 @@ def alta_medicamento():
                 f"{precio};{stock};{receta}\n"
             )
 
+            nuevo_medicamento= f'{codigo};{nombre};{laboratorio};{precio};{stock};{receta};{descripcion}\n'
             arch.write(nuevo_medicamento)
 
         print("Se ha agregado el siguiente medicamento:")
@@ -249,3 +265,53 @@ def mostrar_medicamentos():
             arch.close()
         except:
             print("No se pudo cerrar el archivo")
+
+# Para obtener información de un medicamento por código
+def buscar_medicamento():
+    print(f"{Fore.MAGENTA}{' Buscar Medicamento '.center(30, '=')}")
+    codigo = input("Ingrese código del medicamento: ")
+    valido = validaciones.validar_codigo_medicamento(codigo)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo)
+
+    with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+            matriz_medicamentos = []
+            for linea in arch:
+                datos = linea.strip().split(";")
+                datos[3] = float(datos[3])  # Convertir el precio a float
+                datos[4] = int(datos[4])    # Convertir la cantidad a int
+                datos[5] = int(datos[5])    # Convertir la categoría a int
+                matriz_medicamentos.append(datos)
+
+    pos = -1
+    for j in range(len(matriz_medicamentos)):
+        if matriz_medicamentos[j][0] == codigo:
+            pos = j
+
+    if pos == -1:
+        print("Medicamento no Encontrado")
+        print()
+        return
+
+    lista_receta_medicamentos = []
+    for i in range(len(matriz_medicamentos)):
+        lista_receta_medicamentos.append(matriz_medicamentos[i][5])
+
+    list_recetas_med_traducidas = list(map(lambda x: "Si" if x == 1 else "No", lista_receta_medicamentos))
+
+    descripcion_med = str(matriz_medicamentos[pos][6]) 
+    if len(descripcion_med) > 100:
+        descripcion_med = descripcion_med[:100] + "..."
+    print("-" * 130)
+    print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<21}{"Precio":>10}{"Stock":>10}{"Receta":>10}')
+    print("-" * 130)
+    print(f'{matriz_medicamentos[pos][0]:10}{matriz_medicamentos[pos][1]:20}{matriz_medicamentos[pos][2]:22}{matriz_medicamentos[pos][3]:>7.2f}{matriz_medicamentos[pos][4]:>10}{list_recetas_med_traducidas[pos]:>10}')
+    print("-" * 130)
+    print()
+    print("-" * 130)
+    print(f'{"Descripcion:":<20}{descripcion_med}')
+    print("-" * 130)
+    print()

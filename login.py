@@ -1,0 +1,145 @@
+usuariosAdmin = [["admin", "1234", "Administrador"]]
+usuariosCliente = [["cliente", "4321", "Cliente"]]
+archivo_usuarios = "usuarios.txt"
+
+def cargar_usuarios():
+
+    usuarios = []
+
+    try:
+        archivo = open(archivo_usuarios, "r", encoding = "UTF-8")
+        linea = archivo.readline()
+
+        while linea != "":
+            datos = linea.strip().split(",")
+
+            if len(datos) == 3:
+                usuarios .append(datos)
+            linea = archivo.readline()
+
+        archivo.close()
+
+    except FileNotFoundError:
+
+        try:
+            archivo = open(archivo_usuarios, "w", encoding = "UTF-8")
+            archivo.write("cliente,4321,Cliente\n")
+            archivo.close()
+
+            usuarios.append(["cliente", "4321", "Cliente"])
+        
+        except OSError:
+            print("Error al crear el archivo de usuarios.")
+
+    except OSError:
+        print("Error al leer el archivo de usuarios.")
+
+    return usuarios
+
+
+#REGISTRO DEL USUARIO
+def registrar_usuario():
+    print ("=" * 30 + " REGISTRO " + "=" * 30)
+
+    nombre = input("Ingrese el nombre del usuario: ")
+    contraseña = input("Ingrese la contraseña del usuario: ")
+
+    usuariosCliente = cargar_usuarios()
+
+    usuarios = set()
+
+    for usuario in usuariosCliente:
+        usuarios.add(usuario[0])
+
+    if nombre == "" or contraseña == "":
+        print("\nError: El nombre de usuario y la contraseña no pueden estar vacios.\n")
+
+    elif "," in nombre or "," in contraseña:
+        print("\nError: No se permite el uso de coma.\n")
+
+    elif nombre in usuarios:
+        print("\nEl usuario ya existe.\n")
+    else:
+
+        try:
+            archivo = open(archivo_usuarios, "a", encoding = "UTF-8")
+            archivo.write(nombre + "," + contraseña + ",Cliente\n")
+            archivo.close()
+
+            print("\nUsuario registrado correctamente.\n")
+
+        except OSError:
+            print("\nError al guardar el usuario.")
+
+
+def iniciar_sesion():
+
+    intentos = 0
+
+    while intentos < 3: 
+
+        print("=" * 30 + "Iniciar Sesión" + "=" * 30)
+
+        nombre = input("Ingrese el nombre de usuario: ")
+        contraseña = (input("Ingrese la contraseña: "))
+
+        usuariosCliente = cargar_usuarios()
+        rol = ""
+
+        for usuario in usuariosCliente:
+            if nombre == usuario[0] and contraseña == usuario[1]:
+                rol = "Cliente"
+
+        if rol == "":
+            for usuario in usuariosAdmin:
+                if nombre == usuario[0] and contraseña == usuario[1]:
+                    rol = "Administrador"
+
+        if rol == "Cliente":
+            print("Inicio de sesión exitoso. Bienvenido, Cliente. \n")
+            print("Accediendo al menú de cliente...\n")
+            return "Cliente"
+
+        elif rol == "Administrador":
+            print("Inicio de sesión exitoso. Bienvenido, Administrador. \n")
+            print("Accediendo al menú de administrador...\n")
+            return "Administrador"
+
+        else:
+
+            intentos = intentos + 1
+
+            print("Nombre de usuario o contraseña incorrectos.\n")
+            print("Intentos restantes: ", 3 - intentos)
+
+
+def menu_de_acceso():
+
+    opcion = ""
+    while opcion != "3":
+
+        print("=" * 175)
+        print("Bienvenido al sistema de registo e inicio de sesion".rjust(100))
+        print("=" * 175)
+
+
+        print("Seleccione una opción:\n")
+
+        print("1. Registrar usuario")
+        print("2. Iniciar sesión")
+        print("3. Salir del sistema\n")
+
+        opcion = input("Ingrese el número de la opción deseada: ")
+
+        if opcion == "1":
+            registrar_usuario()
+
+        elif opcion == "2":
+            iniciar_sesion()
+
+        elif opcion == "3":
+            print("Saliendo del sistema...")
+        else: 
+            print("\nError: Opcion invalida. Por favor, seleccione una de las opciones\n")
+
+

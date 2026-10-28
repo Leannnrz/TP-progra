@@ -2,6 +2,7 @@
 from colorama import init, Fore, Back, Style
 from CRUD import clientes, medicamentos, ventas, estadisticas
 from FUNCIONES import excepciones
+from login import registrar_usuario, cargar_usuarios, iniciar_sesion
 import re
 
 init(autoreset=True) # Inicialización de colorama
@@ -10,11 +11,6 @@ init(autoreset=True) # Inicialización de colorama
 Función de login
 '''
 def login(max_intentos):
-    usuario_admin = "admin"
-    contrasenia_admin = "1234"
-
-    usuario_normal = "usuario"
-    contrasenia_normal = "4321"
 
     intentos = 0
 
@@ -22,25 +18,62 @@ def login(max_intentos):
         usuario = input("Ingrese el usuario: ").lower()
         contrasenia = input("Ingrese la contraseña: ")
 
-        if usuario == usuario_admin and contrasenia == contrasenia_admin:
-            print(f"{Fore.GREEN}¡Login exitoso!")
+        if usuario == "admin" and contrasenia == "1234":
+            print(f"{Fore.GREEN}Login exitoso!")
             print("Ingresó como administrador.\n")
-            return usuario_admin
+            return "admin"
+        usuarios = cargar_usuarios()
 
-        elif usuario == usuario_normal and contrasenia == contrasenia_normal:
-            print(f"{Fore.GREEN}¡Login exitoso!")
-            print("Ingresó como usuario.\n")
-            return usuario_normal
+        for datos in usuarios:
+            if usuario == datos[0].lower() and contrasenia == datos[1]:
+                print(f"{Fore.GREEN}¡Login exitoso!")
+                print("Ingresó como usuario.\n")
+                return "usuario"
 
-        else:
-            intentos += 1
-            print(f"{Fore.RED}Usuario o contraseña incorrectos.")
-            print("Intentos restantes:", max_intentos - intentos)
-            print()
+        intentos = intentos + 1
+
+        print(f"{Fore.RED}Usuario o contraseña incorrectos.")
+        print("Intentos restantes:", max_intentos - intentos)
+        print()
 
     print("Ha superado el límite de intentos.")
-    return
+    return None
 
+def menu_de_acceso():
+
+    opcion = ""
+
+    while opcion != "3":
+
+        print("=" * 175)
+        print("Bienvenido al sistema de registo e inicio de sesion".rjust(100))
+        print("=" * 175)
+
+
+        print("Seleccione una opción:\n")
+
+        print("1. Registrar usuario")
+        print("2. Iniciar sesión")
+        print("3. Salir del sistema\n")
+
+        opcion = input("Ingrese el número de la opción deseada: ")
+
+        if opcion == "1":
+            registrar_usuario()
+
+        elif opcion == "2":
+            tipo_usuario = iniciar_sesion()
+
+            if tipo_usuario == "Administrador":
+                mostrar_menu("admin")
+
+            elif tipo_usuario == "Cliente":
+                mostrar_menu("usuario")
+
+        elif opcion == "3":
+            print("Saliendo del sistema...")
+        else: 
+            print("\nError: Opcion invalida. Por favor, seleccione una de las opciones\n")
 
 '''
 SUBMENÚS
@@ -84,7 +117,8 @@ def submenu_medicamentos():
         print("2- Modificar medicamento")
         print("3- Eliminar medicamento")
         print("4- Mostrar medicamentos")
-        print("5- Volver. \n")
+        print("5- Buscar medicamento")
+        print("6- Volver. \n")
 
         opcion_medicamentos = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5])
         print()
@@ -97,7 +131,9 @@ def submenu_medicamentos():
             medicamentos.eliminar_medicamento()
         elif opcion_medicamentos == 4:
             medicamentos.mostrar_medicamentos()
-        elif opcion_medicamentos == 5:
+        elif opcion_medicamentos == "5":
+            medicamentos.buscar_medicamento()
+        elif opcion_medicamentos == "6":
             print("Volviendo al menú principal.\n")
 
 
@@ -185,18 +221,18 @@ def mostrar_menu(tipo_usuario):
     if tipo_usuario == "admin":
         opcion = 0
 
-        while opcion != 5:
-            print(f"{Fore.BLUE}{Style.BRIGHT}{'-' * 25}\n{'Menú Principal'.center(25)}\n{'-' * 25}")
-            print(f"{Fore.BLUE}{Style.BRIGHT}\n1- Clientes")
-            print(f"{Fore.BLUE}{Style.BRIGHT}2- Medicamentos")
-            print(f"{Fore.BLUE}{Style.BRIGHT}3- Ventas")
-            print(f"{Fore.BLUE}{Style.BRIGHT}4- Estadísticas")
-            print(f"{Fore.BLUE}{Style.BRIGHT}5- Salir\n")
+        while opcion != "5":
 
-            opcion = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5])
-            print()
+            print(f"{Style.BRIGHT}{'-' * 80}\n{'Menú Principal'.center(25)}\n{'-' * 80}")
+            print(f"{Style.BRIGHT}\n1- Clientes")
+            print(f"{Style.BRIGHT}2- Medicamentos")
+            print(f"{Style.BRIGHT}3- Ventas")
+            print(f"{Style.BRIGHT}4- Estadísticas")
+            print(f"{Style.BRIGHT}5- Salir\n")
 
-            if opcion == 1:
+            opcion = input("Seleccione una opción: ")
+        
+            if opcion == "1":
                 submenu_clientes()
             elif opcion == 2:
                 submenu_medicamentos()
@@ -204,17 +240,17 @@ def mostrar_menu(tipo_usuario):
                 submenu_ventas()
             elif opcion == 4:
                 submenu_estadisticas()
-            elif opcion == 5:
-                print("Saliendo del programa.")
-            
+            elif opcion == "5":
+                print("Cerrando sesión...")
+            else:
+                print(f"{Fore.RED}Opción no válida.")
 
     elif tipo_usuario == "usuario":
-        opcion = 0
 
-        while opcion != 4:
-            print("\n-----------------------")
-            print("Menú Usuario")
-            print("-----------------------")
+        opcion = ""
+
+        while opcion != "4":
+            print(f"{Style.BRIGHT}{'-' * 80}\n{'Menú Cliente'.center(25)}\n{'-' * 80}")
             print("1- Ver Clientes")
             print("2- Ver Medicamentos")
             print("3- Ver Ventas")
@@ -237,12 +273,5 @@ def mostrar_menu(tipo_usuario):
             else:
                 print(f"{Fore.RED}Opción no válida.")
 
-        else:
-            print(f"{Fore.RED}Acceso denegado.")
-
-
-
-
+menu_de_acceso()
 # Programa principal
-tipo_usuario = login(3)
-mostrar_menu(tipo_usuario)

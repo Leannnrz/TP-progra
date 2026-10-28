@@ -64,7 +64,7 @@ def mayor_venta():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
         lista_cant_productos.append(matriz_ventas[i][3])
-    
+
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
         lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
@@ -265,7 +265,6 @@ def stats_clientes():
     print("1- Por Edad")
     print("2- Por Cobertura")
     opcion_stats = input("Ingrese una Opcion: ")
-
     while opcion_stats != "1" and opcion_stats != "2":
         print("Opcion Invalida")
         print("Ver Porcentajes de Clientes: ")

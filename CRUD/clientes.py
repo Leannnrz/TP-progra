@@ -1,52 +1,96 @@
+import json
 from colorama import Fore, Style
 from CRUD import validaciones
 from FUNCIONES import excepciones
 
-# Matriz de clientes
-matriz_clientes = [
-    ["C001", "Juan Perez", 25, 1],
-    ["C002", "Maria Gomez", 42, 2],
-    ["C003", "Carlos Lopez", 31, 1],
-    ["C004", "Ana Martinez", 55, 2],
-    ["C005", "Luis Fernandez", 19, 1],
-    ["C006", "Sofia Torres", 38, 2],
-    ["C007", "Diego Ramirez", 47, 1],
-    ["C008", "Valentina Castro", 29, 2],
-    ["C009", "Martin Rojas", 61, 2],
-    ["C010", "Lucia Diaz", 34, 2]
-]
+archivo_clientes = "TP-progra/clientes.json"
 
 '''
 FUNCIONES CRUD DE CLIENTES
 '''
 
-def diccionario_clientes():
-    encabezados =  ['ID', 'Nombre', 'Edad', 'Cobertura']
-    lista_clientes = [dict(zip(encabezados, fila)) for fila in matriz_clientes]
-    return lista_clientes
 
-# Para agregar un cliente
+def diccionario_clientes():
+    try:
+        with open(archivo_clientes, "r", encoding = "UTF-8") as archivo:
+                lista_clientes = json.load(archivo)
+
+        if type(lista_clientes) != list:
+            print("Error: el archivo JSON debe contener una lista de clientes")
+            return None
+
+        for cliente in lista_clientes:
+            if type(cliente) != dict:
+                print("Error: cada cliente debe ser un diccionario")
+                return None
+            
+            if "ID" not in cliente or "Nombre" not in cliente or "Edad" not in cliente or "Cobertura" not in cliente:
+                print("Error: cada cliente debe tener las claves 'ID', 'Nombre', 'Edad' y 'Cobertura'")
+                return None
+
+        return lista_clientes
+
+    except FileNotFoundError:
+            print("Error: no se encontro el archivo JSON")
+            return None
+    except json.JSONDecodeError:
+            print("Error: el archivo JSON no tiene datos validos")
+            return None
+    except (OSError, UnicodeDecodeError) as error:
+            print(f"Error: no se pudo leer el archivo JSON: {error}")
+            return None
+
+def matriz_clientes():
+     lista_clientes = diccionario_clientes()
+
+     if lista_clientes is None:
+            return None
+
+     matriz = []
+
+     for cliente in lista_clientes:
+          fila = [
+               cliente["ID"],
+               cliente["Nombre"],
+               cliente["Edad"],
+               cliente["Cobertura"]
+          ]
+          matriz.append(fila)
+     return matriz
+
+def guardar_clientes(lista_clientes):
+    try:
+        with open(archivo_clientes, "w", encoding = "UTF-8") as archivo:
+             json.dump(lista_clientes, archivo, indent=4, ensure_ascii=False)
+        return True
+    
+    except(OSError, TypeError, ValueError) as error:
+         print(f"Error: no se pudo guardar el archivo JSON: {error}")
+         return False
+
+# PARA AGREGAR UN CLIENTE
 def alta_cliente():
+
+    lista_clientes = diccionario_clientes()
+    if lista_clientes is None:
+         return
 
     print(f"{Fore.MAGENTA}{' Agregar Cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
 
-    valido = validaciones.validar_codigo_cliente(codigo)
+    while validaciones.validar_codigo_cliente(codigo) == False:
+         print("Error: el codigo debe tener el formato C001.")
+         codigo = input("Ingrese el código del cliente: ")
 
-    while valido == False:
-        print("Error: el código debe tener el formato C001.")
-        codigo = input("Ingrese el código del cliente: ")
-        valido = validaciones.validar_codigo_cliente(codigo)
-    
-    cantidad = 0  # No existe el código, si existe se convierte en 1
+    while True:
+         cantidad = 0
 
-    for fila in matriz_clientes:  
-            if fila[0] == codigo:         
-                cantidad = cantidad + 1
+         for cliente in lista_clientes:
+              if cliente["ID"] == codigo:
+                   cantidad = cantidad + 1
 
-    while cantidad > 0:
-        print(f"{Fore.RED}Error: el cliente ya existe.")
-        codigo = input("Ingrese otro código: ")
+         if cantidad == 0:
+                break
 
         valido = validaciones.validar_codigo_cliente(codigo)
 
@@ -69,9 +113,27 @@ def alta_cliente():
 
    
     matriz_clientes.append([codigo, nombre, edad, cobertura])  
+         print(f"{Fore.RED}Error: el cliente ya existe.")
+         codigo = input("Ingrese el código del cliente: ")
 
-    print(f"{Fore.GREEN}Cliente agregado correctamente.\n")
+         while validaciones.validar_codigo_cliente(codigo) == False:
+              print("Error: el codigo debe tener el formato C001.")
+              codigo = input("Ingrese el código del cliente: ")
 
+    nombre = input("Ingrese el nombre: ")
+    
+    while nombre == "":
+         print("Error: el nombre no puede estar vacío.")
+         nombre = input("Ingrese el nombre: ")
+
+    try:
+         edad = int(input("Ingrese la edad: "))
+
+         while edad <= 0:
+                print(f"{Fore.RED}Error: la edad debe ser mayor a 0.")
+                edad = int(input("Ingrese la edad: "))
+
+         cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
 
 # Para modificar un cliente
 def modificar_cliente():
@@ -100,31 +162,93 @@ def modificar_cliente():
     matriz_clientes[posicion][2] = excepciones.ingresar_entero_positivo("Nueva edad: ")
 
     matriz_clientes[posicion][3] = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2]) 
+         while cobertura != 1 and cobertura != 2:
+                print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
+                cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
+    
+    except ValueError:
+        print("Error: ingrese un numero valido.")
+        return
 
-    print("Cliente modificado correctamente.")
+    nuevo_cliente = {
+        "ID": codigo,
+        "Nombre": nombre,
+        "Edad": edad,
+        "Cobertura": cobertura
+    }
 
+    lista_clientes.append(nuevo_cliente)
 
-# Para eliminar un cliente
-def eliminar_cliente():
-    print(f"{Fore.MAGENTA}{' Eliminar cliente '.center(30, '=')}")
-    codigo = input("Ingrese el código del cliente: ")
-    posicion = -1
+    if guardar_clientes(lista_clientes):
+        print(f"{Fore.GREEN}Cliente agregado correctamente.\n")
 
-    for i in range(len(matriz_clientes)):  # Busca la posición del cliente
-        if matriz_clientes[i][0] == codigo:
-            posicion = i
-
-    if posicion == -1:
-        print("Cliente no encontrado.")
+# PARA MODIFICAR UN CLIENTE
+def modificar_cliente():
+    lista_clientes = diccionario_clientes()
+    if lista_clientes is None:
         return
     
-    matriz_clientes.pop(posicion)
-    print("Cliente eliminado correctamente.")
+    print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
+    codigo = input("Ingrese el código del cliente: ")
 
+    for cliente in lista_clientes:
+         if cliente["ID"] == codigo:
+              nombre = input("Nuevo nombre: ")
+              edad = (input("Nueva edad: "))
+              cobertura = (input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+              
+              if nombre:
+                  cliente["Nombre"] = nombre
+              
+              try:
+                    if edad:
+                        nueva_edad = int(edad)
+                        if nueva_edad <= 0:
+                             print("Error: la edad debe ser mayor a 0.")
+                             return
+                        cliente["Edad"] = nueva_edad
 
-# Para mostrar lista clientes
+                    if cobertura:
+                        nueva_cobertura = int(cobertura)
+                        if nueva_cobertura != 1 and nueva_cobertura != 2:
+                             print("Tipo de cobertura inválida: Ingrese una de las opciones.")
+                             return
+                        cliente["Cobertura"] = nueva_cobertura
+              except ValueError:
+                   print("Error: la edad y la cobertura deben ser validos.")
+                   return
+
+              if guardar_clientes(lista_clientes):
+                   print(f"{Fore.GREEN}Cliente modificado correctamente.\n")
+              return
+
+    print("Cliente no encontrado.")
+
+# PARA ELIMINAR UN CLIENTE
+def eliminar_cliente():
+
+    lista_clientes = diccionario_clientes()
+    if lista_clientes is None:
+        return
+    
+    print(f"{Fore.MAGENTA}{' Eliminar cliente '.center(30, '=')}")
+    codigo = input("Ingrese el código del cliente: ")
+
+    for cliente in lista_clientes:
+         if cliente["ID"] == codigo:
+              lista_clientes.remove(cliente)
+              if guardar_clientes(lista_clientes):
+                   print(f"{Fore.GREEN}Cliente eliminado correctamente.\n")
+              return
+
+    print("Cliente no encontrado.")
+
+# PARA MOSTRAR LISTA DE CLIENTES
 def mostrar_clientes():
     dic_clientes = diccionario_clientes()
+    if dic_clientes is None:
+        return
+    
     ancho_total = 70
     print()
     print(f"{Fore.MAGENTA}{' LISTADO DE CLIENTES '.center(70, '=')}")
