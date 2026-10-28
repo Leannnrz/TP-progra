@@ -85,7 +85,8 @@ def submenu_medicamentos():
         print("2- Modificar medicamento")
         print("3- Eliminar medicamento")
         print("4- Mostrar medicamentos")
-        print("5- Volver. \n")
+        print("5- Buscar medicamento")
+        print("6- Volver. \n")
 
         opcion_medicamentos = input("Seleccione una opción: ")
         print()
@@ -99,6 +100,8 @@ def submenu_medicamentos():
         elif opcion_medicamentos == "4":
             medicamentos.mostrar_medicamentos()
         elif opcion_medicamentos == "5":
+            medicamentos.buscar_medicamento()
+        elif opcion_medicamentos == "6":
             print("Volviendo al menú principal.\n")
         else:
             print(f"{Fore.RED}Opción no válida.")
@@ -246,8 +249,6 @@ def mostrar_menu(tipo_usuario):
 
         else:
             print(f"{Fore.RED}Acceso denegado.")
-
-
 
 
 # Programa principal
