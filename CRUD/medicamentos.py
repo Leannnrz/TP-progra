@@ -226,7 +226,7 @@ def mostrar_medicamentos():
         print("-" * ancho_total)
 
         while linea:
-                codigo, nombre, laboratorio, precio, stock, receta = linea.split(";")
+                codigo, nombre, laboratorio, precio, stock, receta, descripcion = linea.split(";")
                 if int(receta) == 1:
                     receta = "Si"
                 else:
@@ -287,8 +287,6 @@ def buscar_medicamento():
     print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<21}{"Precio":>10}{"Stock":>10}{"Receta":>10}')
     print("-" * 130)
     print(f'{matriz_medicamentos[pos][0]:10}{matriz_medicamentos[pos][1]:20}{matriz_medicamentos[pos][2]:22}{matriz_medicamentos[pos][3]:>7.2f}{matriz_medicamentos[pos][4]:>10}{list_recetas_med_traducidas[pos]:>10}')
-    print("-" * 130)
-    print()
     print("-" * 130)
     print(f'{"Descripcion:":<20}{descripcion_med}')
     print("-" * 130)

@@ -94,15 +94,15 @@ def submenu_clientes():
         opcion_clientes = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5])
         print()
 
-        if opcion_clientes == 1:
+        if opcion_clientes == "1":
             clientes.alta_cliente()
-        elif opcion_clientes == 2:
+        elif opcion_clientes == "2":
             clientes.modificar_cliente()
-        elif opcion_clientes == 3:
+        elif opcion_clientes == "3":
             clientes.eliminar_cliente()
-        elif opcion_clientes == 4:
+        elif opcion_clientes == "4":
             clientes.mostrar_clientes()
-        elif opcion_clientes == 5:
+        elif opcion_clientes == "5":
             print("Volviendo al menú principal... \n")
         
 
@@ -110,7 +110,7 @@ def submenu_clientes():
 def submenu_medicamentos():
     opcion_medicamentos = 0
 
-    while opcion_medicamentos != 5:
+    while opcion_medicamentos != 6:
 
         print(f"{Fore.CYAN}{'MEDICAMENTOS'.center(25)}\n{'-' * 25}")        
         print("1- Crear medicamento")
@@ -131,9 +131,9 @@ def submenu_medicamentos():
             medicamentos.eliminar_medicamento()
         elif opcion_medicamentos == 4:
             medicamentos.mostrar_medicamentos()
-        elif opcion_medicamentos == "5":
+        elif opcion_medicamentos == 5:
             medicamentos.buscar_medicamento()
-        elif opcion_medicamentos == "6":
+        elif opcion_medicamentos == 6:
             print("Volviendo al menú principal.\n")
 
 
@@ -153,7 +153,6 @@ def submenu_ventas():
 
         opcion_ventas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6])
         print()
-
         if opcion_ventas == 1:
             ventas.alta_venta()
         elif opcion_ventas == 2:
@@ -234,11 +233,11 @@ def mostrar_menu(tipo_usuario):
         
             if opcion == "1":
                 submenu_clientes()
-            elif opcion == 2:
+            elif opcion == "2":
                 submenu_medicamentos()
-            elif opcion == 3:
+            elif opcion == "3":
                 submenu_ventas()
-            elif opcion == 4:
+            elif opcion == "4":
                 submenu_estadisticas()
             elif opcion == "5":
                 print("Cerrando sesión...")

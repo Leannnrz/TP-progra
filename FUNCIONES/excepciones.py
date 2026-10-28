@@ -32,7 +32,6 @@ def ingresar_opcion(msj, opciones):
     while valido == False:
         try:
             numero = int(input(msj))
-
             if numero in opciones:
                 valido = True
             else:
