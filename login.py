@@ -98,16 +98,12 @@ def iniciar_sesion():
         if rol == "Cliente":
             print("Inicio de sesión exitoso. Bienvenido, Cliente. \n")
             print("Accediendo al menú de cliente...\n")
-            "menu_cliente()"
-
-            return
+            return "Cliente"
 
         elif rol == "Administrador":
             print("Inicio de sesión exitoso. Bienvenido, Administrador. \n")
             print("Accediendo al menú de administrador...\n")
-            "menu_admin()"
-
-            return
+            return "Administrador"
 
         else:
 
@@ -146,4 +142,4 @@ def menu_de_acceso():
         else: 
             print("\nError: Opcion invalida. Por favor, seleccione una de las opciones\n")
 
-menu_de_acceso()
+
