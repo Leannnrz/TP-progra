@@ -1,7 +1,7 @@
 from .clientes import matriz_clientes
 from .ventas import matriz_ventas
 from functools import reduce
-
+from FUNCIONES import validaciones
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''
@@ -373,7 +373,42 @@ def reporte_medicamento():
     print("-" * 140)
     print()
 
+#Funcion Para Ver Relacion entre Ventas de Medicamentos
+def relacion_medicamentos_ventas():
+    codigo1 = input("Ingrese el código del medicamento: ")
+    valido = validaciones.validar_codigo_medicamento(codigo1)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo1 = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo1)
 
+    codigo2 = input("Ingrese el código del medicamento: ")
+    valido = validaciones.validar_codigo_medicamento(codigo2)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo2 = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo2)
+
+    lista_ventas_med1 = []
+    lista_ventas_med2 = []
+    for j in range(len(matriz_ventas)):
+        if matriz_ventas[j][2] == codigo1:
+            lista_ventas_med1.append(matriz_ventas[j][1])
+        elif matriz_ventas[j][2] == codigo2:
+            lista_ventas_med2.append(matriz_ventas[j][1])
+
+    conjunto1 = set(lista_ventas_med1)
+    conjunto2 = set(lista_ventas_med2)
+    compraron_ambos = conjunto1 & conjunto2
+    if len(compraron_ambos) > 0:
+        print("Los Clientes que Compraron ambos Medicamentos son:", compraron_ambos)
+        print()
+    else: 
+        print("No existen cliente que hayan comprado esos 2 medicamentos")
+        print()
+    
 # MEDICAMENTOS 
 def medicamentos_con_receta(matriz_medicamentos): #FILTRAR MEDICAMENTOS QUE REQUIEREN RECETA
 
