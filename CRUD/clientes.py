@@ -2,7 +2,7 @@ import json
 from colorama import Fore, Style
 from CRUD import validaciones
 
-archivo_clientes = "clientes.json"
+archivo_clientes = "TP-progra/clientes.json"
 
 '''
 FUNCIONES CRUD DE CLIENTES
