@@ -1,6 +1,7 @@
 import json
 from colorama import Fore, Style
 from CRUD import validaciones
+from FUNCIONES import excepciones
 
 archivo_clientes = "TP-progra/clientes.json"
 
@@ -82,44 +83,25 @@ def alta_cliente():
          codigo = input("Ingrese el código del cliente: ")
 
     while True:
-         cantidad = 0
+        cantidad = 0
 
-         for cliente in lista_clientes:
-              if cliente["ID"] == codigo:
-                   cantidad = cantidad + 1
+        for cliente in lista_clientes:
+            if cliente["ID"] == codigo:
+               cantidad = cantidad + 1
 
-         if cantidad == 0:
-                break
+        if cantidad == 0:
+            break
+         
+        print(f"{Fore.RED}Error: el cliente ya existe.")
+        codigo = input("Ingrese el código del cliente: ")
 
-         print(f"{Fore.RED}Error: el cliente ya existe.")
-         codigo = input("Ingrese el código del cliente: ")
+        while validaciones.validar_codigo_cliente(codigo) == False:
+            print("Error: el codigo debe tener el formato C001.")
+            codigo = input("Ingrese el código del cliente: ")
 
-         while validaciones.validar_codigo_cliente(codigo) == False:
-              print("Error: el codigo debe tener el formato C001.")
-              codigo = input("Ingrese el código del cliente: ")
-
-    nombre = input("Ingrese el nombre: ")
-    
-    while nombre == "":
-         print("Error: el nombre no puede estar vacío.")
-         nombre = input("Ingrese el nombre: ")
-
-    try:
-         edad = int(input("Ingrese la edad: "))
-
-         while edad <= 0:
-                print(f"{Fore.RED}Error: la edad debe ser mayor a 0.")
-                edad = int(input("Ingrese la edad: "))
-
-         cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
-
-         while cobertura != 1 and cobertura != 2:
-                print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
-                cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
-    
-    except ValueError:
-        print("Error: ingrese un numero valido.")
-        return
+    nombre = excepciones.ingresar_texto("Ingrese el nombre: ")
+    edad = excepciones.ingresar_entero_positivo("Ingrese la edad: ")
+    cobertura = excepciones.ingresar_opcion("Tipo de cobertura (1-Particular / 2-Obra Social): ",[1, 2])
 
     nuevo_cliente = {
         "ID": codigo,
@@ -133,6 +115,7 @@ def alta_cliente():
     if guardar_clientes(lista_clientes):
         print(f"{Fore.GREEN}Cliente agregado correctamente.\n")
 
+
 # PARA MODIFICAR UN CLIENTE
 def modificar_cliente():
     lista_clientes = diccionario_clientes()
@@ -144,9 +127,12 @@ def modificar_cliente():
 
     for cliente in lista_clientes:
          if cliente["ID"] == codigo:
-              nombre = input("Nuevo nombre: ")
-              edad = (input("Nueva edad: "))
-              cobertura = (input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+              nombre = excepciones.ingresar_texto("Nuevo nombre: ")
+              edad = excepciones.ingresar_entero_positivo("Nueva edad: ")
+              cobertura = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2])
+              while cobertura != 1 and cobertura != 2:
+                              print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
+                              cobertura = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2])
               
               if nombre:
                   cliente["Nombre"] = nombre
