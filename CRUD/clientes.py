@@ -39,6 +39,24 @@ def diccionario_clientes():
             print(f"Error: no se pudo leer el archivo JSON: {error}")
             return None
 
+def matriz_clientes():
+     lista_clientes = diccionario_clientes()
+
+     if lista_clientes is None:
+            return None
+
+     matriz = []
+
+     for cliente in lista_clientes:
+          fila = [
+               cliente["ID"],
+               cliente["Nombre"],
+               cliente["Edad"],
+               cliente["Cobertura"]
+          ]
+          matriz.append(fila)
+     return matriz
+
 def guardar_clientes(lista_clientes):
     try:
         with open(archivo_clientes, "w", encoding = "UTF-8") as archivo:
@@ -63,40 +81,41 @@ def alta_cliente():
          print("Error: el codigo debe tener el formato C001.")
          codigo = input("Ingrese el código del cliente: ")
 
-    cantidad = 0
+    while True:
+         cantidad = 0
 
-    for cliente in lista_clientes:
-         if cliente["ID"] == codigo:
-                cantidad = cantidad + 1
+         for cliente in lista_clientes:
+              if cliente["ID"] == codigo:
+                   cantidad = cantidad + 1
 
-    while cantidad > 0:
+         if cantidad == 0:
+                break
+
          print(f"{Fore.RED}Error: el cliente ya existe.")
-         codigo = input("Ingrese otro código: ")
+         codigo = input("Ingrese el código del cliente: ")
 
          while validaciones.validar_codigo_cliente(codigo) == False:
-             print("Error: el codigo debe tener el formato C001.")
-             codigo = input("Ingrese el código del cliente: ")
-
-    for cliente in lista_clientes:
-         if cliente["ID"] == codigo:
-                cantidad = cantidad + 1
+              print("Error: el codigo debe tener el formato C001.")
+              codigo = input("Ingrese el código del cliente: ")
 
     nombre = input("Ingrese el nombre: ")
-
+    
     while nombre == "":
          print("Error: el nombre no puede estar vacío.")
          nombre = input("Ingrese el nombre: ")
 
     try:
-         edad = (input("Ingrese la edad: "))
+         edad = int(input("Ingrese la edad: "))
+
          while edad <= 0:
                 print(f"{Fore.RED}Error: la edad debe ser mayor a 0.")
-                edad = (input("Ingrese la edad: "))
+                edad = int(input("Ingrese la edad: "))
 
-         cobertura = (input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
+         cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
+
          while cobertura != 1 and cobertura != 2:
                 print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
-                cobertura = (input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
+                cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
     
     except ValueError:
         print("Error: ingrese un numero valido.")
