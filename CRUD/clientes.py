@@ -77,8 +77,6 @@ def alta_cliente():
              print("Error: el codigo debe tener el formato C001.")
              codigo = input("Ingrese el código del cliente: ")
 
-    cantidad = 0
-
     for cliente in lista_clientes:
          if cliente["ID"] == codigo:
                 cantidad = cantidad + 1
@@ -90,15 +88,15 @@ def alta_cliente():
          nombre = input("Ingrese el nombre: ")
 
     try:
-         edad = int(input("Ingrese la edad: "))
+         edad = (input("Ingrese la edad: "))
          while edad <= 0:
                 print(f"{Fore.RED}Error: la edad debe ser mayor a 0.")
-                edad = int(input("Ingrese la edad: "))
+                edad = (input("Ingrese la edad: "))
 
-         cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
+         cobertura = (input("Tipo de cobertura (1-Particular / 2-Obra Social): "))
          while cobertura != 1 and cobertura != 2:
                 print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
-                cobertura = int(input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
+                cobertura = (input("Tipo de cobertura (1-Particular / 2-Obra Social): \n"))
     
     except ValueError:
         print("Error: ingrese un numero valido.")
@@ -128,8 +126,8 @@ def modificar_cliente():
     for cliente in lista_clientes:
          if cliente["ID"] == codigo:
               nombre = input("Nuevo nombre: ")
-              edad = int(input("Nueva edad: "))
-              cobertura = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+              edad = (input("Nueva edad: "))
+              cobertura = (input("Nueva cobertura (1-Particular / 2-Obra Social): "))
               
               if nombre:
                   cliente["Nombre"] = nombre
@@ -175,7 +173,7 @@ def eliminar_cliente():
                    print(f"{Fore.GREEN}Cliente eliminado correctamente.\n")
               return
 
-print("Cliente no encontrado.")
+    print("Cliente no encontrado.")
 
 # PARA MOSTRAR LISTA DE CLIENTES
 def mostrar_clientes():

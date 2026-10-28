@@ -77,8 +77,6 @@ def alta_cliente():
              print("Error: el codigo debe tener el formato C001.")
              codigo = input("Ingrese el código del cliente: ")
 
-    cantidad = 0
-
     for cliente in lista_clientes:
          if cliente["ID"] == codigo:
                 cantidad = cantidad + 1
@@ -128,8 +126,8 @@ def modificar_cliente():
     for cliente in lista_clientes:
          if cliente["ID"] == codigo:
               nombre = input("Nuevo nombre: ")
-              edad = int(input("Nueva edad: "))
-              cobertura = int(input("Nueva cobertura (1-Particular / 2-Obra Social): "))
+              edad = (input("Nueva edad: "))
+              cobertura = (input("Nueva cobertura (1-Particular / 2-Obra Social): "))
               
               if nombre:
                   cliente["Nombre"] = nombre
@@ -175,7 +173,7 @@ def eliminar_cliente():
                    print(f"{Fore.GREEN}Cliente eliminado correctamente.\n")
               return
 
-print("Cliente no encontrado.")
+    print("Cliente no encontrado.")
 
 # PARA MOSTRAR LISTA DE CLIENTES
 def mostrar_clientes():
