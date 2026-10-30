@@ -1,7 +1,7 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
 from CRUD import clientes, medicamentos, ventas, estadisticas
-from FUNCIONES import excepciones
+from FUNCIONES import excepciones, recursividad
 from login import registrar_usuario, cargar_usuarios, iniciar_sesion
 import re
 
@@ -46,12 +46,10 @@ def menu_de_acceso():
     while opcion != "3":
 
         print("=" * 175)
-        print("Bienvenido al sistema de registo e inicio de sesion".rjust(100))
+        print("Bienvenido al sistema de registro e inicio de sesión".rjust(100))
         print("=" * 175)
 
-
         print("Seleccione una opción:\n")
-
         print("1. Registrar usuario")
         print("2. Iniciar sesión")
         print("3. Salir del sistema\n")
@@ -62,18 +60,20 @@ def menu_de_acceso():
             registrar_usuario()
 
         elif opcion == "2":
-            tipo_usuario = iniciar_sesion()
 
-            if tipo_usuario == "Administrador":
+            tipo_usuario = login(3)
+
+            if tipo_usuario == "admin":
                 mostrar_menu("admin")
 
-            elif tipo_usuario == "Cliente":
+            elif tipo_usuario == "usuario":
                 mostrar_menu("usuario")
 
         elif opcion == "3":
             print("Saliendo del sistema...")
-        else: 
-            print("\nError: Opcion invalida. Por favor, seleccione una de las opciones\n")
+
+        else:
+            print("\nError: Opción inválida. Por favor, seleccione una opción válida.\n")
 
 '''
 SUBMENÚS
@@ -94,15 +94,15 @@ def submenu_clientes():
         opcion_clientes = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5])
         print()
 
-        if opcion_clientes == "1":
+        if opcion_clientes == 1:
             clientes.alta_cliente()
-        elif opcion_clientes == "2":
+        elif opcion_clientes == 2:
             clientes.modificar_cliente()
-        elif opcion_clientes == "3":
+        elif opcion_clientes == 3:
             clientes.eliminar_cliente()
-        elif opcion_clientes == "4":
+        elif opcion_clientes == 4:
             clientes.mostrar_clientes()
-        elif opcion_clientes == "5":
+        elif opcion_clientes == 5:
             print("Volviendo al menú principal... \n")
         
 

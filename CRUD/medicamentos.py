@@ -1,6 +1,6 @@
 from colorama import Fore, Style
 from CRUD import validaciones
-from FUNCIONES import excepciones
+from FUNCIONES import excepciones, recursividad
 import os
 
 '''
@@ -10,13 +10,7 @@ FUNCIONES CRUD DE MEDICAMENTOS
 def alta_medicamento():
     print(f"{Fore.MAGENTA}{' Agregar Medicamento '.center(30, '=')}")
 
-    codigo = input("Ingrese el código del medicamento: ")
-    valido = validaciones.validar_codigo_medicamento(codigo)
-
-    while valido == False:
-        print("Error: el código debe tener el formato M001.")
-        codigo = input("Ingrese el código del medicamento: ")
-        valido = validaciones.validar_codigo_medicamento(codigo)
+    codigo = excepciones.ingresar_codigo("Ingrese el código del medicamento: ",validaciones.validar_codigo_medicamento,"M001")
 
     codigos = []
 
@@ -45,9 +39,7 @@ def alta_medicamento():
         descripcion = input("Ingrese la descripción del medicamento: ")
     else:
         descripcion = "No hay descripción disponible."
-    while receta != 1 and receta != 2:
-        print ("Opción no válida: Ingrese una de las opciones.")
-        receta = int(input("Requiere receta (1- Si / 2- No): "))
+    
     
     try:
         with open("medicamentos.txt", "at", encoding="UTF-8") as arch:
@@ -247,47 +239,54 @@ def mostrar_medicamentos():
 # Para obtener información de un medicamento por código
 def buscar_medicamento():
     print(f"{Fore.MAGENTA}{' Buscar Medicamento '.center(30, '=')}")
-    codigo = input("Ingrese código del medicamento: ")
-    valido = validaciones.validar_codigo_medicamento(codigo)
-    
-    while valido == False:
-        print("Error: el código debe tener el formato M001.")
-        codigo = input("Ingrese el código del medicamento: ")
-        valido = validaciones.validar_codigo_medicamento(codigo)
 
-    with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
-            matriz_medicamentos = []
-            for linea in arch:
-                datos = linea.strip().split(";")
-                datos[3] = float(datos[3])  # Convertir el precio a float
-                datos[4] = int(datos[4])    # Convertir la cantidad a int
-                datos[5] = int(datos[5])    # Convertir la categoría a int
-                matriz_medicamentos.append(datos)
+    codigo = excepciones.ingresar_codigo("Ingrese codigo del medicamento: ",validaciones.validar_codigo_medicamento,"M001")
 
-    pos = -1
-    for j in range(len(matriz_medicamentos)):
-        if matriz_medicamentos[j][0] == codigo:
-            pos = j
+    try:
+        with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
+            lineas = arch.readlines()
 
-    if pos == -1:
-        print("Medicamento no Encontrado")
+        medicamento = recursividad.buscar_medicamento_recursivo(lineas, codigo)
+
+        if medicamento is None:
+            print("Medicamento no encontrado.")
+            print()
+            return
+
+        precio = float(medicamento[3])
+        stock = int(medicamento[4])
+        receta = int(medicamento[5])
+
+        if receta == 1:
+            receta_traducida = "Si"
+        else:
+            receta_traducida = "No"
+
+        descripcion = medicamento[6]
+
+        if len(descripcion) > 100:
+            descripcion = descripcion[:100] + "..."
+
+        print("-" * 130)
+        print(f'{"Codigo":<10}{"Nombre":<20}{"Laboratorio":<21}' f'{"Precio":>10}{"Stock":>10}{"Receta":>10}')
+        print("-" * 130)
+
+        print(
+            f'{medicamento[0]:10}'
+            f'{medicamento[1]:20}'
+            f'{medicamento[2]:22}'
+            f'{precio:>7.2f}'
+            f'{stock:>10}'
+            f'{receta_traducida:>10}'
+        )
+
+        print("-" * 130)
+        print(f'{"Descripcion:":<20}{descripcion}')
+        print("-" * 130)
         print()
-        return
 
-    lista_receta_medicamentos = []
-    for i in range(len(matriz_medicamentos)):
-        lista_receta_medicamentos.append(matriz_medicamentos[i][5])
+    except FileNotFoundError:
+        print("El archivo medicamentos.txt no existe.")
 
-    list_recetas_med_traducidas = list(map(lambda x: "Si" if x == 1 else "No", lista_receta_medicamentos))
-
-    descripcion_med = str(matriz_medicamentos[pos][6]) 
-    if len(descripcion_med) > 100:
-        descripcion_med = descripcion_med[:100] + "..."
-    print("-" * 130)
-    print(f'{"Código":<10}{"Nombre":<20}{"Laboratorio":<21}{"Precio":>10}{"Stock":>10}{"Receta":>10}')
-    print("-" * 130)
-    print(f'{matriz_medicamentos[pos][0]:10}{matriz_medicamentos[pos][1]:20}{matriz_medicamentos[pos][2]:22}{matriz_medicamentos[pos][3]:>7.2f}{matriz_medicamentos[pos][4]:>10}{list_recetas_med_traducidas[pos]:>10}')
-    print("-" * 130)
-    print(f'{"Descripcion:":<20}{descripcion_med}')
-    print("-" * 130)
-    print()
+    except (OSError, IndexError, ValueError) as error:
+        print(f"Error al consultar el medicamento: {error}")
