@@ -509,26 +509,12 @@ def mostrar_ventas_con_receta():
                 "- Cantidad:",
                 venta[3]
             )
+    print()
 
 def mostrar_cantidad_total_vendida():
     cantidad = cantidad_total_vendida(matriz_ventas)
     print("\n--- CANTIDAD TOTAL VENDIDA ---")
     print("Cantidad total de medicamentos vendidos:", cantidad)
-
-def porcentajes_ventas_receta():
-    ventas_receta = ventas_con_receta(matriz_ventas)
-    total_ventas = len(matriz_ventas)
-    total_ventas_con_receta = len(ventas_receta)
-    if total_ventas > 0:
-        porcentaje_con_receta = (total_ventas_con_receta / total_ventas) * 100
-    else:
-        porcentaje_con_receta = 0
-
-    print("-" * 50)
-    print("--- PORCENTAJE DE VENTAS CON RECETA ---")
-    print(f"Porcentaje de ventas con receta: {porcentaje_con_receta:.2f}%")
-    print("-" * 50)
-    print()
 
 
 # ESTADISTICAS DE VENTAS

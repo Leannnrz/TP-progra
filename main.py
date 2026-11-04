@@ -170,7 +170,7 @@ def submenu_ventas():
 #Submenú de Estadisticas
 def submenu_estadisticas(): 
     opcion_estadisticas = 0
-    while opcion_estadisticas != 13:
+    while opcion_estadisticas != 14:
         print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Ganancia Total")
         print("2- Venta Más Grande")
@@ -184,7 +184,7 @@ def submenu_estadisticas():
         print("10- Ver Ventas con Receta")
         print("11- Ver Cantidad Total Vendida")
         print("12- Ver Relacion entre Ventas de Medicamentos")
-        print("13- Ver Porcentaje de Ventas con Receta")
+        print("13- Mostrar Estadisticas de Ventas")
         print("14- Volver.\n")  
 
         opcion_estadisticas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
@@ -214,7 +214,7 @@ def submenu_estadisticas():
         elif opcion_estadisticas == 12:
             estadisticas.relacion_medicamentos_ventas()
         elif opcion_estadisticas == 13:
-            estadisticas.porcentajes_ventas_receta()
+            estadisticas.mostrar_estadisticas_ventas()
         elif opcion_estadisticas == 14:
             print("Volviendo al menú principal.\n")
         
