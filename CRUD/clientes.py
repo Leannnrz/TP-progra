@@ -5,6 +5,7 @@ from FUNCIONES import excepciones, recursividad
 
 archivo_clientes = "clientes.json"
 
+
 '''
 FUNCIONES CRUD DE CLIENTES
 '''
@@ -41,49 +42,49 @@ def diccionario_clientes():
             return None
 
 def matriz_clientes():
-     lista_clientes = diccionario_clientes()
+    lista_clientes = diccionario_clientes()
 
-     if lista_clientes is None:
+    if lista_clientes is None:
         return None
 
-     matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
+    matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
 
-     return matriz
+    return matriz
 
 def guardar_clientes(lista_clientes):
     try:
         with open(archivo_clientes, "w", encoding = "UTF-8") as archivo:
-             json.dump(lista_clientes, archivo, indent=4, ensure_ascii=False)
+            json.dump(lista_clientes, archivo, indent=4, ensure_ascii=False)
         return True
     
     except(OSError, TypeError, ValueError) as error:
-         print(f"Error: no se pudo guardar el archivo JSON: {error}")
-         return False
+        print(f"Error: no se pudo guardar el archivo JSON: {error}")
+        return False
 
 # PARA AGREGAR UN CLIENTE
 def alta_cliente():
 
     lista_clientes = diccionario_clientes()
     if lista_clientes is None:
-         return
+        return
 
     print(f"{Fore.MAGENTA}{' Agregar Cliente '.center(30, '=')}")
     codigo = input("Ingrese el código del cliente: ")
 
     while validaciones.validar_codigo_cliente(codigo) == False:
-         print("Error: el codigo debe tener el formato C001.")
-         codigo = input("Ingrese el código del cliente: ")
+        print("Error: el codigo debe tener el formato C001.")
+        codigo = input("Ingrese el código del cliente: ")
 
     while True:
         cantidad = 0
 
         for cliente in lista_clientes:
             if cliente["ID"] == codigo:
-               cantidad = cantidad + 1
+                cantidad = cantidad + 1
 
         if cantidad == 0:
             break
-         
+        
         print(f"{Fore.RED}Error: el cliente ya existe.")
         codigo = input("Ingrese el código del cliente: ")
 

@@ -158,7 +158,6 @@ def modificar_medicamento():
 def eliminar_medicamento():
 
     print(f"{Fore.MAGENTA}{' Eliminar Medicamento '.center(30, '=')}")
-
     codigo = input("Ingrese código del medicamento: ")
     valido = validaciones.validar_codigo_medicamento(codigo)
 
