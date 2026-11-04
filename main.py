@@ -82,11 +82,7 @@ SUBMENÚS
 def submenu_clientes():
     opcion_clientes = 0
 
-<<<<<<< HEAD
-    while opcion_clientes != "5":
-=======
     while opcion_clientes != 5:
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
         print(f"{Fore.CYAN}{'CLIENTES'.center(25)}\n{'-' * 25}")
         print("1- Agregar cliente")
@@ -95,11 +91,7 @@ def submenu_clientes():
         print("4- Mostrar cliente")
         print("5- Volver.\n")
 
-<<<<<<< HEAD
-        opcion_clientes = input("Seleccione una opción: ")
-=======
         opcion_clientes = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5])
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
         print()
 
         if opcion_clientes == 1:
@@ -110,17 +102,9 @@ def submenu_clientes():
             clientes.eliminar_cliente()
         elif opcion_clientes == 4:
             clientes.mostrar_clientes()
-<<<<<<< HEAD
-        elif opcion_clientes == "5":
-            print("Volviendo al menú principal... \n")
-        else:
-            print(f"{Fore.RED}Opción no válida.")
-
-=======
         elif opcion_clientes == 5:
             print("Volviendo al menú principal... \n")
         
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
 # Submenú medicamentos
 def submenu_medicamentos():
@@ -136,11 +120,7 @@ def submenu_medicamentos():
         print("5- Buscar medicamento")
         print("6- Volver. \n")
 
-<<<<<<< HEAD
-        opcion_medicamentos = input("Seleccione una opción: ")
-=======
         opcion_medicamentos = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5])
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
         print()
 
         if opcion_medicamentos == 1:
@@ -155,22 +135,13 @@ def submenu_medicamentos():
             medicamentos.buscar_medicamento()
         elif opcion_medicamentos == 6:
             print("Volviendo al menú principal.\n")
-<<<<<<< HEAD
-        else:
-            print(f"{Fore.RED}Opción no válida.")
-=======
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
 
 # Submenú de ventas
 def submenu_ventas():
     opcion_ventas = 0
 
-<<<<<<< HEAD
-    while opcion_ventas != "6":
-=======
     while opcion_ventas != 6:
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
         print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
         print("1- Crear venta")
@@ -180,16 +151,9 @@ def submenu_ventas():
         print("5- Buscar venta")
         print("6- Volver.\n")
 
-<<<<<<< HEAD
-        opcion_ventas = input("Seleccione una opción: ")
-        print()
-
-        if opcion_ventas == "1":
-=======
         opcion_ventas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6])
         print()
         if opcion_ventas == 1:
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
             ventas.alta_venta()
         elif opcion_ventas == 2:
             ventas.modificar_venta()
@@ -197,16 +161,6 @@ def submenu_ventas():
             ventas.eliminar_venta()
         elif opcion_ventas == 4:
             ventas.mostrar_ventas()
-<<<<<<< HEAD
-        elif opcion_ventas == "5":
-            ventas.buscar_venta()
-        elif opcion_ventas == "6":
-            print("Volviendo al menú principal.\n")
-        else:
-            print(f"{Fore.RED}Opción no válida.")
-
-
-=======
         elif opcion_ventas == 5:
             ventas.buscar_venta()
         elif opcion_ventas == 6:
@@ -234,7 +188,6 @@ def submenu_estadisticas():
         print("14- Volver.\n")  
 
         opcion_estadisticas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
         if opcion_estadisticas == 1:
             estadisticas.total_recaudado()
@@ -274,14 +227,6 @@ def mostrar_menu(tipo_usuario):
         opcion = 0
 
         while opcion != "5":
-<<<<<<< HEAD
-            print(f"{Fore.BLUE}{Style.BRIGHT}{'-' * 25}\n{'Menú Principal'.center(25)}\n{'-' * 25}")
-            print(f"{Fore.BLUE}{Style.BRIGHT}\n1- Clientes")
-            print(f"{Fore.BLUE}{Style.BRIGHT}2- Medicamentos")
-            print(f"{Fore.BLUE}{Style.BRIGHT}3- Ventas")
-            print(f"{Fore.BLUE}{Style.BRIGHT}4- Estadísticas")
-            print(f"{Fore.BLUE}{Style.BRIGHT}5- Salir\n")
-=======
 
             print(f"{Style.BRIGHT}{'-' * 80}\n{'Menú Principal'.center(25)}\n{'-' * 80}")
             print(f"{Style.BRIGHT}\n1- Clientes")
@@ -289,7 +234,6 @@ def mostrar_menu(tipo_usuario):
             print(f"{Style.BRIGHT}3- Ventas")
             print(f"{Style.BRIGHT}4- Estadísticas")
             print(f"{Style.BRIGHT}5- Salir\n")
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
             opcion = input("Seleccione una opción: ")
         
@@ -300,11 +244,7 @@ def mostrar_menu(tipo_usuario):
             elif opcion == "3":
                 submenu_ventas()
             elif opcion == "4":
-<<<<<<< HEAD
-                ...
-=======
                 submenu_estadisticas()
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
             elif opcion == "5":
                 print("Cerrando sesión...")
             else:
@@ -321,11 +261,7 @@ def mostrar_menu(tipo_usuario):
             print("3- Ver Ventas")
             print("4- Salir\n")
 
-<<<<<<< HEAD
-            opcion = input("Seleccione una opción: ")
-=======
             opcion = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4])
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
             print()
 
             if opcion == 1:
@@ -341,15 +277,6 @@ def mostrar_menu(tipo_usuario):
                 print("Saliendo del programa.")
             else:
                 print(f"{Fore.RED}Opción no válida.")
-<<<<<<< HEAD
-
-    else:
-        print(f"{Fore.RED}Acceso denegado.")
-
-
-
-=======
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
 menu_de_acceso()
 # Programa principal
