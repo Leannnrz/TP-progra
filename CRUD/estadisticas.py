@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-from .clientes import matriz_clientes
-from .ventas import matriz_ventas
-from functools import reduce
-from colorama import Fore, Style
-
-
-=======
 import json 
 from .clientes import archivo_clientes, diccionario_clientes
 from .ventas import matriz_ventas
 from functools import reduce
 from FUNCIONES import recursividad, validaciones
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''
@@ -74,11 +65,6 @@ def mayor_venta():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
         lista_cant_productos.append(matriz_ventas[i][3])
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
         lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
@@ -274,19 +260,12 @@ def ganancia_x_medicamento():
 
 #Funcion Para Calcular Estadisticas de Clientes
 def stats_clientes(): 
-<<<<<<< HEAD
-=======
     matriz_clients = matriz_clientes()
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
     print
     print("Ver Porcentajes de Clientes: ")
     print("1- Por Edad")
     print("2- Por Cobertura")
     opcion_stats = input("Ingrese una Opcion: ")
-<<<<<<< HEAD
-
-=======
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
     while opcion_stats != "1" and opcion_stats != "2":
         print("Opcion Invalida")
         print("Ver Porcentajes de Clientes: ")
@@ -295,13 +274,8 @@ def stats_clientes():
         opcion_stats = input("Ingrese Una Opcion: ")
 
     lista_edades = []
-<<<<<<< HEAD
-    for h in range(len(matriz_clientes)): 
-        lista_edades.append(matriz_clientes[h][2])
-=======
     for h in range(len(matriz_clients)): 
         lista_edades.append(matriz_clients[h][2])
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
     if opcion_stats == "1":
         edad = int(input("Determine el rango de edad: "))
@@ -330,15 +304,9 @@ def stats_clientes():
 
     else:
         lista_coberturas = []
-<<<<<<< HEAD
-        for h in range(len(matriz_clientes)): 
-            lista_coberturas.append(matriz_clientes[h][3])
-
-=======
         for h in range(len(matriz_clients)): 
             lista_coberturas.append(matriz_clients[h][3])
              
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
         cobertura_obra_social = []
         cobertura_particular = []
         for i in range (len(lista_coberturas)):
@@ -360,8 +328,6 @@ def stats_clientes():
         print("Mientras que el porcentaje de Clientes de forma Particular es del", porcentaje_particular, "%")
         print("-" * 100) 
 
-<<<<<<< HEAD
-=======
 def diccionario_clientes():
     try:
         with open(archivo_clientes, "r", encoding = "UTF-8") as archivo:
@@ -401,7 +367,6 @@ def matriz_clientes():
      matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
 
      return matriz
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 #Funcion Para Calcular el Total
 def calcular_total(precio, cantidad): 
 
@@ -448,9 +413,6 @@ def reporte_medicamento():
     print("-" * 140)
     print()
 
-<<<<<<< HEAD
-
-=======
 #Funcion Para Ver Relacion entre Ventas de Medicamentos
 def relacion_medicamentos_ventas():
     codigo1 = input("Ingrese el código del medicamento: ")
@@ -487,7 +449,6 @@ def relacion_medicamentos_ventas():
         print("No existen cliente que hayan comprado esos 2 medicamentos")
         print()
     
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 # MEDICAMENTOS 
 def medicamentos_con_receta(matriz_medicamentos): #FILTRAR MEDICAMENTOS QUE REQUIEREN RECETA
 
@@ -551,159 +512,6 @@ def mostrar_cantidad_total_vendida():
     print("\n--- CANTIDAD TOTAL VENDIDA ---")
     print("Cantidad total de medicamentos vendidos:", cantidad)
 
-<<<<<<< HEAD
-
-
-# ESTADISTICAS DE VENTAS
-
-# Funcion para calcular el importe de cada venta
-def calcular_importes_ventas():
-    matriz_medicamentos = convertir_a_matriz()
-
-    lista_id_medicamentos = []
-    lista_precios = []
-
-    for i in range(len(matriz_medicamentos)):
-        lista_id_medicamentos.append(matriz_medicamentos[i][0])
-        lista_precios.append(matriz_medicamentos[i][3])
-
-    lista_importes = []
-
-    for i in range(len(matriz_ventas)):
-        id_medicamento = matriz_ventas[i][2]
-        cantidad = int(matriz_ventas[i][3])
-
-        pos = lista_id_medicamentos.index(id_medicamento)
-        precio = lista_precios[pos]
-
-        importe = precio * cantidad
-        lista_importes.append(importe)
-
-    return lista_importes
-
-
-# Funcion para calcular el promedio general
-def promedio_general_ventas():
-    lista_importes = calcular_importes_ventas()
-
-    if len(lista_importes) == 0:
-        return 0
-
-    total = sum(lista_importes)
-    cantidad = len(lista_importes)
-    promedio = total / cantidad
-
-    return promedio
-
-
-# Funcion para calcular el promedio de ventas con receta
-def promedio_ventas_con_receta():
-    importes = calcular_importes_ventas()
-    lista_importes_receta = []
-
-    for venta, importe in importes:
-        if int(venta[4]) == 1:
-            lista_importes_receta.append(importe)
-
-    if len(lista_importes_receta) == 0:
-        return 0
-
-    total = sum(lista_importes_receta)
-    cantidad = len(lista_importes_receta)
-    promedio = total / cantidad
-
-    return promedio
-
-
-# Funcion para calcular el promedio de ventas sin receta
-def promedio_ventas_sin_receta():
-    importes = calcular_importes_ventas()
-    lista_importes_sin_receta = []
-
-    for venta, importe in importes:
-        if int(venta[4]) == 0:
-            lista_importes_sin_receta.append(importe)
-
-    if len(lista_importes_sin_receta) == 0:
-        return 0
-
-    total = sum(lista_importes_sin_receta)
-    cantidad = len(lista_importes_sin_receta)
-    promedio = total / cantidad
-
-    return promedio
-
-
-# Funcion para mostrar el resumen estadistico de ventas
-def mostrar_estadisticas_ventas():
-    importes = calcular_importes_ventas()
-
-    if len(importes) == 0:
-        print("No hay ventas registradas.")
-        return
-
-    ancho_total = 80
-
-    total_ventas = len(importes)
-    total_recaudado = 0
-
-    lista_importes = []
-    cantidad_con_receta = 0
-    cantidad_sin_receta = 0
-
-    for venta, importe in importes:
-        lista_importes.append(importe)
-        total_recaudado = total_recaudado + importe
-
-        if int(venta[4]) == 1:
-            cantidad_con_receta = cantidad_con_receta + 1
-        elif int(venta[4]) == 0:
-            cantidad_sin_receta = cantidad_sin_receta + 1
-
-    promedio_general = total_recaudado / total_ventas
-    mayor_importe = max(lista_importes)
-    menor_importe = min(lista_importes)
-
-    porcentaje_con_receta = cantidad_con_receta * 100 / total_ventas
-    porcentaje_sin_receta = cantidad_sin_receta * 100 / total_ventas
-
-    promedio_con_receta = promedio_ventas_con_receta()
-    promedio_sin_receta = promedio_ventas_sin_receta()
-
-    print()
-    print(f"{Fore.MAGENTA}{' RESUMEN ESTADISTICO DE VENTAS '.center(ancho_total, '=')}")
-    print("-" * ancho_total)
-
-    print(f'{"Cantidad de ventas:":<35}{total_ventas:>20}')
-    print(f'{"Total recaudado:":<35}${total_recaudado:>19.2f}')
-    print(f'{"Promedio general por venta:":<35}${promedio_general:>19.2f}')
-    print(f'{"Venta de mayor importe:":<35}${mayor_importe:>19.2f}')
-    print(f'{"Venta de menor importe:":<35}${menor_importe:>19.2f}')
-
-    print("-" * ancho_total)
-    print(f"{Fore.MAGENTA}{' CONTEOS Y PORCENTAJES POR CATEGORIA '.center(ancho_total, '=')}")
-    print("-" * ancho_total)
-
-    print(f'{"Categoría":<25}{"Cantidad":>20}{"Porcentaje":>25}')
-    print("-" * ancho_total)
-
-    print(f'{"Con receta":<25}{cantidad_con_receta:>20}{porcentaje_con_receta:>24.2f} %')
-    print(f'{"Sin receta":<25}{cantidad_sin_receta:>20}{porcentaje_sin_receta:>24.2f} %')
-    print(f'{"TOTAL":<25}{total_ventas:>20}{100.0:>24.2f} %')
-
-    print("-" * ancho_total)
-    print(f"{Fore.MAGENTA}{' PROMEDIOS POR CATEGORIA '.center(ancho_total, '=')}")
-    print("-" * ancho_total)
-
-    print(f'{"Categoría":<35}{"Promedio por venta":>30}')
-    print("-" * ancho_total)
-
-    print(f'{"Con receta":<35}${promedio_con_receta:>29.2f}')
-    print(f'{"Sin receta":<35}${promedio_sin_receta:>29.2f}')
-
-    print("-" * ancho_total)
-    print()
-=======
 def porcentajes_ventas_receta():
     ventas_receta = ventas_con_receta(matriz_ventas)
     total_ventas = len(matriz_ventas)
@@ -718,4 +526,3 @@ def porcentajes_ventas_receta():
     print(f"Porcentaje de ventas con receta: {porcentaje_con_receta:.2f}%")
     print("-" * 50)
     print()
->>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
