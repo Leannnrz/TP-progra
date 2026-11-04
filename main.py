@@ -279,4 +279,3 @@ def mostrar_menu(tipo_usuario):
                 print(f"{Fore.RED}Opción no válida.")
 
 menu_de_acceso()
-# Programa principal

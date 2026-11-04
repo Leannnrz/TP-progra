@@ -309,7 +309,7 @@ def stats_clientes():
         lista_coberturas = []
         for h in range(len(matriz_clients)): 
             lista_coberturas.append(matriz_clients[h][3])
-        
+            
         cobertura_obra_social = []
         cobertura_particular = []
         for i in range (len(lista_coberturas)):
