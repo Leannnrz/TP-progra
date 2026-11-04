@@ -1,7 +1,7 @@
 import json
 from colorama import Fore, Style
 from CRUD import validaciones
-from FUNCIONES import excepciones
+from FUNCIONES import excepciones, recursividad
 
 archivo_clientes = "clientes.json"
 
@@ -44,18 +44,10 @@ def matriz_clientes():
      lista_clientes = diccionario_clientes()
 
      if lista_clientes is None:
-            return None
+        return None
 
-     matriz = []
+     matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
 
-     for cliente in lista_clientes:
-          fila = [
-               cliente["ID"],
-               cliente["Nombre"],
-               cliente["Edad"],
-               cliente["Cobertura"]
-          ]
-          matriz.append(fila)
      return matriz
 
 def guardar_clientes(lista_clientes):
@@ -118,67 +110,59 @@ def alta_cliente():
 
 # PARA MODIFICAR UN CLIENTE
 def modificar_cliente():
+    
     lista_clientes = diccionario_clientes()
+
     if lista_clientes is None:
         return
-    
+
     print(f"{Fore.MAGENTA}{' Modificar cliente '.center(30, '=')}")
-    codigo = input("Ingrese el código del cliente: ")
 
-    for cliente in lista_clientes:
-         if cliente["ID"] == codigo:
-              nombre = excepciones.ingresar_texto("Nuevo nombre: ")
-              edad = excepciones.ingresar_entero_positivo("Nueva edad: ")
-              cobertura = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2])
-              while cobertura != 1 and cobertura != 2:
-                              print ("Tipo de cobertura inválida: Ingrese una de las opciones.")
-                              cobertura = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2])
-              
-              if nombre:
-                  cliente["Nombre"] = nombre
-              
-              try:
-                    if edad:
-                        nueva_edad = int(edad)
-                        if nueva_edad <= 0:
-                             print("Error: la edad debe ser mayor a 0.")
-                             return
-                        cliente["Edad"] = nueva_edad
+    codigo = excepciones.ingresar_codigo("Ingrese el código del cliente: ",validaciones.validar_codigo_cliente,"C001")
 
-                    if cobertura:
-                        nueva_cobertura = int(cobertura)
-                        if nueva_cobertura != 1 and nueva_cobertura != 2:
-                             print("Tipo de cobertura inválida: Ingrese una de las opciones.")
-                             return
-                        cliente["Cobertura"] = nueva_cobertura
-              except ValueError:
-                   print("Error: la edad y la cobertura deben ser validos.")
-                   return
+    cliente = recursividad.buscar_cliente_recursivo(lista_clientes, codigo)
 
-              if guardar_clientes(lista_clientes):
-                   print(f"{Fore.GREEN}Cliente modificado correctamente.\n")
-              return
+    if cliente is None:
+        print("Cliente no encontrado.")
+        return
 
-    print("Cliente no encontrado.")
+    nombre = excepciones.ingresar_texto("Nuevo nombre: ")
+
+    edad = excepciones.ingresar_entero_positivo("Nueva edad: ")
+
+    cobertura = excepciones.ingresar_opcion("Nueva cobertura (1-Particular / 2-Obra Social): ",[1, 2])
+
+    cliente["Nombre"] = nombre
+    cliente["Edad"] = edad
+    cliente["Cobertura"] = cobertura
+
+    if guardar_clientes(lista_clientes):
+        print(f"{Fore.GREEN}Cliente modificado correctamente.\n")
+
 
 # PARA ELIMINAR UN CLIENTE
 def eliminar_cliente():
 
     lista_clientes = diccionario_clientes()
+
     if lista_clientes is None:
         return
-    
+
     print(f"{Fore.MAGENTA}{' Eliminar cliente '.center(30, '=')}")
-    codigo = input("Ingrese el código del cliente: ")
 
-    for cliente in lista_clientes:
-         if cliente["ID"] == codigo:
-              lista_clientes.remove(cliente)
-              if guardar_clientes(lista_clientes):
-                   print(f"{Fore.GREEN}Cliente eliminado correctamente.\n")
-              return
+    codigo = excepciones.ingresar_codigo("Ingrese el código del cliente: ",validaciones.validar_codigo_cliente,"C001")
 
-    print("Cliente no encontrado.")
+    cliente = recursividad.buscar_cliente_recursivo(lista_clientes, codigo)
+
+    if cliente is None:
+        print("Cliente no encontrado.")
+        return
+
+    lista_clientes.remove(cliente)
+
+    if guardar_clientes(lista_clientes):
+        print(f"{Fore.GREEN}Cliente eliminado correctamente.\n")
+
 
 # PARA MOSTRAR LISTA DE CLIENTES
 def mostrar_clientes():

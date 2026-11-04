@@ -1,6 +1,6 @@
 from CRUD.clientes import matriz_clientes
 from CRUD import validaciones
-from FUNCIONES import excepciones
+from FUNCIONES import excepciones, recursividad
 from colorama import Fore, Style
 import re
 
@@ -48,76 +48,43 @@ def alta_venta():
     print(f"{Fore.MAGENTA}{' Agregar Venta '.center(30, '=')}")
 
     # Código de venta
-    codigo = input("Ingrese código de venta: ")
-    valido = validaciones.validar_codigo_venta(codigo)
+    codigo = excepciones.ingresar_codigo("Ingrese código de venta: ",validaciones.validar_codigo_venta,"V001")
 
-    while valido == False:
-         print(f"{Fore.RED}Error: el código debe tener el formato V001.")
-         codigo = input("Ingrese código de venta: ")
-         valido = validaciones.validar_codigo_venta(codigo)
+    # Verificar que el código no exista
+    venta = recursividad.buscar_por_codigo_recursivo(matriz_ventas, codigo, 0)
 
-    cantidad = 0
-    for fila in matriz_ventas:
-        if fila[0] == codigo:
-            cantidad = cantidad + 1
-
-    while cantidad > 0:
+    while venta is not None:
         print(f"{Fore.RED}Error: la venta ya existe.")
-        codigo = input("Ingrese otro código de venta: ")
-        valido = validaciones.validar_codigo_venta(codigo)
 
-    while valido == False:
-        print(f"{Fore.RED}Error: el código debe tener el formato V001.")
-        codigo = input("Ingrese otro código de venta: ")
-        valido = validaciones.validar_codigo_venta(codigo)
+        codigo = excepciones.ingresar_codigo("Ingrese otro código de venta: ",validaciones.validar_codigo_venta,"V001")
 
-    cantidad = 0
-    for fila in matriz_ventas:
-        if fila[0] == codigo:
-            cantidad = cantidad + 1
-
-        cantidad = 0
-        for fila in matriz_ventas:
-            if fila[0] == codigo:
-                cantidad = cantidad + 1
+        venta = recursividad.buscar_por_codigo_recursivo(matriz_ventas, codigo, 0)
 
     # Código de cliente
-    cliente = input("Ingrese código de cliente: ")
-    valido = validaciones.validar_codigo_cliente(cliente)
+    cliente = excepciones.ingresar_codigo("Ingrese código de cliente: ",validaciones.validar_codigo_cliente,"C001")
 
-    while valido == False:
-        print(f"{Fore.RED}Error: el código debe tener el formato C001.")
-        cliente = input("Ingrese código de cliente: ")
-        valido = validaciones.validar_codigo_cliente(cliente)
+    # Verificar que el cliente exista
+    lista_clientes = matriz_clientes()
 
-    cantidad = 0
-    for fila in matriz_clientes:
-        if fila[0] == cliente:
-            cantidad = cantidad + 1
+    if lista_clientes is None:
+        print(f"{Fore.RED}Error: no se pudo obtener la lista de clientes.")
+        return
 
-    if cantidad == 0:
+    cliente_encontrado = recursividad.buscar_por_codigo_recursivo(lista_clientes, cliente, 0)
+
+    if cliente_encontrado is None:
         print(f"{Fore.RED}Error: Cliente inexistente.")
         return
 
     # Código de medicamento
-    medicamento = input("Ingrese el código del medicamento: ")
-    valido = validaciones.validar_codigo_medicamento(medicamento)
+    medicamento = excepciones.ingresar_codigo("Ingrese el código del medicamento: ",validaciones.validar_codigo_medicamento,"M001")
 
-    while valido == False:
-        print(f"{Fore.RED}Error: el código debe tener el formato M001.")
-        medicamento = input("Ingrese el código del medicamento: ")
-        valido = validaciones.validar_codigo_medicamento(medicamento)
-
-    # Verificar que el medicamento exista en el archivo
-    codigos_medicamentos = []
-
+    # Verificar que el medicamento exista
     try:
         with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
-            for linea in arch:
-                datos = linea.strip().split(";")
+            lineas = arch.readlines()
 
-                if len(datos) == 6:
-                    codigos_medicamentos.append(datos[0])
+        medicamento_encontrado = recursividad.buscar_medicamento_recursivo(lineas, medicamento)
 
     except FileNotFoundError:
         print(f"{Fore.RED}Error: no existe el archivo medicamentos.txt.")
@@ -127,7 +94,7 @@ def alta_venta():
         print(f"{Fore.RED}Error al leer el archivo: {error}")
         return
 
-    if medicamento not in codigos_medicamentos:
+    if medicamento_encontrado is None:
         print(f"{Fore.RED}Error: Medicamento inexistente.")
         return
 
@@ -137,9 +104,12 @@ def alta_venta():
     # Verificar receta
     receta = excepciones.ingresar_opcion("¿Presentó receta? (1-Sí / 2-No): ",[1, 2])
 
+    # Registrar venta
     matriz_ventas.append([codigo, cliente, medicamento, ventas, receta])
 
     print(f"{Fore.GREEN}Venta agregada correctamente.")
+
+
 
 #-------------------------
 # Modificar una venta
@@ -149,66 +119,42 @@ def modificar_venta():
     print(f"{Fore.MAGENTA}{' Modificar Venta '.center(30, '=')}")
 
     # Código de venta
-    codigo = input("Ingrese código de venta: ")
-    valido = validaciones.validar_codigo_venta(codigo)
+    codigo = excepciones.ingresar_codigo("Ingrese código de venta: ",validaciones.validar_codigo_venta,"V001")
 
-    while valido == False:
-          print(f"{Fore.RED}Error: el código debe tener el formato V001.")
-          codigo = input("Ingrese código de venta: ")
-          valido = validaciones.validar_codigo_venta(codigo)
+    # Verificar que la venta exista
+    venta_encontrada = recursividad.buscar_por_codigo_recursivo(matriz_ventas, codigo)
 
-    posicion = -1
-
-    for i in range(len(matriz_ventas)):
-        if matriz_ventas[i][0] == codigo:
-            posicion = i
-
-    if posicion == -1:
-        print("Venta no encontrada.")
+    if venta_encontrada is None:
+        print(f"{Fore.RED}Error: Venta no encontrada.")
         return
 
+    posicion = matriz_ventas.index(venta_encontrada)
+
     # Código de cliente
-    cliente = input("Nuevo código de cliente: ")
-    valido = validaciones.validar_codigo_cliente(cliente)
+    cliente = excepciones.ingresar_codigo("Nuevo código de cliente: ",validaciones.validar_codigo_cliente,"C001")
 
-    while valido == False:
-        print(f"{Fore.RED}Error: el código debe tener el formato C001.")
-        cliente = input("Nuevo código de cliente: ")
-        valido = validaciones.validar_codigo_cliente(cliente)
+    # Verificar que el cliente exista
+    lista_clientes = matriz_clientes()
 
-    # Verifica que el cliente exista
-    cantidad = 0
+    if lista_clientes is None:
+        print(f"{Fore.RED}Error: no se pudo obtener la lista de clientes.")
+        return
 
-    for fila in matriz_clientes:
-        if fila[0] == cliente:
-            cantidad = cantidad + 1
+    cliente_encontrado = recursividad.buscar_por_codigo_recursivo(lista_clientes, cliente)
 
-    if cantidad == 0:
+    if cliente_encontrado is None:
         print(f"{Fore.RED}Error: Cliente inexistente.")
         return
 
     # Código de medicamento
-    medicamento = input("Nuevo código de medicamento: ")
-    valido = validaciones.validar_codigo_medicamento(medicamento)
+    medicamento = excepciones.ingresar_codigo("Nuevo código de medicamento: ",validaciones.validar_codigo_medicamento,"M001")
 
-    while valido == False:
-        print(f"{Fore.RED}Error: el código debe tener el formato M001.")
-        medicamento = input("Nuevo código de medicamento: ")
-        valido = validaciones.validar_codigo_medicamento(medicamento)
-
-    # Verifica que el medicamento exista
-    codigos_medicamentos = []
-
+    # Verificar que el medicamento exista
     try:
         with open("medicamentos.txt", "rt", encoding="UTF-8") as arch:
-            for linea in arch:
-                datos = linea.strip().split(";")
+            lineas = arch.readlines()
 
-                if len(datos) != 6:
-                    print(f"{Fore.RED}Error: hay un registro inválido en medicamentos.txt.")
-                    return
-
-                codigos_medicamentos.append(datos[0])
+        medicamento_encontrado = recursividad.buscar_medicamento_recursivo(lineas, medicamento)
 
     except FileNotFoundError:
         print(f"{Fore.RED}Error: no existe el archivo medicamentos.txt.")
@@ -218,7 +164,7 @@ def modificar_venta():
         print(f"{Fore.RED}Error al leer el archivo: {error}")
         return
 
-    if medicamento not in codigos_medicamentos:
+    if medicamento_encontrado is None:
         print(f"{Fore.RED}Error: Medicamento inexistente.")
         return
 
@@ -243,24 +189,20 @@ def eliminar_venta():
 
     print(f"{Fore.MAGENTA}{' Eliminar Venta '.center(30, '=')}")
 
-    codigo = input("Ingrese código de la venta: ")
-    valido = validaciones.validar_codigo_venta(codigo)
+    # Código de venta
+    codigo = excepciones.ingresar_codigo("Ingrese código de la venta: ",validaciones.validar_codigo_venta,"V001")
 
-    while valido == False:
-        print(f"{Fore.RED}Error: el código debe tener el formato V001.")
-        codigo = input("Ingrese código de la venta: ")
-        valido = validaciones.validar_codigo_venta(codigo)
+    # Verificar que la venta exista
+    venta_encontrada = recursividad.buscar_por_codigo_recursivo(matriz_ventas, codigo)
 
-    posicion = -1
-
-    for i in range(len(matriz_ventas)):
-        if matriz_ventas[i][0] == codigo:
-            posicion = i
-
-    if posicion == -1:
+    if venta_encontrada is None:
         print(f"{Fore.RED}Error: Venta no encontrada.")
         return
 
+    # Obtener la posición de la venta
+    posicion = matriz_ventas.index(venta_encontrada)
+
+    # Eliminar venta
     matriz_ventas.pop(posicion)
 
     print(f"{Fore.GREEN}Venta eliminada correctamente.")
