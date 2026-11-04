@@ -1,7 +1,7 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
 from CRUD import clientes, estadisticas, medicamentos, ventas
-from FUNCIONES import excepciones, recursividad
+from FUNCIONES import excepciones, recursividad, validaciones
 from login import registrar_usuario, cargar_usuarios, iniciar_sesion
 import re
 
