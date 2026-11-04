@@ -184,9 +184,10 @@ def submenu_estadisticas():
         print("10- Ver Ventas con Receta")
         print("11- Ver Cantidad Total Vendida")
         print("12- Ver Relacion entre Ventas de Medicamentos")
-        print("13- Volver.\n")  
+        print("13- Ver Porcentaje de Ventas con Receta")
+        print("14- Volver.\n")  
 
-        opcion_estadisticas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+        opcion_estadisticas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
 
         if opcion_estadisticas == 1:
             estadisticas.total_recaudado()
@@ -213,6 +214,8 @@ def submenu_estadisticas():
         elif opcion_estadisticas == 12:
             estadisticas.relacion_medicamentos_ventas()
         elif opcion_estadisticas == 13:
+            estadisticas.porcentajes_ventas_receta()
+        elif opcion_estadisticas == 14:
             print("Volviendo al menú principal.\n")
         
 '''
