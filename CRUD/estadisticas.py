@@ -306,7 +306,7 @@ def stats_clientes():
         lista_coberturas = []
         for h in range(len(matriz_clients)): 
             lista_coberturas.append(matriz_clients[h][3])
-             
+        
         cobertura_obra_social = []
         cobertura_particular = []
         for i in range (len(lista_coberturas)):
@@ -359,14 +359,14 @@ def diccionario_clientes():
             return None
 
 def matriz_clientes():
-     lista_clientes = diccionario_clientes()
+    lista_clientes = diccionario_clientes()
 
-     if lista_clientes is None:
+    if lista_clientes is None:
         return None
 
-     matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
+    matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
 
-     return matriz
+    return matriz
 #Funcion Para Calcular el Total
 def calcular_total(precio, cantidad): 
 
