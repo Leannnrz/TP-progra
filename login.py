@@ -1,4 +1,4 @@
-usuariosAdmin = [["admin", "1234", "Administrador"]]
+usuariosAdmin = (("admin", "1234", "Administrador"),)
 usuariosCliente = [["cliente", "4321", "Cliente"]]
 archivo_usuarios = "usuarios.txt"
 
