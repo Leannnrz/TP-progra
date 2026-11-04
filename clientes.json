@@ -1,0 +1,62 @@
+[
+    {
+        "ID": "C001",
+        "Nombre": "Juan Perez",
+        "Edad": 25,
+        "Cobertura": 1
+    },
+    {
+        "ID": "C002",
+        "Nombre": "Maria Gomez",
+        "Edad": 42,
+        "Cobertura": 2
+    },
+    {
+        "ID": "C003",
+        "Nombre": "Carlos Lopez",
+        "Edad": 31,
+        "Cobertura": 1
+    },
+    {
+        "ID": "C004",
+        "Nombre": "Ana Martinez",
+        "Edad": 55,
+        "Cobertura": 2
+    },
+    {
+        "ID": "C005",
+        "Nombre": "Luis Fernandez",
+        "Edad": 19,
+        "Cobertura": 1
+    },
+    {
+        "ID": "C006",
+        "Nombre": "Sofia Torres",
+        "Edad": 38,
+        "Cobertura": 2
+    },
+    {
+        "ID": "C007",
+        "Nombre": "Diego Ramirez",
+        "Edad": 47,
+        "Cobertura": 1
+    },
+    {
+        "ID": "C008",
+        "Nombre": "Valentina Castro",
+        "Edad": 29,
+        "Cobertura": 2
+    },
+    {
+        "ID": "C009",
+        "Nombre": "Martin Rojas",
+        "Edad": 61,
+        "Cobertura": 2
+    },
+    {
+        "ID": "C010",
+        "Nombre": "Lucia Diaz",
+        "Edad": 34,
+        "Cobertura": 2
+    }
+]

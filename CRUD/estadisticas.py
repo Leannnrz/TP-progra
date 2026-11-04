@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 from .clientes import matriz_clientes
 from .ventas import matriz_ventas
 from functools import reduce
 from colorama import Fore, Style
 
 
+=======
+import json 
+from .clientes import archivo_clientes, diccionario_clientes
+from .ventas import matriz_ventas
+from functools import reduce
+from FUNCIONES import recursividad, validaciones
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''
@@ -66,7 +74,11 @@ def mayor_venta():
     lista_cant_productos = []
     for i in range(len(matriz_ventas)):
         lista_cant_productos.append(matriz_ventas[i][3])
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
     lista_medicamentos_vendidos = []
     for j in range(len(matriz_ventas)):
         lista_medicamentos_vendidos.append(matriz_ventas[j][2]) 
@@ -262,12 +274,19 @@ def ganancia_x_medicamento():
 
 #Funcion Para Calcular Estadisticas de Clientes
 def stats_clientes(): 
+<<<<<<< HEAD
+=======
+    matriz_clients = matriz_clientes()
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
     print
     print("Ver Porcentajes de Clientes: ")
     print("1- Por Edad")
     print("2- Por Cobertura")
     opcion_stats = input("Ingrese una Opcion: ")
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
     while opcion_stats != "1" and opcion_stats != "2":
         print("Opcion Invalida")
         print("Ver Porcentajes de Clientes: ")
@@ -276,8 +295,13 @@ def stats_clientes():
         opcion_stats = input("Ingrese Una Opcion: ")
 
     lista_edades = []
+<<<<<<< HEAD
     for h in range(len(matriz_clientes)): 
         lista_edades.append(matriz_clientes[h][2])
+=======
+    for h in range(len(matriz_clients)): 
+        lista_edades.append(matriz_clients[h][2])
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 
     if opcion_stats == "1":
         edad = int(input("Determine el rango de edad: "))
@@ -306,9 +330,15 @@ def stats_clientes():
 
     else:
         lista_coberturas = []
+<<<<<<< HEAD
         for h in range(len(matriz_clientes)): 
             lista_coberturas.append(matriz_clientes[h][3])
 
+=======
+        for h in range(len(matriz_clients)): 
+            lista_coberturas.append(matriz_clients[h][3])
+             
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
         cobertura_obra_social = []
         cobertura_particular = []
         for i in range (len(lista_coberturas)):
@@ -330,6 +360,48 @@ def stats_clientes():
         print("Mientras que el porcentaje de Clientes de forma Particular es del", porcentaje_particular, "%")
         print("-" * 100) 
 
+<<<<<<< HEAD
+=======
+def diccionario_clientes():
+    try:
+        with open(archivo_clientes, "r", encoding = "UTF-8") as archivo:
+            lista_clientes = json.load(archivo)
+
+        if type(lista_clientes) != list:
+            print("Error: el archivo JSON debe contener una lista de clientes")
+            return None
+
+        for cliente in lista_clientes:
+            if type(cliente) != dict:
+                print("Error: cada cliente debe ser un diccionario")
+                return None
+            
+            if "ID" not in cliente or "Nombre" not in cliente or "Edad" not in cliente or "Cobertura" not in cliente:
+                print("Error: cada cliente debe tener las claves 'ID', 'Nombre', 'Edad' y 'Cobertura'")
+                return None
+            
+        return lista_clientes
+    
+    except FileNotFoundError:
+            print("Error: no se encontro el archivo JSON")
+            return None
+    except json.JSONDecodeError:
+            print("Error: el archivo JSON no tiene datos validos")
+            return None
+    except (OSError, UnicodeDecodeError) as error:
+            print(f"Error: no se pudo leer el archivo JSON: {error}")
+            return None
+
+def matriz_clientes():
+     lista_clientes = diccionario_clientes()
+
+     if lista_clientes is None:
+        return None
+
+     matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
+
+     return matriz
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 #Funcion Para Calcular el Total
 def calcular_total(precio, cantidad): 
 
@@ -376,7 +448,46 @@ def reporte_medicamento():
     print("-" * 140)
     print()
 
+<<<<<<< HEAD
 
+=======
+#Funcion Para Ver Relacion entre Ventas de Medicamentos
+def relacion_medicamentos_ventas():
+    codigo1 = input("Ingrese el código del medicamento: ")
+    valido = validaciones.validar_codigo_medicamento(codigo1)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo1 = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo1)
+
+    codigo2 = input("Ingrese el código del medicamento: ")
+    valido = validaciones.validar_codigo_medicamento(codigo2)
+    
+    while valido == False:
+        print("Error: el código debe tener el formato M001.")
+        codigo2 = input("Ingrese el código del medicamento: ")
+        valido = validaciones.validar_codigo_medicamento(codigo2)
+
+    lista_ventas_med1 = []
+    lista_ventas_med2 = []
+    for j in range(len(matriz_ventas)):
+        if matriz_ventas[j][2] == codigo1:
+            lista_ventas_med1.append(matriz_ventas[j][1])
+        elif matriz_ventas[j][2] == codigo2:
+            lista_ventas_med2.append(matriz_ventas[j][1])
+
+    conjunto1 = set(lista_ventas_med1)
+    conjunto2 = set(lista_ventas_med2)
+    compraron_ambos = conjunto1 & conjunto2
+    if len(compraron_ambos) > 0:
+        print("Los Clientes que Compraron ambos Medicamentos son:", compraron_ambos)
+        print()
+    else: 
+        print("No existen cliente que hayan comprado esos 2 medicamentos")
+        print()
+    
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
 # MEDICAMENTOS 
 def medicamentos_con_receta(matriz_medicamentos): #FILTRAR MEDICAMENTOS QUE REQUIEREN RECETA
 
@@ -440,6 +551,7 @@ def mostrar_cantidad_total_vendida():
     print("\n--- CANTIDAD TOTAL VENDIDA ---")
     print("Cantidad total de medicamentos vendidos:", cantidad)
 
+<<<<<<< HEAD
 
 
 # ESTADISTICAS DE VENTAS
@@ -591,3 +703,19 @@ def mostrar_estadisticas_ventas():
 
     print("-" * ancho_total)
     print()
+=======
+def porcentajes_ventas_receta():
+    ventas_receta = ventas_con_receta(matriz_ventas)
+    total_ventas = len(matriz_ventas)
+    total_ventas_con_receta = len(ventas_receta)
+    if total_ventas > 0:
+        porcentaje_con_receta = (total_ventas_con_receta / total_ventas) * 100
+    else:
+        porcentaje_con_receta = 0
+
+    print("-" * 50)
+    print("--- PORCENTAJE DE VENTAS CON RECETA ---")
+    print(f"Porcentaje de ventas con receta: {porcentaje_con_receta:.2f}%")
+    print("-" * 50)
+    print()
+>>>>>>> 3342944e362e354625de69fd10e0c28c5f00ded3
