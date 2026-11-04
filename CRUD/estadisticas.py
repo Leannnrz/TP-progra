@@ -3,6 +3,9 @@ from .clientes import archivo_clientes, diccionario_clientes
 from .ventas import matriz_ventas
 from functools import reduce
 from FUNCIONES import recursividad, validaciones
+from colorama import Fore, Style
+
+
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''

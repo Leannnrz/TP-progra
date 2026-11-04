@@ -5,9 +5,6 @@ from FUNCIONES import excepciones, recursividad
 
 archivo_clientes = "clientes.json"
 
-encabezados =  ['ID', 'Nombre', 'Edad', 'Cobertura']
-lista_clientes = [dict(zip(encabezados, fila)) for fila in matriz_clientes]
-
 
 '''
 FUNCIONES CRUD DE CLIENTES
