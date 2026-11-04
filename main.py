@@ -170,8 +170,8 @@ def submenu_ventas():
 #Submenú de Estadisticas
 def submenu_estadisticas(): 
     opcion_estadisticas = 0
-    while opcion_estadisticas != 13:
-        print(f"{Fore.CYAN}{'VENTAS'.center(20)}\n{'-' * 20}")
+    while opcion_estadisticas != 15:
+        print(f"{Fore.CYAN}{'ESTADÍSTICAS'.center(20)}\n{'-' * 20}")
         print("1- Ganancia Total")
         print("2- Venta Más Grande")
         print("3- Venta Más Pequeña")
@@ -185,7 +185,8 @@ def submenu_estadisticas():
         print("11- Ver Cantidad Total Vendida")
         print("12- Ver Relacion entre Ventas de Medicamentos")
         print("13- Ver Porcentaje de Ventas con Receta")
-        print("14- Volver.\n")  
+        print("14- Reporte de estadisticas")
+        print("15- Volver.\n")  
 
         opcion_estadisticas = excepciones.ingresar_opcion("Seleccione una opción: ",[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
 
@@ -216,6 +217,8 @@ def submenu_estadisticas():
         elif opcion_estadisticas == 13:
             estadisticas.porcentajes_ventas_receta()
         elif opcion_estadisticas == 14:
+            estadisticas.mostrar_estadisticas_ventas()
+        elif opcion_estadisticas == 15:
             print("Volviendo al menú principal.\n")
         
 '''
@@ -228,7 +231,7 @@ def mostrar_menu(tipo_usuario):
 
         while opcion != "5":
 
-            print(f"{Style.BRIGHT}{'-' * 80}\n{'Menú Principal'.center(25)}\n{'-' * 80}")
+            print(f"{Fore.BLUE}{Style.BRIGHT}{'-' * 40}\n{'Menú Principal'.center(25)}\n{'-' * 40}")
             print(f"{Style.BRIGHT}\n1- Clientes")
             print(f"{Style.BRIGHT}2- Medicamentos")
             print(f"{Style.BRIGHT}3- Ventas")
