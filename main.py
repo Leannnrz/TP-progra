@@ -1,6 +1,6 @@
 # Importacion de módulos.
 from colorama import init, Fore, Back, Style
-from CRUD import clientes, medicamentos, ventas, estadisticas
+from CRUD import clientes, estadisticas, medicamentos, ventas
 from FUNCIONES import excepciones, recursividad
 from login import registrar_usuario, cargar_usuarios, iniciar_sesion
 import re
@@ -179,7 +179,7 @@ def submenu_estadisticas():
         print("5- Buscar Ganancias por Medicamento")  
         print("6- Ver Estadisticas de Clientes") 
         print("7- Ver Reporte de Medicamentos")
-        print("8- Ver Ventas con Receta")
+        print("8- Ver Medicamentos con Receta")
         print("9- Ver Valor Total del Stock")
         print("10- Ver Ventas con Receta")
         print("11- Ver Cantidad Total Vendida")

@@ -1,7 +1,8 @@
-from .clientes import matriz_clientes
+import json 
+from .clientes import archivo_clientes, diccionario_clientes
 from .ventas import matriz_ventas
 from functools import reduce
-from FUNCIONES import validaciones
+from FUNCIONES import recursividad, validaciones
 '''
 FUNCIONES CRUD DE PROMEDIOS
 '''
@@ -260,6 +261,7 @@ def ganancia_x_medicamento():
 
 #Funcion Para Calcular Estadisticas de Clientes
 def stats_clientes(): 
+    matriz_clients = matriz_clientes()
     print
     print("Ver Porcentajes de Clientes: ")
     print("1- Por Edad")
@@ -273,8 +275,8 @@ def stats_clientes():
         opcion_stats = input("Ingrese Una Opcion: ")
 
     lista_edades = []
-    for h in range(len(matriz_clientes)): 
-        lista_edades.append(matriz_clientes[h][2])
+    for h in range(len(matriz_clients)): 
+        lista_edades.append(matriz_clients[h][2])
 
     if opcion_stats == "1":
         edad = int(input("Determine el rango de edad: "))
@@ -303,8 +305,8 @@ def stats_clientes():
 
     else:
         lista_coberturas = []
-        for h in range(len(matriz_clientes)): 
-            lista_coberturas.append(matriz_clientes[h][3])
+        for h in range(len(matriz_clients)): 
+            lista_coberturas.append(matriz_clients[h][3])
              
         cobertura_obra_social = []
         cobertura_particular = []
@@ -327,6 +329,45 @@ def stats_clientes():
         print("Mientras que el porcentaje de Clientes de forma Particular es del", porcentaje_particular, "%")
         print("-" * 100) 
 
+def diccionario_clientes():
+    try:
+        with open(archivo_clientes, "r", encoding = "UTF-8") as archivo:
+            lista_clientes = json.load(archivo)
+
+        if type(lista_clientes) != list:
+            print("Error: el archivo JSON debe contener una lista de clientes")
+            return None
+
+        for cliente in lista_clientes:
+            if type(cliente) != dict:
+                print("Error: cada cliente debe ser un diccionario")
+                return None
+            
+            if "ID" not in cliente or "Nombre" not in cliente or "Edad" not in cliente or "Cobertura" not in cliente:
+                print("Error: cada cliente debe tener las claves 'ID', 'Nombre', 'Edad' y 'Cobertura'")
+                return None
+            
+        return lista_clientes
+    
+    except FileNotFoundError:
+            print("Error: no se encontro el archivo JSON")
+            return None
+    except json.JSONDecodeError:
+            print("Error: el archivo JSON no tiene datos validos")
+            return None
+    except (OSError, UnicodeDecodeError) as error:
+            print(f"Error: no se pudo leer el archivo JSON: {error}")
+            return None
+
+def matriz_clientes():
+     lista_clientes = diccionario_clientes()
+
+     if lista_clientes is None:
+        return None
+
+     matriz = recursividad.crear_matriz_clientes_recursivo(lista_clientes)
+
+     return matriz
 #Funcion Para Calcular el Total
 def calcular_total(precio, cantidad): 
 
