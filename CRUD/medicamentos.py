@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from CRUD import validaciones
+from FUNCIONES import validaciones
 from FUNCIONES import excepciones, recursividad
 import os
 

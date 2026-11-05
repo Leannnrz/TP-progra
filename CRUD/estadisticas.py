@@ -598,7 +598,7 @@ def promedio_ventas_sin_receta():
     lista_importes_sin_receta = []
 
     for i in range(len(matriz_ventas)):
-        if matriz_ventas[i][4] == 0:
+        if matriz_ventas[i][4] == 2:
             lista_importes_sin_receta.append(lista_importes[i])
 
     if len(lista_importes_sin_receta) == 0:
@@ -630,7 +630,7 @@ def mostrar_estadisticas_ventas():
     for i in range(len(matriz_ventas)):
         if matriz_ventas[i][4] == 1:
             cantidad_con_receta = cantidad_con_receta + 1
-        elif matriz_ventas[i][4] == 0:
+        elif matriz_ventas[i][4] == 2:
             cantidad_sin_receta = cantidad_sin_receta + 1
 
     promedio_general = promedio_general_ventas()
