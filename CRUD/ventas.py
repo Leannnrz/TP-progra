@@ -1,6 +1,10 @@
 from CRUD.clientes import matriz_clientes
+<<<<<<< HEAD
 from FUNCIONES import validaciones
 from FUNCIONES import excepciones, recursividad
+=======
+from FUNCIONES import excepciones, recursividad, validaciones
+>>>>>>> main
 from colorama import Fore, Style
 import re
 

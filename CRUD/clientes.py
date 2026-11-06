@@ -1,7 +1,11 @@
 import json
 from colorama import Fore, Style
+<<<<<<< HEAD
 from FUNCIONES import validaciones
 from FUNCIONES import excepciones, recursividad
+=======
+from FUNCIONES import excepciones, recursividad, validaciones
+>>>>>>> main
 
 archivo_clientes = "clientes.json"
 
