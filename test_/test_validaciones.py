@@ -1,4 +1,5 @@
 
+# Importamos las funciones
 from FUNCIONES.validaciones import (
     validar_codigo_cliente,
     validar_codigo_medicamento,

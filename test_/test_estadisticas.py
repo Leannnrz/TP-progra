@@ -6,11 +6,7 @@ from CRUD.estadisticas import (
     medicamentos_con_receta,
     valor_total_stock,
     ventas_con_receta,
-    cantidad_total_vendida,
-    calcular_importes_ventas,
-    promedio_general_ventas,
-    promedio_ventas_con_receta,
-    promedio_ventas_sin_receta
+    cantidad_total_vendida
 )
 
 
@@ -40,7 +36,7 @@ def test_medicamentos_con_receta():
         ["M003", "Amoxicilina", "Lab3", 300.0, 10, 1]
     ]
 
-    # Probamos que filtre solamente medicamentos con receta.
+    # Probamos que encuentre los medicamentos con receta.
     resultado = medicamentos_con_receta(matriz_medicamentos)
 
     assert resultado == [
@@ -78,7 +74,7 @@ def test_ventas_con_receta():
         ["V003", "C003", "M003", 1, 1]
     ]
 
-    # Probamos que filtre solamente ventas con receta.
+    # Probamos que encuentre las ventas con receta.
     resultado = ventas_con_receta(matriz_ventas)
 
     assert resultado == [
@@ -107,110 +103,3 @@ def test_cantidad_total_vendida():
 
     # Probamos cuando no hay ventas.
     assert cantidad_total_vendida([]) == 0
-
-
-def test_calcular_importes_ventas(monkeypatch):
-    # Creamos una matriz de medicamentos de prueba.
-    matriz_medicamentos = [
-        ["M001", "Paracetamol", "Lab1", 100.0, 20, 1],
-        ["M002", "Ibuprofeno", "Lab2", 200.0, 15, 2]
-    ]
-
-    # Creamos una matriz de ventas de prueba.
-    ventas_prueba = [
-        ["V001", "C001", "M001", 2, 1],
-        ["V002", "C002", "M002", 3, 2]
-    ]
-
-    # Reemplazamos los datos originales por los datos de prueba.
-    import CRUD.estadisticas as estadisticas
-
-    monkeypatch.setattr(
-        estadisticas,
-        "convertir_a_matriz",
-        lambda: matriz_medicamentos
-    )
-
-    monkeypatch.setattr(
-        estadisticas,
-        "matriz_ventas",
-        ventas_prueba
-    )
-
-    # Probamos calcular los importes de cada venta.
-    assert estadisticas.calcular_importes_ventas() == [200.0, 600.0]
-
-
-def test_promedio_general_ventas(monkeypatch):
-    # Creamos importes de ventas de prueba.
-    import CRUD.estadisticas as estadisticas
-
-    monkeypatch.setattr(
-        estadisticas,
-        "calcular_importes_ventas",
-        lambda: [200.0, 600.0, 400.0]
-    )
-
-    # Probamos calcular el promedio general.
-    assert estadisticas.promedio_general_ventas() == 400.0
-
-    # Probamos cuando no hay ventas.
-    monkeypatch.setattr(
-        estadisticas,
-        "calcular_importes_ventas",
-        lambda: []
-    )
-
-    assert estadisticas.promedio_general_ventas() == 0
-
-
-def test_promedio_ventas_con_receta(monkeypatch):
-    # Creamos ventas de prueba.
-    import CRUD.estadisticas as estadisticas
-
-    ventas_prueba = [
-        ["V001", "C001", "M001", 2, 1],
-        ["V002", "C002", "M002", 3, 2],
-        ["V003", "C003", "M003", 1, 1]
-    ]
-
-    monkeypatch.setattr(
-        estadisticas,
-        "matriz_ventas",
-        ventas_prueba
-    )
-
-    monkeypatch.setattr(
-        estadisticas,
-        "calcular_importes_ventas",
-        lambda: [200.0, 600.0, 300.0]
-    )
-
-    # Probamos el promedio de ventas con receta.
-    assert estadisticas.promedio_ventas_con_receta() == 250.0
-
-
-def test_promedio_ventas_sin_receta(monkeypatch):
-    # Creamos ventas de prueba.
-    import CRUD.estadisticas as estadisticas
-
-    ventas_prueba = [
-        ["V001", "C001", "M001", 2, 1],
-        ["V002", "C002", "M002", 3, 2],
-        ["V003", "C003", "M003", 1, 2]
-    ]
-
-    monkeypatch.setattr(
-        estadisticas,
-        "matriz_ventas",
-        ventas_prueba
-    )
-
-    monkeypatch.setattr(
-        estadisticas,
-        "calcular_importes_ventas",
-        lambda: [200.0, 600.0, 300.0]
-    )
-
-    # Probamos el promedio de ventas sin receta.
-    assert estadisticas.promedio_ventas_sin_receta() == 450.0

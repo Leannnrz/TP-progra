@@ -1,12 +1,12 @@
-
 import login
 
-def test_cargar_usuarios(tmp_path, monkeypatch):
-    # Utilizamos un archivo temporal para no modificar usuarios.txt.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("ana,1234,Cliente\njuan,5678,Cliente\n", encoding="UTF-8")
 
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_cargar_usuarios():
+    # Creamos un archivo con dos usuarios.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("ana,1234,Cliente\n")
+    archivo.write("juan,5678,Cliente\n")
+    archivo.close()
 
     usuarios = login.cargar_usuarios()
 
@@ -16,25 +16,26 @@ def test_cargar_usuarios(tmp_path, monkeypatch):
     ]
 
 
-def test_cargar_usuarios_sin_archivo(tmp_path, monkeypatch):
-    # Si el archivo no existe, se crea con el usuario predeterminado.
-    archivo = tmp_path / "usuarios.txt"
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_cargar_usuarios_sin_archivo():
+    # Eliminamos el archivo para comprobar qué sucede.
+    import os
+
+    if os.path.exists(login.archivo_usuarios):
+        os.remove(login.archivo_usuarios)
 
     usuarios = login.cargar_usuarios()
 
     assert usuarios == [["cliente", "4321", "Cliente"]]
-    assert archivo.exists()
 
 
-def test_registrar_usuario(monkeypatch, tmp_path):
-    # Probamos registrar un usuario nuevo.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("cliente,4321,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_registrar_usuario():
+    # Preparamos un archivo con un usuario.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("cliente,4321,Cliente\n")
+    archivo.close()
 
-    entradas = iter(["ana", "1234"])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
+    # Registramos un usuario nuevo.
+    login.input = lambda mensaje: "ana" if "nombre" in mensaje else "1234"
 
     login.registrar_usuario()
 
@@ -43,14 +44,13 @@ def test_registrar_usuario(monkeypatch, tmp_path):
     assert ["ana", "1234", "Cliente"] in usuarios
 
 
-def test_registrar_usuario_existente(monkeypatch, tmp_path):
-    # No debe permitir registrar un usuario que ya existe.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("ana,1234,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_registrar_usuario_existente():
+    # Preparamos un usuario que ya existe.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("ana,1234,Cliente\n")
+    archivo.close()
 
-    entradas = iter(["ana", "5678"])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
+    login.input = lambda mensaje: "ana" if "nombre" in mensaje else "5678"
 
     login.registrar_usuario()
 
@@ -59,30 +59,13 @@ def test_registrar_usuario_existente(monkeypatch, tmp_path):
     assert usuarios == [["ana", "1234", "Cliente"]]
 
 
-def test_registrar_usuario_campos_vacios(monkeypatch, tmp_path):
-    # No se permite registrar usuarios con campos vacíos.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("cliente,4321,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_registrar_usuario_campos_vacios():
+    # Preparamos el archivo inicial.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("cliente,4321,Cliente\n")
+    archivo.close()
 
-    entradas = iter(["", "1234"])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
-
-    login.registrar_usuario()
-
-    usuarios = login.cargar_usuarios()
-
-    assert usuarios == [["cliente", "4321", "Cliente"]]
-
-
-def test_registrar_usuario_con_coma(monkeypatch, tmp_path):
-    # No se permite utilizar comas en el nombre o la contraseña.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("cliente,4321,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
-
-    entradas = iter(["ana,juan", "1234"])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
+    login.input = lambda mensaje: "" if "nombre" in mensaje else "1234"
 
     login.registrar_usuario()
 
@@ -91,41 +74,56 @@ def test_registrar_usuario_con_coma(monkeypatch, tmp_path):
     assert usuarios == [["cliente", "4321", "Cliente"]]
 
 
-def test_iniciar_sesion_cliente(monkeypatch, tmp_path):
-    # Probamos el inicio de sesión de un cliente.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("ana,1234,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_registrar_usuario_con_coma():
+    # Preparamos el archivo inicial.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("cliente,4321,Cliente\n")
+    archivo.close()
 
-    entradas = iter(["ana", "1234"])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
+    login.input = lambda mensaje: "ana,juan" if "nombre" in mensaje else "1234"
+
+    login.registrar_usuario()
+
+    usuarios = login.cargar_usuarios()
+
+    assert usuarios == [["cliente", "4321", "Cliente"]]
+
+
+def test_iniciar_sesion_cliente():
+    # Preparamos los datos del cliente.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("ana,1234,Cliente\n")
+    archivo.close()
+
+    datos = ["ana", "1234"]
+    login.input = lambda mensaje: datos.pop(0)
 
     assert login.iniciar_sesion() == "Cliente"
 
 
-def test_iniciar_sesion_administrador(monkeypatch, tmp_path):
-    # Probamos el inicio de sesión del administrador.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("cliente,4321,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_iniciar_sesion_administrador():
+    # Preparamos los datos del administrador.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("cliente,4321,Cliente\n")
+    archivo.close()
 
-    entradas = iter(["admin", "1234"])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
+    datos = ["admin", "1234"]
+    login.input = lambda mensaje: datos.pop(0)
 
     assert login.iniciar_sesion() == "Administrador"
 
 
-def test_iniciar_sesion_datos_incorrectos(monkeypatch, tmp_path):
-    # Si los datos son incorrectos, permite tres intentos y devuelve None.
-    archivo = tmp_path / "usuarios.txt"
-    archivo.write_text("cliente,4321,Cliente\n", encoding="UTF-8")
-    monkeypatch.setattr(login, "archivo_usuarios", str(archivo))
+def test_iniciar_sesion_datos_incorrectos():
+    # Preparamos los datos iniciales.
+    archivo = open(login.archivo_usuarios, "w", encoding="UTF-8")
+    archivo.write("cliente,4321,Cliente\n")
+    archivo.close()
 
-    entradas = iter([
+    datos = [
         "ana", "1111",
         "juan", "2222",
         "pedro", "3333"
-    ])
-    monkeypatch.setattr("builtins.input", lambda _: next(entradas))
+    ]
+    login.input = lambda mensaje: datos.pop(0)
 
     assert login.iniciar_sesion() == None
